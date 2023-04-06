@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS `ticketingsystem`.`ticketfieldtag`;
 DROP TABLE IF EXISTS `ticketingsystem`.`fieldtag`;
 DROP TABLE IF EXISTS `ticketingsystem`.`ticket`;
 DROP TABLE IF EXISTS `ticketingsystem`.`user`;
--- option to add ZEROFILL before NOT NULL
+-- option to add ZEROFILL before NOT NULL to make the ID's 6/7 digits long
 CREATE TABLE `ticketingsystem`.`user` (
   `userID` INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `fName` VARCHAR(45) NULL,
