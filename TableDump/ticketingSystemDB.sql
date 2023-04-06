@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS `ticketingsystem`.`ticket`;
 DROP TABLE IF EXISTS `ticketingsystem`.`user`;
 -- option to add ZEROFILL before NOT NULL
 CREATE TABLE `ticketingsystem`.`user` (
-  `userID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `userID` INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `fName` VARCHAR(45) NULL,
   `lName` VARCHAR(45) NULL,
   `role` ENUM('admin', 'employee', 'user', 'inactive') NOT NULL DEFAULT 'user',
@@ -17,7 +17,7 @@ CREATE TABLE `ticketingsystem`.`user` (
   
  
   CREATE TABLE `ticketingsystem`.`ticket` (
-  `ticketID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `ticketID` INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `userID` INT UNSIGNED NULL,
   `title` VARCHAR(45) NOT NULL,
   `info` MEDIUMTEXT NULL,
