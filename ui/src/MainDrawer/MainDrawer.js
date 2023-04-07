@@ -22,8 +22,8 @@ const drawerWidth = 210;
 
 export default function MainDrawer (props) {
 
-    const [templates,setTemplates] = useState(Array.from({length: 30}, (item,idx) => "template" + idx))
-    const [tickets,setTickets] = useState(Array.from({length: 30}, (item,idx) => {
+    const [templates,setTemplates] = useState(Array.from({length: 30}, (item,idx) => "template" + idx)) // for ticket templates
+    const [tickets,setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
         return{
             user: "user" + idx,
             name: "ticket" + idx,
@@ -32,22 +32,12 @@ export default function MainDrawer (props) {
         }
 
     }))
-    const [searchValue, setSearchValue] = useState("");
-    const [tabValue, setTabValue] = useState("Tickets");
-    const [selectedValue,setSelectedValue] = useState(null)
-    function a11yProps(index) {
-        return {
-            id: `simple-tab-${index}`,
-            'aria-controls': `simple-tabpanel-${index}`,
-        };
-    }
+    const [searchValue, setSearchValue] = useState(""); //value in search bar
+    const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
+    const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
 
     const handleTabChange = (newValue) => {
         setTabValue(newValue);
-    };
-
-    const handleChangeIndex = (index) => {
-        setTabValue(index);
     };
 
     const handleValueSelection = (text) => {
