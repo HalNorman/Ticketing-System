@@ -1,0 +1,12 @@
+import {Typography} from "@mui/material";
+
+
+export default function Settings() {
+
+    return (
+        <Typography variant = "h2">
+            Settings Here
+        </Typography>
+    )
+
+}
