@@ -105,6 +105,3 @@ dist
 
 # DS_Store files for Mac... This should hopefully cover all of them.
 **/.DS_Store
-
-# Jet Brain IDEs (WebStorm, PyCharm, etc.)
-.idea/
