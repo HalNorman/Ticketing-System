@@ -6,22 +6,30 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
+import { Typography } from '@mui/material';
 
 
 export default function Login({setUser}) {
-    const [userInput, setUserInput] = useState('');
+    const [userName, setUserName] = useState('');
+    const [password, setPassword] = useState('');
     const [verifyUser, setVerifyUser] = useState(false);
     const [authFailed, setAuthFailed] = useState(false);
 
 
-    const handleInputChange = event => {
+    const handleInputChange = (label) => event => {
         console.log("handleInputChange called.");
 
 //        event.stopPropagation();
 //        event.preventDefault();
 
-        setUserInput(event.target.value);
+        if(label === 'Username')
+            setUserName(event.target.value);
+        
+        else // label === 'Password'
+            setPassword(event.target.value)
+
         setAuthFailed(false);
+        setVerifyUser(false);
 
         if(event.key === "Enter") {
             console.log("handleKeyPress: Verify user input.");
@@ -30,20 +38,22 @@ export default function Login({setUser}) {
     };
 
     useEffect(() => {
-
-        if( ! verifyUser || userInput.length === 0)
+        console.log(password)
+        if( ! verifyUser || userName.length === 0)
             return;
 
         //short circuit this effect until we get the api up
-        if(userInput === 'admin')
+        if(userName === 'admin' && password === 'sudo')
         {
             setUser('admin');
         }
         return;
 
+        //need to make call to api for veryfying password as well
+
         const api = new API();
         async function getUserInfo() {
-            api.getUserInfo(userInput)
+            api.getUserInfo(userName)
                 .then( userInfo => {
                 console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
                 const user = userInfo.user;
@@ -57,21 +67,38 @@ export default function Login({setUser}) {
         }
 
         getUserInfo();
-    }, [verifyUser, setUser, userInput]);
+    }, [verifyUser, setUser, userName, password]);
 
 
     return (
        <Fragment>
-           <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={10}>
+            <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
+                Ticket Pleeeeeeease
+            </Typography>
+           <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>
 
                 <TextField
                     error={authFailed}
                     id="outlined-error-helper-text"
-                    label="Login name"
+                    label="Username"
                     placeholder=""
-                    value={userInput}
-                    helperText="Only for existing users!"
-                    onChange={handleInputChange}
+                    value={userName}
+                    helperText="'admin'"
+                    onChange={handleInputChange('Username')}
+                />
+                <Divider />
+           </Box>
+
+           <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={1}>
+
+                <TextField
+                    error={authFailed}
+                    id="outlined-error-helper-text"
+                    label="Password"
+                    placeholder=""
+                    value={password}
+                    helperText="'sudo'"
+                    onChange={handleInputChange('Password')}
                 />
                 <Divider />
            </Box>
@@ -81,7 +108,7 @@ export default function Login({setUser}) {
                     variant="outlined"
                     size="medium"
                     onClick={() => {setVerifyUser(true)}}
-                >Proceed</Button>
+                >Log in</Button>
            </Box>
        </Fragment>
 
