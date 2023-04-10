@@ -1,3 +1,5 @@
+//HomePage.js
+//Component for the main overall homepage of the app
 import MenuAppBar from "../AppBar/AppBar";
 import Box from "@mui/material/Box";
 import MainDrawer from "../MainDrawer/MainDrawer";
