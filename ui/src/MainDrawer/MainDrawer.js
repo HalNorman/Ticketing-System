@@ -18,7 +18,6 @@ import {Fragment} from "react";
 
 import TempTicketDisplay from "./TempTicketDisplay";
 
-
 const drawerWidth = 210;
 
 export default function MainDrawer (props) {
@@ -71,11 +70,13 @@ export default function MainDrawer (props) {
                                        </Icon>
                                    </InputAdornment>
                                ),
-                           }}size="small" ></TextField>
+                           }}size="small" onChange={(s) => setSearchValue(s.target.value)} ></TextField>
                 <Box sx={{ overflow: 'auto', border: '1px solid lightgray'}} >
                     {tabValue === "Templates" &&
                         <List>
-                            {templates.map((text, index) => (
+                            {templates.filter((data) => {
+                                return data.includes(searchValue);
+                            }).map((text, index) => (
                                 <ListItem sx={{border: "1px solid lightgray"}} key={text} disablePadding >
                                     <ListItemButton onClick={() => handleValueSelection(text)}>
                                         <ListItemText primary={text} />
@@ -86,7 +87,9 @@ export default function MainDrawer (props) {
                     }
                     {tabValue === "Tickets" &&
                         <List>
-                            {tickets.map((text, index) => (
+                            {tickets.filter((data) => {
+                                return data.user.includes(searchValue) || data.name.includes(searchValue)
+                            }).map((text, index) => (
                                 <ListItem sx={{border: "1px solid lightgray"}} key={text} multiline = "true" disablePadding >
                                     <ListItemButton onClick={() => handleValueSelection(text.user + " " + text.name)}>
                                         <ListItemText primary={text.name} secondary ={text.user}/>
@@ -103,7 +106,6 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                 <TempTicketDisplay selectedValue={selectedValue}>
-
                 </TempTicketDisplay>
             </Box>
 

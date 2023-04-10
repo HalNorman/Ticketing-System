@@ -1,3 +1,5 @@
+//Main.js
+//For displaying the initial login page which then routes to homepage
 import React, { useState, Fragment } from 'react';
 import Login from './Login';
 import App from './App';
