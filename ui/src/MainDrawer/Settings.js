@@ -1,3 +1,6 @@
+//Settings.js
+//View for the settings display
+
 import {Typography} from "@mui/material";
 
 

@@ -1,3 +1,5 @@
+//AppBar.js
+//Component for AppBar of the homepage
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
@@ -19,9 +21,11 @@ export default function MenuAppBar(props) {
 
     const [checked,setChecked] = useState(true)
     const handleChange = (event) => {
-        setChecked(event.target.checked)
+        setChecked(event.target.checked);
         props.adminSwitch();
     }
+
+
     return (
         <Box>
             <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
