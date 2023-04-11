@@ -5,19 +5,21 @@ DROP TABLE IF EXISTS `ticketingsystem`.`ticketfieldtag`;
 DROP TABLE IF EXISTS `ticketingsystem`.`fieldtag`;
 DROP TABLE IF EXISTS `ticketingsystem`.`ticket`;
 DROP TABLE IF EXISTS `ticketingsystem`.`user`;
--- option to add ZEROFILL before NOT NULL to make the ID's 6/7 digits long
+-- option to add ZEROFILL before NOT NULL
+DROP DATABASE IF EXISTS `ticketingsystem`;
+CREATE DATABASE `ticketingsystem`;
 CREATE TABLE `ticketingsystem`.`user` (
-  `userID` INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `userID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `fName` VARCHAR(45) NULL,
   `lName` VARCHAR(45) NULL,
   `role` ENUM('admin', 'employee', 'user', 'inactive') NOT NULL DEFAULT 'user',
   `email` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`userID`));
-  
  
+
   CREATE TABLE `ticketingsystem`.`ticket` (
-  `ticketID` INT UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+  `ticketID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `userID` INT UNSIGNED NULL,
   `title` VARCHAR(45) NOT NULL,
   `info` MEDIUMTEXT NULL,
@@ -41,7 +43,6 @@ CREATE TABLE `ticketingsystem`.`fieldtag` (
   `valid` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`fieldtagID`))
 COMMENT = 'valid is a boolean, with 1 being valid and 0 being invalid';
-
 
 CREATE TABLE `ticketingsystem`.`ticketfieldtag` (
   `ticketID` INT UNSIGNED NOT NULL,
@@ -97,5 +98,21 @@ INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `email`, `passwo
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `email`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee@email.com', 'password');
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `email`, `password`) VALUES ('Bill', 'McGoo', 'user', 'bmcgoo@email.com', 'password');
 
+INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (2, "Test Ticket", "This is ticket information", "active", "2020-01-21", "2020-01-21", null);
+INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (2, "Test Ticket2", "This is ticket information2", "complete", "2020-02-21", "2020-03-21", "2021-01-01");
 
-SELECT * FROM `user`;
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `text`) VALUES ("Computer Type", "PC");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `text`) VALUES ("Computer Type", "Mac");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `text`) VALUES ("Building", "Darwin");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `text`) VALUES ("Building", "Ives");
+
+INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (1, 1);
+INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (1, 3);
+INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 2);
+INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 4);
+
+SELECT * FROM `ticketingsystem`.`ticket` A INNER JOIN `ticketingsystem`.`ticketfieldtag` B ON A.`ticketID` = B.`ticketID` INNER JOIN `ticketingsystem`.`fieldtag` C ON B.`fieldtagID` = C.`fieldtagID` WHERE A.`status` = "active";
+
+SELECT * FROM `ticketingsystem`.`fieldtag`;
+SELECT * FROM `ticketingsystem`.`ticket`;
+SELECT * FROM `ticketingsystem`.`user`;
