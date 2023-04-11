@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS `ticketingsystem`.`theme`;
-DROP TABLE IF EXISTS `ticketingsystem`.`presetfieldtag`;
-DROP TABLE IF EXISTS `ticketingsystem`.`preset`;
+DROP TABLE IF EXISTS `ticketingsystem`.`templatefieldtag`;
+DROP TABLE IF EXISTS `ticketingsystem`.`template`;
 DROP TABLE IF EXISTS `ticketingsystem`.`ticketfieldtag`;
 DROP TABLE IF EXISTS `ticketingsystem`.`fieldtag`;
 DROP TABLE IF EXISTS `ticketingsystem`.`ticket`;
@@ -39,7 +39,7 @@ CREATE TABLE `ticketingsystem`.`user` (
 CREATE TABLE `ticketingsystem`.`fieldtag` (
   `fieldtagID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `field` VARCHAR(45) NULL,
-  `text` VARCHAR(45) NULL,
+  `tag` VARCHAR(45) NULL,
   `valid` TINYINT NOT NULL DEFAULT 1,
   PRIMARY KEY (`fieldtagID`))
 COMMENT = 'valid is a boolean, with 1 being valid and 0 being invalid';
@@ -71,21 +71,21 @@ CREATE TABLE `ticketingsystem`.`theme` (
 COMMENT = '16711680 is red, 65535 is blue';
 
 
-CREATE TABLE `ticketingsystem`.`preset` (
-  `presetID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `ticketingsystem`.`template` (
+  `templateID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(45) NULL,
   `info` VARCHAR(45) NULL,
-  PRIMARY KEY (`presetID`));
+  PRIMARY KEY (`templateID`));
 
 
-CREATE TABLE `ticketingsystem`.`presetfieldtag` (
-  `presetID` INT UNSIGNED NOT NULL,
+CREATE TABLE `ticketingsystem`.`templatefieldtag` (
+  `templateID` INT UNSIGNED NOT NULL,
   `fieldtagID` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`presetID`, `fieldtagID`),
+  PRIMARY KEY (`templateID`, `fieldtagID`),
   INDEX `fieldtagID_idx` (`fieldtagID` ASC) VISIBLE,
-  CONSTRAINT `preset`
-    FOREIGN KEY (`presetID`)
-    REFERENCES `ticketingsystem`.`preset` (`presetID`)
+  CONSTRAINT `template`
+    FOREIGN KEY (`templateID`)
+    REFERENCES `ticketingsystem`.`template` (`templateID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fieldtag`
@@ -101,18 +101,34 @@ INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `email`, `passwo
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (2, "Test Ticket", "This is ticket information", "active", "2020-01-21", "2020-01-21", null);
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (2, "Test Ticket2", "This is ticket information2", "complete", "2020-02-21", "2020-03-21", "2021-01-01");
 
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `text`) VALUES ("Computer Type", "PC");
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `text`) VALUES ("Computer Type", "Mac");
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `text`) VALUES ("Building", "Darwin");
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `text`) VALUES ("Building", "Ives");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Computer Type", "PC");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Computer Type", "Mac");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Building", "Darwin");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Building", "Ives");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Issue", "Internet is down");
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Issue", "Liquid Spill");
 
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (1, 1);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (1, 3);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 2);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 4);
 
-SELECT * FROM `ticketingsystem`.`ticket` A INNER JOIN `ticketingsystem`.`ticketfieldtag` B ON A.`ticketID` = B.`ticketID` INNER JOIN `ticketingsystem`.`fieldtag` C ON B.`fieldtagID` = C.`fieldtagID` WHERE A.`status` = "active";
+INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template", "explain how this template is useful");
+INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template2", "explain how this template is useful");
 
+INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (1, 1);
+INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (1, 4);
+INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (1, 6);
+INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (2, 2);
+-- This is an example of a call to validate a user and password
+SELECT * FROM `ticketingsystem`.`user` A WHERE A.`email` = 'bmcgee@email.com' AND A.`password` = 'password'; 
+
+-- This is an example of a ticket instance with fields and user name
+SELECT A.`ticketID`, A.`title`, D.`fName`, D.`lName`, C.`field`, C.`tag`, A.`info`, A.`dateCreated`, A.`dateModified` FROM `ticketingsystem`.`ticket` A INNER JOIN `ticketingsystem`.`ticketfieldtag` B ON A.`ticketID` = B.`ticketID` INNER JOIN `ticketingsystem`.`fieldtag` C ON B.`fieldtagID` = C.`fieldtagID` INNER JOIN `ticketingsystem`.`user` D ON A.userID = D.userID WHERE A.`ticketID` = 1;
+-- This is an example of a ticket template with 3 tags, title, and info on the template
+SELECT * FROM `ticketingsystem`.`template` A INNER JOIN `ticketingsystem`.`templatefieldtag` B ON A.`templateID` = B.`templateID` INNER JOIN `ticketingsystem`.`fieldtag` C ON B.`fieldtagID` = C.`fieldtagID` WHERE B.`templateID` = 1;
+
+SELECT * FROM  `ticketingsystem`.`template`;
 SELECT * FROM `ticketingsystem`.`fieldtag`;
 SELECT * FROM `ticketingsystem`.`ticket`;
 SELECT * FROM `ticketingsystem`.`user`;
