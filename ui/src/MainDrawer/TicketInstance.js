@@ -1,6 +1,11 @@
 import React, { useState } from "react";
-import { Box, Typography, MenuItem, Select } from "@mui/material";
-
+import {
+  Box,
+  Typography,
+  MenuItem,
+  Select,
+  Button,
+} from "@mui/material";
 
 const template = 
 {
@@ -42,60 +47,60 @@ const fields = template.TemplateTicket.map((ticket) => ({
 }));
 
 const fieldTags = {
-  fieldtags: [
-    {
-      fieldtagID: 1,
-      field: "Computer Type",
-      tags: [
-        {
-          tag: "PC",
-        },
-        {
-          tag: "Mac",
-        },
-        {
-          tag: "Linux",
-        },
-      ],
-    },
-    {
-      fieldtagID: 4,
-      field: "Building",
-      tags: [
-        {
-          tag: "Ives",
-        },
-        {
-          tag: "Tanna",
-        },
-        {
-          tag: "Arin",
-        },
-        {
-          tag: "Hale",
-        },
-        {
-          tag: "Een",
-        },
-      ],
-    },
-    {
-      fieldtagID: 6,
-      field: "Issue",
-      tags: [
-        {
-          tag: "Liquid Spill",
-        },
-        {
-          tag: "Solid Spill",
-        },
-        {
-          tag: "Gas Leak",
-        },
-      ],
-    },
-  ],
-};
+    fieldtags: [
+      {
+        fieldtagID: 1,
+        field: "Computer Type",
+        tags: [
+          {
+            tag: "PC",
+          },
+          {
+            tag: "Mac",
+          },
+          {
+            tag: "Linux",
+          },
+        ],
+      },
+      {
+        fieldtagID: 4,
+        field: "Building",
+        tags: [
+          {
+            tag: "Ives",
+          },
+          {
+            tag: "Tanna",
+          },
+          {
+            tag: "Arin",
+          },
+          {
+            tag: "Hale",
+          },
+          {
+            tag: "Een",
+          },
+        ],
+      },
+      {
+        fieldtagID: 6,
+        field: "Issue",
+        tags: [
+          {
+            tag: "Liquid Spill",
+          },
+          {
+            tag: "Solid Spill",
+          },
+          {
+            tag: "Gas Leak",
+          },
+        ],
+      },
+    ],
+  };
 
 const Fields = () => {
   const [selectedTags, setSelectedTags] = useState(
@@ -124,6 +129,22 @@ const Fields = () => {
     ));
   };
 
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    const selectedFields = fields.map((field) => ({
+      fieldtagID: field.fieldtagID,
+      field: field.field,
+      tag: selectedTags[field.fieldtagID],
+    }));
+
+    const formData = {
+      selectedFields: selectedFields,
+    };
+
+    console.log(JSON.stringify(formData));
+  };
+
   return (
     <>
       {fields.map((field) => (
@@ -146,6 +167,9 @@ const Fields = () => {
           </Select>
         </Box>
       ))}
+      <Button onClick={handleFormSubmit} variant="contained">
+        Submit
+      </Button>
     </>
   );
 };
