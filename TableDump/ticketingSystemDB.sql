@@ -13,7 +13,7 @@ CREATE TABLE `ticketingsystem`.`user` (
   `fName` VARCHAR(45) NULL,
   `lName` VARCHAR(45) NULL,
   `role` ENUM('admin', 'employee', 'user', 'inactive') NOT NULL DEFAULT 'user',
-  `email` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
   `password` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`userID`));
  
@@ -94,9 +94,9 @@ CREATE TABLE `ticketingsystem`.`templatefieldtag` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `email`, `password`) VALUES ('setFirstName', 'setLastName', 'admin', 'temp@email.com', 'password');
-INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `email`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee@email.com', 'password');
-INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `email`, `password`) VALUES ('Bill', 'McGoo', 'user', 'bmcgoo@email.com', 'password');
+INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('setFirstName', 'setLastName', 'admin', 'admin', 'password');
+INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee', 'password');
+INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bill', 'McGoo', 'user', 'bmcgoo', 'password');
 
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (2, "Test Ticket", "This is ticket information", "active", "2020-01-21", "2020-01-21", null);
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (2, "Test Ticket2", "This is ticket information2", "complete", "2020-02-21", "2020-03-21", "2021-01-01");
@@ -121,7 +121,7 @@ INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VA
 INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (1, 6);
 INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (2, 2);
 -- This is an example of a call to validate a user and password
-SELECT * FROM `ticketingsystem`.`user` A WHERE A.`email` = 'bmcgee@email.com' AND A.`password` = 'password'; 
+SELECT * FROM `ticketingsystem`.`user` A WHERE A.`username` = 'admin' AND A.`password` = 'password'; 
 
 -- This is an example of a ticket instance with fields and user name
 SELECT A.`ticketID`, A.`title`, D.`fName`, D.`lName`, C.`field`, C.`tag`, A.`info`, A.`dateCreated`, A.`dateModified` FROM `ticketingsystem`.`ticket` A INNER JOIN `ticketingsystem`.`ticketfieldtag` B ON A.`ticketID` = B.`ticketID` INNER JOIN `ticketingsystem`.`fieldtag` C ON B.`fieldtagID` = C.`fieldtagID` INNER JOIN `ticketingsystem`.`user` D ON A.userID = D.userID WHERE A.`ticketID` = 1;
