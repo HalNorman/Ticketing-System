@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Fragment, useState } from "react";
 import {
   Box,
   Typography,
@@ -103,6 +103,9 @@ const fieldTags = {
   };
 
 const Fields = () => {
+  const title = template.TemplateTicket[0].title;
+  const info =  template.TemplateTicket[0].info;
+
   const [selectedTags, setSelectedTags] = useState(
     fields.reduce((obj, field) => {
       obj[field.fieldtagID] = field.tag;
@@ -146,7 +149,13 @@ const Fields = () => {
   };
 
   return (
-    <>
+    <Fragment>
+      <Typography variant="h3">
+        {title}
+      </Typography>
+      <Typography variant="h5">
+        {info}
+      </Typography>
       {fields.map((field) => (
         <Box
           key={field.fieldtagID}
@@ -170,7 +179,7 @@ const Fields = () => {
       <Button onClick={handleFormSubmit} variant="contained">
         Submit
       </Button>
-    </>
+    </Fragment>
   );
 };
 
