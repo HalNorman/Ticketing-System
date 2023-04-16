@@ -167,7 +167,9 @@ const Fields = () => {
             border: "1px solid black",
           }}
         >
-          <Typography sx={{ mr: 1 }}>{field.field}:</Typography>
+          <Typography sx={{ mr: 1 }}>
+            {field.field}:
+          </Typography>
           <Select
             value={selectedTags[field.fieldtagID]}
             onChange={(event) => handleTagChange(event, field.fieldtagID)}
