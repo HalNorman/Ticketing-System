@@ -105,11 +105,8 @@ export default function MainDrawer (props) {
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
             >
                 <Toolbar />
-                <TempTicketDisplay selectedValue={selectedValue}>
-                </TempTicketDisplay>
+                <TempTicketDisplay selectedValue={selectedValue}></TempTicketDisplay>
             </Box>
-
         </Fragment>
-
     )
 }
