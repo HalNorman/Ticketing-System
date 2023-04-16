@@ -67,7 +67,6 @@ export default function Login({setUser}) {
                 }
             });
         }
-
         getUserInfo();
     }, [verifyUser, setUser, userName, password]);
 
