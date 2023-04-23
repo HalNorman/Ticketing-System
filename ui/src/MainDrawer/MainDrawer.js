@@ -19,7 +19,6 @@ import {Fragment} from "react";
 import TempTicketDisplay from "./TempTicketDisplay";
 import TicketInstance from "./TicketInstance";
 
-
 const drawerWidth = 210;
 
 export default function MainDrawer (props) {
@@ -107,10 +106,10 @@ export default function MainDrawer (props) {
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
             >
                 <Toolbar />
+
                 <TicketInstance/>
+
             </Box>
-
         </Fragment>
-
     )
 }
