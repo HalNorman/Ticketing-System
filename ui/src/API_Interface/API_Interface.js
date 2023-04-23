@@ -35,6 +35,9 @@ export default class APIInterface {
     async getAllTicketsForUser(user_id){
         return axiosAgent.get(`ticket/${user_id}/all-tickets`);
     }
+    async getTicketByID(ticket_id){
+        return axiosAgent.get(`ticket/${ticket_id}/ticketID`);
+    }
     async getTheme(){
         return axiosAgent.get(`theme/theme`);
     }
@@ -44,5 +47,7 @@ export default class APIInterface {
     async getAllTemplates(){
         return axiosAgent.get(`template/all-templates`);
     }
-    
+    async getAllFieldTags(){
+        return axiosAgent.get(`fieldTag/all-fieldTags-valid`);
+    }
 }

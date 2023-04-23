@@ -20,15 +20,6 @@ router.get('/', function (ctx) {
     return ctx.body = 'API is running';
 });
 
-/*
-|--------------------------------------------------------------------------
-| login router
-|--------------------------------------------------------------------------
-|
-| Description
-|
-*/
-
 // Theme router configuration
 
 const ThemeController = require("../app/Controllers/ThemeController.js");
@@ -77,12 +68,15 @@ const fieldTagRouter = require("koa-router")({
 });
 
 fieldTagRouter.use(VerifyJWT);
-fieldTagRouter.get('/all-fieldTagsValid', Authorize('admin'), FieldTagController.allFieldTags, err => console.log(`allFieldTags ran into an error ${err}`));
+fieldTagRouter.get('/all-fieldTags-valid', Authorize('admin'), FieldTagController.allFieldTags, err => console.log(`allFieldTags ran into an error ${err}`));
 /**
  * Register all of the controllers into the default controller.
  */
 router.use(
     '',
+    themeRouter.routes(),
+    templateRouter.routes(),
+    fieldTagRouter.routes(),
     loginRouter.routes(),
     ticketRouter.routes()
 );
