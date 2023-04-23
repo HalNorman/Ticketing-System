@@ -72,8 +72,8 @@ CREATE TABLE `ticketingsystem`.`ticketfieldtag` (
 CREATE TABLE `ticketingsystem`.`theme` (
   `themeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL DEFAULT 'TicketingSystem',
-  `primaryColor` INT NOT NULL DEFAULT 16711680,
-  `secondaryColor` INT NOT NULL DEFAULT 65535,
+  `primaryColor` INT UNSIGNED NOT NULL DEFAULT 16711680,
+  `secondaryColor` INT UNSIGNED NOT NULL DEFAULT 65535,
   `image` VARCHAR(45) BINARY NULL,
   PRIMARY KEY (`themeID`))
 COMMENT = '16711680 is red, 65535 is blue';
@@ -141,6 +141,8 @@ INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 2);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 4);
 
+INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`) VALUES ("Default", 16711680, 65535);
+
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template", "explain how this template is useful");
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template2", "explain how this template is useful");
 
@@ -155,7 +157,7 @@ SELECT * FROM `ticketingsystem`.`user` A WHERE A.`username` = 'admin' AND A.`pas
 SELECT A.`ticketID`, A.`title`, D.`fName`, D.`lName`, C.`field`, C.`tag`, A.`info`, A.`dateCreated`, A.`dateModified` FROM `ticketingsystem`.`ticket` A INNER JOIN `ticketingsystem`.`ticketfieldtag` B ON A.`ticketID` = B.`ticketID` INNER JOIN `ticketingsystem`.`fieldtag` C ON B.`fieldtagID` = C.`fieldtagID` INNER JOIN `ticketingsystem`.`user` D ON A.userID = D.userID WHERE A.`ticketID` = 1;
 -- This is an example of a ticket template with 3 tags, title, and info on the template
 SELECT * FROM `ticketingsystem`.`template` A INNER JOIN `ticketingsystem`.`templatefieldtag` B ON A.`templateID` = B.`templateID` INNER JOIN `ticketingsystem`.`fieldtag` C ON B.`fieldtagID` = C.`fieldtagID` WHERE B.`templateID` = 1;
-
+-- this is an example of getting all the tickets a user can see based on their userID (the number 2 in the subquerry right below is the userID that should be a ? in the actual call)
 SELECT * FROM `ticketingsystem`.`ticket` A INNER JOIN (SELECT `ticketingsystem`.`getTicketsByUserID`(`ticketID`, `userID`, 2) as ticketID FROM `ticketingsystem`.`ticket`) B ON A.`ticketID` = B.`ticketID`;
 
 
