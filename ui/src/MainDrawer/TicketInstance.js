@@ -7,7 +7,8 @@ import {
   Button,
 } from "@mui/material";
 
-const template = 
+
+const template =
 {
     "TemplateTicket": [
       {
@@ -164,7 +165,7 @@ const Fields = () => {
             alignItems: "center",
             my: 1,
             p: 1,
-            border: "1px solid black",
+            border: "1px solid lightgray",
           }}
         >
           <Typography sx={{ mr: 1 }}>{field.field}:</Typography>

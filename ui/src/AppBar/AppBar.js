@@ -14,6 +14,7 @@ import {FormControlLabel, IconButton} from "@mui/material";
 import {Switch} from "@mui/material";
 
 import {useState} from "react";
+import {red} from "@mui/material/colors";
 
 
 export default function MenuAppBar(props) {
@@ -28,7 +29,7 @@ export default function MenuAppBar(props) {
 
     return (
         <Box>
-            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
+            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, background: "red" }} >
                 <Toolbar>
                     <img src = {require('../TicketLogo2-export.png')} alt = "logo "/>
                     <FormControlLabel control={
