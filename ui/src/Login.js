@@ -44,18 +44,11 @@ export default function Login({setUser}) {
         if( ! verifyUser || userName.length === 0)
             return;
 
-        //short circuit this effect until we get the api up
-        if(userName === 'admin' && password === 'sudo')
-        {
-            setUser('admin');
-        }
-        return;
-
         //need to make call to api for veryfying password as well
 
         const api = new API();
         async function getUserInfo() {
-            api.getUserInfo(userName)
+            api.getUserInfo(userName, password)
                 .then( userInfo => {
                 console.log(`api returns user info and it is: ${JSON.stringify(userInfo)}`);
                 const user = userInfo.user;
