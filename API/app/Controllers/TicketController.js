@@ -33,6 +33,39 @@ const allTickets = async (ctx) => {
         ctx.status = 500;
     });
 }
+const allTicketsByUserID = async (ctx) => {
+    console.log('tickets all tickets called.');
+    return new Promise((resolve, reject) => {
+        const query = `
+                        SELECT * FROM 
+                            ticketingsystem.ticket A 
+                        INNER JOIN 
+                            (SELECT 
+                                ticketingsystem.getTicketsByUserID(ticketID, userID, ?) as ticketID 
+                            FROM 
+                                ticketingsystem.ticket) B 
+                        ON 
+                            A.ticketID = B.ticketID
+                        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in TicketsController::allTickets", error);
+                return reject(error);
+            }
+            ctx.body = tuples;
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in allTicketsByUserID.", err);
+        ctx.body = [];
+        ctx.status = 500;
+    });
+}
+
 
 const ticketWithTicketID = (ctx) => {
         return new Promise((resolve, reject) => {
@@ -62,7 +95,7 @@ const ticketWithTicketID = (ctx) => {
                 return resolve();
             });
         }).catch(err => {
-            console.log("Database connection error in allTickets.", err);
+            console.log("Database connection error in ticketWithTicketID.", err);
             // The UI side will have to look for the value of status and
             // if it is not 200, act appropriately.
             ctx.body = [];
@@ -73,5 +106,6 @@ const ticketWithTicketID = (ctx) => {
 
 module.exports = {
     allTickets,
-    ticketWithTicketID
+    ticketWithTicketID,
+    allTicketsByUserID,
 };

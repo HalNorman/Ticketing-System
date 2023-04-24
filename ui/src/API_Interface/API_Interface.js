@@ -23,8 +23,8 @@ const axiosAgent = AxiosConfigured();
 
 export default class APIInterface {
 
-    async getUserInfo(user_id) {
-        return axiosAgent.get(`login/${user_id}`)
+    async getUserInfo(user_id, password) {
+        return axiosAgent.get(`login/${user_id}/${password}`)
             .then(userInfo => userInfo.data)
             .catch(error => (
                 {
@@ -32,14 +32,22 @@ export default class APIInterface {
                     user: undefined
                  }));
     }
-
-    async getPasswordInfo(passwordInput) {
-        return axiosAgent.get(`login/password/${passwordInput}`)
-            .then(password => password.data)
-            .catch(error => (
-                {
-                    error,
-                    password: undefined
-                 }));
+    async getAllTicketsForUser(user_id){
+        return axiosAgent.get(`ticket/${user_id}/all-tickets`);
+    }
+    async getTicketByID(ticket_id){
+        return axiosAgent.get(`ticket/${ticket_id}/ticketID`);
+    }
+    async getTheme(){
+        return axiosAgent.get(`theme/theme`);
+    }
+    async getAllTemplatesFields(){
+        return axiosAgent.get(`template/all-templates-fields`);
+    }
+    async getAllTemplates(){
+        return axiosAgent.get(`template/all-templates`);
+    }
+    async getAllFieldTags(){
+        return axiosAgent.get(`fieldTag/all-fieldTags-valid`);
     }
 }
