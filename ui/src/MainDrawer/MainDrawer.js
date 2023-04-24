@@ -11,7 +11,7 @@ import {useState} from "react";
 import {Tabs} from "@mui/material";
 import {TextField} from "@mui/material";
 import {Icon} from "@mui/material";
-
+import {Typography} from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import {Fragment} from "react";
@@ -61,11 +61,11 @@ export default function MainDrawer (props) {
                 <Toolbar />
                 <Box sx={{ borderColor: 'divider' }}>
                     <Tabs value={tabValue} centered  aria-label="basic tabs example">
-                        <Tab sx={{border: "1px solid lightgray"}} label="Tickets " value={1} onClick={() => handleTabChange("Tickets")}/>
-                        <Tab sx={{border: "1px solid lightgray"}} label="Templates" value={2} onClick={() => handleTabChange("Templates")} />
+                        <Tab sx={{border: "1px solid lightgray", width: drawerWidth/2}} label="Tickets " value={1} onClick={() => handleTabChange("Tickets")}/>
+                        <Tab sx={{border: "1px solid lightgray", width: drawerWidth/2}} label="Templates" value={2} onClick={() => handleTabChange("Templates")} />
                     </Tabs>
                 </Box>
-                <TextField variant = "standard"
+                <TextField variant = "standard" sx={{borderTop:"1px solid lightgray" }}
                            InputProps={{
                                startAdornment: (
                                    <InputAdornment position="start">
@@ -81,11 +81,13 @@ export default function MainDrawer (props) {
                             {templates.filter((data) => {
                                 return data.includes(searchValue);
                             }).map((text, index) => (
-                                <ListItem sx={{border: "1px solid lightgray"}} key={text} disablePadding >
+                                <div className="font-link">
+                                <ListItem sx={{borderTop: "1px solid lightgray"}} key={text} disablePadding >
                                     <ListItemButton onClick={() => handleValueSelection(text)}>
-                                        <ListItemText primary={text} />
+                                            <ListItemText primary={text}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
                                     </ListItemButton>
                                 </ListItem>
+                                </div>
                             ))}
                         </List>
                     }
@@ -94,9 +96,9 @@ export default function MainDrawer (props) {
                             {tickets.filter((data) => {
                                 return data.user.includes(searchValue) || data.name.includes(searchValue)
                             }).map((text, index) => (
-                                <ListItem sx={{border: "1px solid lightgray"}} key={text} multiline = "true" disablePadding >
+                                <ListItem sx={{borderTop: "1px solid lightgray"}} key={text} multiline = "true" disablePadding >
                                     <ListItemButton onClick={() => handleValueSelection(text.user + " " + text.name)}>
-                                        <ListItemText primary={text.name} secondary ={text.user}/>
+                                        <ListItemText primaryTypographyProps={{fontSize: '18px'}} primary={text.name} secondary ={text.user}/>
                                     </ListItemButton>
                                 </ListItem>
                             ))}
