@@ -14,7 +14,7 @@ const template =
       {
         "templateID": 1,
         "title": "this is a template",
-        "info": "something useful",
+        "info": "In Progress",
         "fieldtagID": 1,
         "field": "Computer Type",
         "tag": "PC",
@@ -103,7 +103,9 @@ const fieldTags = {
     ],
   };
 
-const Fields = () => {
+const Fields = () => { //brought down const template, const fields, const fieldTags. This was originally outside of our Fields function
+
+
   const title = template.TemplateTicket[0].title;
   const info =  template.TemplateTicket[0].info;
 
