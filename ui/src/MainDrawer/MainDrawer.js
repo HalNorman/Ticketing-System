@@ -107,7 +107,7 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
 
-                <TicketInstance selectedValue={selectedValue} />
+                <TicketInstance/> //this is the component that will be displayed in the main window, we could pass this the selectedValue state variable
 
             </Box>
         </Fragment>
