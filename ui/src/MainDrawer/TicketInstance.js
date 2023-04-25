@@ -8,38 +8,134 @@ import {
 } from "@mui/material";
 
 
-const template =
-{
-    "TemplateTicket": [
-      {
-        "templateID": 1,
-        "title": "this is a template",
-        "info": "something useful",
-        "fieldtagID": 1,
-        "field": "Computer Type",
-        "tag": "PC",
-        "valid": 1
-      },
-      {
-        "templateID": 1,
-        "title": "this is a template",
-        "info": "something useful",
-        "fieldtagID": 4,
-        "field": "Building",
-        "tag": "Ives",
-        "valid": 1
-      },
-      {
-        "templateID": 1,
-        "title": "this is a template",
-        "info": "something useful",
-        "fieldtagID": 6,
-        "field": "Issue",
-        "tag": "Liquid Spill",
-        "valid": 1
-      }
-    ]
-};
+// const template =
+// {
+//     "TemplateTicket": [
+//       {
+//         "templateID": 1,
+//         "title": "this is a template",
+//         "info": "something useful",
+//         "fieldtagID": 1,
+//         "field": "Computer Type",
+//         "tag": "PC",
+//         "valid": 1
+//       },
+//       {
+//         "templateID": 1,
+//         "title": "this is a template",
+//         "info": "something useful",
+//         "fieldtagID": 4,
+//         "field": "Building",
+//         "tag": "Ives",
+//         "valid": 1
+//       },
+//       {
+//         "templateID": 1,
+//         "title": "this is a template",
+//         "info": "something useful",
+//         "fieldtagID": 6,
+//         "field": "Issue",
+//         "tag": "Liquid Spill",
+//         "valid": 1
+//       }
+//     ]
+// };
+
+// const fields = template.TemplateTicket.map((ticket) => ({
+//   fieldtagID: ticket.fieldtagID,
+//   field: ticket.field,
+//   tag: ticket.tag,
+// }));
+
+// const fieldTags = {
+//     fieldtags: [
+//       {
+//         fieldtagID: 1,
+//         field: "Computer Type",
+//         tags: [
+//           {
+//             tag: "PC",
+//           },
+//           {
+//             tag: "Mac",
+//           },
+//           {
+//             tag: "Linux",
+//           },
+//         ],
+//       },
+//       {
+//         fieldtagID: 4,
+//         field: "Building",
+//         tags: [
+//           {
+//             tag: "Ives",
+//           },
+//           {
+//             tag: "Tanna",
+//           },
+//           {
+//             tag: "Arin",
+//           },
+//           {
+//             tag: "Hale",
+//           },
+//           {
+//             tag: "Een",
+//           },
+//         ],
+//       },
+//       {
+//         fieldtagID: 6,
+//         field: "Issue",
+//         tags: [
+//           {
+//             tag: "Liquid Spill",
+//           },
+//           {
+//             tag: "Solid Spill",
+//           },
+//           {
+//             tag: "Gas Leak",
+//           },
+//         ],
+//       },
+//     ],
+//   };
+
+const Fields = (props) => {
+  const template =
+  {
+      "TemplateTicket": [
+        {
+          "templateID": 1,
+          "title": props.selectedValue,
+          "info": "In Progress",
+          "fieldtagID": 1,
+          "field": "Computer Type",
+          "tag": "PC",
+          "valid": 1
+        },
+        {
+          "templateID": 1,
+          "title": "this is a template",
+          "info": "something useful",
+          "fieldtagID": 4,
+          "field": "Building",
+          "tag": "Ives",
+          "valid": 1
+        },
+        {
+          "templateID": 1,
+          "title": "this is a template",
+          "info": "something useful",
+          "fieldtagID": 6,
+          "field": "Issue",
+          "tag": "Liquid Spill",
+          "valid": 1
+        }
+      ]
+  };
 
 const fields = template.TemplateTicket.map((ticket) => ({
   fieldtagID: ticket.fieldtagID,
@@ -102,8 +198,6 @@ const fieldTags = {
       },
     ],
   };
-
-const Fields = () => {
   const title = template.TemplateTicket[0].title;
   const info =  template.TemplateTicket[0].info;
 

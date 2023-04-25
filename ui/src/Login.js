@@ -21,8 +21,8 @@ export default function Login({setUser}) {
     const handleInputChange = (label) => event => {
         console.log("handleInputChange called.");
 
-//        event.stopPropagation();
-//        event.preventDefault();
+        // event.stopPropagation();
+        // event.preventDefault();
 
         if(label === 'Username')
             setUserName(event.target.value);
@@ -44,6 +44,11 @@ export default function Login({setUser}) {
         if( ! verifyUser || userName.length === 0)
             return;
 
+
+        // if(userName === 'admin' && password === 'sudo')
+        //     setUser(userName);
+        
+        // return;
         //need to make call to api for veryfying password as well
 
         const api = new API();
@@ -67,7 +72,7 @@ export default function Login({setUser}) {
     return (
        <Fragment>
             <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
-                Ticket Pleeeeeeease
+                Ticketing System
             </Typography>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>
 

@@ -7,7 +7,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import {IconButton, Tab} from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Tabs} from "@mui/material";
 import {TextField} from "@mui/material";
 import {Icon} from "@mui/material";
@@ -15,7 +15,7 @@ import {Typography} from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import {Fragment} from "react";
-
+import API from '../API_Interface/API_Interface';
 import TempTicketDisplay from "./TempTicketDisplay";
 import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
@@ -24,7 +24,32 @@ import TicketTemplate from "./TicketTemplate";
 
 const drawerWidth = 210;
 
+
+
 export default function MainDrawer (props) {
+
+    /*
+    field
+    tag
+    ticketID
+    */
+
+   const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
+
+    useEffect(() => {
+        const api = new API();
+
+        async function getTickets() {
+            const routesJSONString = await  api.getAllTicketsForUser(props.user.userID);
+            console.log(`routes from the DB ${JSON.stringify(routesJSONString)}`);
+            setTicketInstanceIDs(routesJSONString.data);
+        }
+
+        getTickets();
+    }, []);
+
+    console.log('user ',props.user.userID);
+    console.log(ticketInstanceIDs);
 
     const [templates,setTemplates] = useState(Array.from({length: 30}, (item,idx) => "template" + idx)) // for ticket templates
     const [tickets,setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
@@ -32,6 +57,7 @@ export default function MainDrawer (props) {
             user: "user" + idx,
             name: "ticket" + idx,
             date: "date" + idx,
+            
             otherInfo: "other Info" + idx
         }
 
@@ -39,6 +65,7 @@ export default function MainDrawer (props) {
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
+    const [selectedTicketInstanceID, setSelectedTicketInstanceID] = useState(null) //current view to be displayed in window
 
     const handleTabChange = (newValue) => {
         setTabValue(newValue);
@@ -46,6 +73,10 @@ export default function MainDrawer (props) {
 
     const handleValueSelection = (text) => {
         setSelectedValue(text)
+    }
+
+    const handleTicketInstanceIDSelection = (newValue) => {
+        setSelectedTicketInstanceID(newValue)
     }
 
     return(
@@ -112,7 +143,7 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
 
-                <TicketInstance/>
+                <TicketInstance selectedValue = {selectedValue}/>
 
             </Box>
         </Fragment>
