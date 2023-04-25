@@ -72,7 +72,9 @@ export default function Login({setUser}) {
     return (
        <Fragment>
             <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
+
                 Ticketing System
+
             </Typography>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>
 

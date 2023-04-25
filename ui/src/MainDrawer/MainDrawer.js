@@ -158,6 +158,7 @@ export default function MainDrawer (props) {
                                 info = {info}
                                 id = {templateID}/>}
 
+
             </Box>
         </Fragment>
     )
