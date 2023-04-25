@@ -1,4 +1,5 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useState, useEffect } from "react";
+import API from '../API_Interface/API_Interface';
 import {
   Box,
   Typography,
@@ -105,12 +106,28 @@ import {
 //   };
 
 const Fields = (props) => {
+  console.log(props.title);
+  console.log(props.info);
+  console.log(props.id);
+
+  useEffect(() => {
+    const api = new API();
+
+    async function getTickets() {
+        const routesJSONString = await  api.getTicketByID(props.id);
+        console.log(`Tickets from the DB ${JSON.stringify(routesJSONString)}`);
+        //setTicketInstanceIDs(routesJSONString.data);
+    }
+
+    getTickets();
+}, []);
+
   const template =
   {
       "TemplateTicket": [
         {
           "templateID": 1,
-          "title": props.selectedValue,
+          "title": "hard coded title",
           "info": "In Progress",
           "fieldtagID": 1,
           "field": "Computer Type",
@@ -138,38 +155,6 @@ const Fields = (props) => {
       ]
   };
 
-const template =
-{
-    "TemplateTicket": [
-      {
-        "templateID": 1,
-        "title": "this is a template",
-        "info": "In Progress",
-        "fieldtagID": 1,
-        "field": "Computer Type",
-        "tag": "PC",
-        "valid": 1
-      },
-      {
-        "templateID": 1,
-        "title": "this is a template",
-        "info": "something useful",
-        "fieldtagID": 4,
-        "field": "Building",
-        "tag": "Ives",
-        "valid": 1
-      },
-      {
-        "templateID": 1,
-        "title": "this is a template",
-        "info": "something useful",
-        "fieldtagID": 6,
-        "field": "Issue",
-        "tag": "Liquid Spill",
-        "valid": 1
-      }
-    ]
-};
 
 
 const fields = template.TemplateTicket.map((ticket) => ({
@@ -234,7 +219,7 @@ const fieldTags = {
     ],
   };
 
-const Fields = () => { //brought down const template, const fields, const fieldTags. This was originally outside of our Fields function
+//const Fields = () => { //brought down const template, const fields, const fieldTags. This was originally outside of our Fields function
 
 
 
