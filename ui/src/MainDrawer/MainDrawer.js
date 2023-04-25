@@ -28,12 +28,6 @@ const drawerWidth = 210;
 
 export default function MainDrawer (props) {
 
-    /*
-    field
-    tag
-    ticketID
-    */
-
    const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
 
     useEffect(() => {
@@ -51,7 +45,7 @@ export default function MainDrawer (props) {
     console.log('user ', props.user.userID);
     console.log(ticketInstanceIDs);
 
-    // const [templates,setTemplates] = useState(Array.from({length: 30}, (item,idx) => "template" + idx)) // for ticket templates
+  
     const [tickets,setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
         return{
             user: "user" + idx,
@@ -62,7 +56,7 @@ export default function MainDrawer (props) {
 
     }))
 
-    const  [templates, setTemplates] = useState([]);
+    const  [templates, setTemplates] = useState([]); // ticket templates
     useEffect(() => {
         setTemplates(ticketInstanceIDs.map((ticket) => ({
             ticketID: ticket.ticketID,
@@ -70,37 +64,30 @@ export default function MainDrawer (props) {
             info: ticket.info,
         })));
       }, [ticketInstanceIDs]);
-
-    // const [templates, setTemplates] = useState(ticketInstanceIDs.map((ticket) => ({
-    //     ticketID: ticket.ticketID,
-    //     title: ticket.title,
-    //     info: ticket.info,
-    // })));
-
-    
-
-    console.log('templates ', templates);
-    // console.log('ticketID ', ticketInstanceIDs[0]);
-    // console.log('ticketID ', ticketInstanceIDs[0].ticketID);
-    //console.log('title ', ticketInstanceIDs[0].title);
-    // console.log('info ', ticketInstanceIDs[0].info);
     
 
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
-    const [selectedTicketInstanceID, setSelectedTicketInstanceID] = useState(null) //current view to be displayed in window
+    const [title, setTitle] = useState(""); // title of current ticket 
+    const [info, setInfo] = useState(""); // info for current ticket
+    const [templateID, setTemplateID] = useState(-1); // id of current ticket
+    const [doRenderTicket, setDoRenderTicket] = useState(false); // id of current ticket
 
     const handleTabChange = (newValue) => {
         setTabValue(newValue);
     };
 
-    const handleValueSelection = (text) => {
+    const handleValueSelection = (text,) => {
         setSelectedValue(text)
+
     }
 
-    const handleTicketInstanceIDSelection = (newValue) => {
-        setSelectedTicketInstanceID(newValue)
+    const handleTicketTemplateSelection = (title, info, id) => {
+        setTitle(title);
+        setInfo(info);
+        setTemplateID(id);
+        setDoRenderTicket(true);
     }
 
     return(
@@ -138,7 +125,7 @@ export default function MainDrawer (props) {
                         }).map((obj, index) => (
                           <div className="font-link">
                             <ListItem sx={{borderTop: "1px solid lightgray"}} key={obj.ticketID} disablePadding >
-                              <ListItemButton onClick={() => handleValueSelection(obj.title)}>
+                              <ListItemButton onClick={() => handleTicketTemplateSelection(obj.title, obj.info, obj.ticketID)}>
                                 <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
                               </ListItemButton>
                             </ListItem>
@@ -166,8 +153,10 @@ export default function MainDrawer (props) {
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
             >
                 <Toolbar />
-
-                <TicketInstance selectedValue = {selectedValue}/>
+                {doRenderTicket &&
+                <TicketInstance title = {title}
+                                info = {info}
+                                id = {templateID}/>}
 
             </Box>
         </Fragment>
