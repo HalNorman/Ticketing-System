@@ -48,20 +48,44 @@ export default function MainDrawer (props) {
         getTickets();
     }, []);
 
-    console.log('user ',props.user.userID);
+    console.log('user ', props.user.userID);
     console.log(ticketInstanceIDs);
 
-    const [templates,setTemplates] = useState(Array.from({length: 30}, (item,idx) => "template" + idx)) // for ticket templates
+    // const [templates,setTemplates] = useState(Array.from({length: 30}, (item,idx) => "template" + idx)) // for ticket templates
     const [tickets,setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
         return{
             user: "user" + idx,
             name: "ticket" + idx,
             date: "date" + idx,
-            
             otherInfo: "other Info" + idx
         }
 
     }))
+
+    const  [templates, setTemplates] = useState([]);
+    useEffect(() => {
+        setTemplates(ticketInstanceIDs.map((ticket) => ({
+            ticketID: ticket.ticketID,
+            title: ticket.title,
+            info: ticket.info,
+        })));
+      }, [ticketInstanceIDs]);
+
+    // const [templates, setTemplates] = useState(ticketInstanceIDs.map((ticket) => ({
+    //     ticketID: ticket.ticketID,
+    //     title: ticket.title,
+    //     info: ticket.info,
+    // })));
+
+    
+
+    console.log('templates ', templates);
+    // console.log('ticketID ', ticketInstanceIDs[0]);
+    // console.log('ticketID ', ticketInstanceIDs[0].ticketID);
+    //console.log('title ', ticketInstanceIDs[0].title);
+    // console.log('info ', ticketInstanceIDs[0].info);
+    
+
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
@@ -109,18 +133,18 @@ export default function MainDrawer (props) {
                 <Box sx={{ overflow: 'auto', border: '1px solid lightgray'}} >
                     {tabValue === "Templates" &&
                         <List>
-                            {templates.filter((data) => {
-                                return data.includes(searchValue);
-                            }).map((text, index) => (
-                                <div className="font-link">
-                                <ListItem sx={{borderTop: "1px solid lightgray"}} key={text} disablePadding >
-                                    <ListItemButton onClick={() => handleValueSelection(text)}>
-                                            <ListItemText primary={text}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-                                </div>
-                            ))}
-                        </List>
+                        {templates.filter((obj) => {
+                          return obj.title.includes(searchValue);
+                        }).map((obj, index) => (
+                          <div className="font-link">
+                            <ListItem sx={{borderTop: "1px solid lightgray"}} key={obj.ticketID} disablePadding >
+                              <ListItemButton onClick={() => handleValueSelection(obj.title)}>
+                                <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
+                              </ListItemButton>
+                            </ListItem>
+                          </div>
+                        ))}
+                      </List>
                     }
                     {tabValue === "Tickets" &&
                         <List>
