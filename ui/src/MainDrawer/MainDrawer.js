@@ -18,6 +18,9 @@ import {Fragment} from "react";
 
 import TempTicketDisplay from "./TempTicketDisplay";
 import TicketInstance from "./TicketInstance";
+import TicketTemplate from "./TicketTemplate";
+
+
 
 const drawerWidth = 210;
 

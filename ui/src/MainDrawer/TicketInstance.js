@@ -170,7 +170,9 @@ const Fields = () => { //brought down const template, const fields, const fieldT
             border: "1px solid lightgray",
           }}
         >
-          <Typography sx={{ mr: 1 }}>{field.field}:</Typography>
+          <Typography sx={{ mr: 1 }}>
+            {field.field}:
+          </Typography>
           <Select
             value={selectedTags[field.fieldtagID]}
             onChange={(event) => handleTagChange(event, field.fieldtagID)}
