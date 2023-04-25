@@ -167,7 +167,9 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
 
+
                 <TicketInstance selectedValue = {selectedValue}/>
+
 
             </Box>
         </Fragment>

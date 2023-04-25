@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 
 
+
 // const template =
 // {
 //     "TemplateTicket": [
@@ -137,6 +138,40 @@ const Fields = (props) => {
       ]
   };
 
+const template =
+{
+    "TemplateTicket": [
+      {
+        "templateID": 1,
+        "title": "this is a template",
+        "info": "In Progress",
+        "fieldtagID": 1,
+        "field": "Computer Type",
+        "tag": "PC",
+        "valid": 1
+      },
+      {
+        "templateID": 1,
+        "title": "this is a template",
+        "info": "something useful",
+        "fieldtagID": 4,
+        "field": "Building",
+        "tag": "Ives",
+        "valid": 1
+      },
+      {
+        "templateID": 1,
+        "title": "this is a template",
+        "info": "something useful",
+        "fieldtagID": 6,
+        "field": "Issue",
+        "tag": "Liquid Spill",
+        "valid": 1
+      }
+    ]
+};
+
+
 const fields = template.TemplateTicket.map((ticket) => ({
   fieldtagID: ticket.fieldtagID,
   field: ticket.field,
@@ -198,6 +233,11 @@ const fieldTags = {
       },
     ],
   };
+
+const Fields = () => { //brought down const template, const fields, const fieldTags. This was originally outside of our Fields function
+
+
+
   const title = template.TemplateTicket[0].title;
   const info =  template.TemplateTicket[0].info;
 
