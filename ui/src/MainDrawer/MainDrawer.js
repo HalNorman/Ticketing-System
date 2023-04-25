@@ -7,7 +7,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import {IconButton, Tab} from "@mui/material";
 import * as React from "react";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import {Tabs} from "@mui/material";
 import {TextField} from "@mui/material";
 import {Icon} from "@mui/material";
@@ -15,7 +15,7 @@ import {Typography} from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import {Fragment} from "react";
-
+import API from '../API_Interface/API_Interface';
 import TempTicketDisplay from "./TempTicketDisplay";
 import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
@@ -24,9 +24,34 @@ import TicketTemplate from "./TicketTemplate";
 
 const drawerWidth = 210;
 
+
+
 export default function MainDrawer (props) {
 
-    const [templates,setTemplates] = useState(Array.from({length: 30}, (item,idx) => "template" + idx)) // for ticket templates
+    /*
+    field
+    tag
+    ticketID
+    */
+
+   const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
+
+    useEffect(() => {
+        const api = new API();
+
+        async function getTickets() {
+            const routesJSONString = await  api.getAllTicketsForUser(props.user.userID);
+            console.log(`routes from the DB ${JSON.stringify(routesJSONString)}`);
+            setTicketInstanceIDs(routesJSONString.data);
+        }
+
+        getTickets();
+    }, []);
+
+    console.log('user ', props.user.userID);
+    console.log(ticketInstanceIDs);
+
+    // const [templates,setTemplates] = useState(Array.from({length: 30}, (item,idx) => "template" + idx)) // for ticket templates
     const [tickets,setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
         return{
             user: "user" + idx,
@@ -36,9 +61,35 @@ export default function MainDrawer (props) {
         }
 
     }))
+
+    const  [templates, setTemplates] = useState([]);
+    useEffect(() => {
+        setTemplates(ticketInstanceIDs.map((ticket) => ({
+            ticketID: ticket.ticketID,
+            title: ticket.title,
+            info: ticket.info,
+        })));
+      }, [ticketInstanceIDs]);
+
+    // const [templates, setTemplates] = useState(ticketInstanceIDs.map((ticket) => ({
+    //     ticketID: ticket.ticketID,
+    //     title: ticket.title,
+    //     info: ticket.info,
+    // })));
+
+    
+
+    console.log('templates ', templates);
+    // console.log('ticketID ', ticketInstanceIDs[0]);
+    // console.log('ticketID ', ticketInstanceIDs[0].ticketID);
+    //console.log('title ', ticketInstanceIDs[0].title);
+    // console.log('info ', ticketInstanceIDs[0].info);
+    
+
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
+    const [selectedTicketInstanceID, setSelectedTicketInstanceID] = useState(null) //current view to be displayed in window
 
     const handleTabChange = (newValue) => {
         setTabValue(newValue);
@@ -46,6 +97,10 @@ export default function MainDrawer (props) {
 
     const handleValueSelection = (text) => {
         setSelectedValue(text)
+    }
+
+    const handleTicketInstanceIDSelection = (newValue) => {
+        setSelectedTicketInstanceID(newValue)
     }
 
     return(
@@ -78,18 +133,18 @@ export default function MainDrawer (props) {
                 <Box sx={{ overflow: 'auto', border: '1px solid lightgray'}} >
                     {tabValue === "Templates" &&
                         <List>
-                            {templates.filter((data) => {
-                                return data.includes(searchValue);
-                            }).map((text, index) => (
-                                <div className="font-link">
-                                <ListItem sx={{borderTop: "1px solid lightgray"}} key={text} disablePadding >
-                                    <ListItemButton onClick={() => handleValueSelection(text)}>
-                                            <ListItemText primary={text}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
-                                    </ListItemButton>
-                                </ListItem>
-                                </div>
-                            ))}
-                        </List>
+                        {templates.filter((obj) => {
+                          return obj.title.includes(searchValue);
+                        }).map((obj, index) => (
+                          <div className="font-link">
+                            <ListItem sx={{borderTop: "1px solid lightgray"}} key={obj.ticketID} disablePadding >
+                              <ListItemButton onClick={() => handleValueSelection(obj.title)}>
+                                <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
+                              </ListItemButton>
+                            </ListItem>
+                          </div>
+                        ))}
+                      </List>
                     }
                     {tabValue === "Tickets" &&
                         <List>
@@ -112,7 +167,9 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
 
-                <TicketInstance/> //this is the component that will be displayed in the main window, we could pass this the selectedValue state variable
+
+                <TicketInstance selectedValue = {selectedValue}/>
+
 
             </Box>
         </Fragment>
