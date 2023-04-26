@@ -7,13 +7,14 @@ import {
   Button,
 } from "@mui/material";
 
-const template = 
+
+const template =
 {
     "TemplateTicket": [
       {
         "templateID": 1,
         "title": "this is a template",
-        "info": "something useful",
+        "info": "In Progress",
         "fieldtagID": 1,
         "field": "Computer Type",
         "tag": "PC",
@@ -102,7 +103,9 @@ const fieldTags = {
     ],
   };
 
-const Fields = () => {
+const Fields = () => { //brought down const template, const fields, const fieldTags. This was originally outside of our Fields function
+
+
   const title = template.TemplateTicket[0].title;
   const info =  template.TemplateTicket[0].info;
 
@@ -164,7 +167,7 @@ const Fields = () => {
             alignItems: "center",
             my: 1,
             p: 1,
-            border: "1px solid black",
+            border: "1px solid lightgray",
           }}
         >
           <Typography sx={{ mr: 1 }}>{field.field}:</Typography>
