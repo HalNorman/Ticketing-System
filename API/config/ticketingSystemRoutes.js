@@ -59,7 +59,7 @@ const templateRouter = require("koa-router")({
 templateRouter.use(VerifyJWT);
 templateRouter.get('/all-templates', Authorize('admin'), TemplateController.allTemplates, err => console.log(`allTemplates ran into an error: ${err}`));
 templateRouter.get('/all-templates-fields', Authorize('admin'), TemplateController.allTemplatesWithFields, err => console.log(`allTemplatesWithFields ran into an error: ${err}`));
-
+templateRouter.get('/:templateID/template-fields-byID', Authorize('admin'), TemplateController.templateWithFieldsByTemplateID, err => console.log(`allTemplatesWithFields ran into an error: ${err}`));
 // FieldTag Router configuration
 
 const FieldTagController = require("../app/Controllers/FieldTagController.js");
