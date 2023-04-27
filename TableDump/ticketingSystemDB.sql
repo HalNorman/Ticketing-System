@@ -65,8 +65,9 @@ CREATE TABLE `ticketingsystem`.`ticketfieldtag` (
 CREATE TABLE `ticketingsystem`.`theme` (
   `themeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL DEFAULT 'TicketingSystem',
-  `primaryColor` VARCHAR(20) NOT NULL DEFAULT "Cyan",
-  `secondaryColor` VARCHAR(20) NOT NULL DEFAULT "Yellow",
+  `primaryColor` VARCHAR(20) NOT NULL DEFAULT "cyan",
+  `secondaryColor` VARCHAR(20) NOT NULL DEFAULT "yellow",
+  `textColor` VARCHAR(20) NOT NULL DEFAULT "black",
   `image` VARCHAR(45) BINARY NULL,
   PRIMARY KEY (`themeID`))
 COMMENT = '16711680 is red, 65535 is blue';
