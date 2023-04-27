@@ -66,6 +66,11 @@ const allTicketsByUserID = async (ctx) => {
     });
 }
 
+/*
+field
+tag
+ticketID
+*/
 
 const ticketWithTicketID = (ctx) => {
         return new Promise((resolve, reject) => {

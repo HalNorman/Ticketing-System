@@ -4,10 +4,10 @@ import './App.css';
 import HomePage from './HomePage/HomePage'
 
 
-function App() {
+function App(props) {
   return (
       <div className="App">
-        <HomePage/> {/* routes to main homepage */ }
+        <HomePage user = {props.user}/> {/* routes to main homepage */ }
       </div>
   );
 }

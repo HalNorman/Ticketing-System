@@ -5,7 +5,7 @@ import Box from "@mui/material/Box";
 import MainDrawer from "../MainDrawer/MainDrawer";
 import {useState} from "react";
 
-export default function HomePage() {
+export default function HomePage(props) {
 
     const [admin,setAdmin] = useState(true);
 
@@ -18,7 +18,8 @@ export default function HomePage() {
             <Box sx={{ display: 'flex' }}>
                 <MenuAppBar adminSwitch = {adminSwitch}
                             admin = {admin}/>
-                <MainDrawer admin = {admin}/>
+                <MainDrawer admin = {admin}
+                            user = {props.user}/>
             </Box>
         </div>
     );
