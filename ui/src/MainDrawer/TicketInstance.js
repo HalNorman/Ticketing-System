@@ -15,65 +15,43 @@ const Fields = (props) => {
 
   const[fieldTags, setFieldTags] = useState([]);
   const[allFieldTags, setAllFieldTags] = useState([]);
-  const[template, setTemplate] = useState([]);
   const [fields, setFields] = useState([]);
 
   useEffect(() => {
     const api = new API();
 
-
-    async function getTemplate() {
+    async function getFields() {
       const routesJSONString = await  api.getTemplateFieldsByID(props.ticket.ticketID);
       console.log(`Fields from the DB ${JSON.stringify(routesJSONString)}`);
-      setTemplate(routesJSONString.data);
+
+      setFields(routesJSONString.data.map((ticket) => ({
+        fieldtagID: ticket.fieldtagID,
+        field: ticket.field,
+        tag: ticket.tag,
+      })));
     
   }
-
     async function getFieldTags() {
       const routesJSONString = await  api.getAllFieldTags(props.ticket.ticketID);
-      console.log(`All Fields from the DB ${JSON.stringify(routesJSONString)}`);
+      console.log(`All Fields tags from the DB ${JSON.stringify(routesJSONString)}`);
       setAllFieldTags(routesJSONString.data);
-    
-  }
-    getTemplate();
+    }
+
+    getFields();
     getFieldTags();
 }, []);
-
-
+ 
 
   useEffect(() => {
     
-    setFields  (template.map((ticket) => ({
-      fieldtagID: ticket.fieldtagID,
-      field: ticket.field,
-      tag: ticket.tag,
-    })));
-   // console.log("jenfjfn ", template);
-
-    const api = new API();
-
-  
-
-
-  async function getFieldTags(fields) {
-    const routesJSONString = await api.getAllFieldTags();
-    console.log(`Field Tags from the DB ${JSON.stringify(routesJSONString)}`);
-  
     // extract fieldtagID values from fields array
     const fieldTagIDs = fields.map((field) => field.fieldtagID);
-  
+
     // filter field tags by fieldTagID and templateID
-    const filteredFieldTags = routesJSONString.data.filter((fieldTag) =>
+    const filteredFieldTags = allFieldTags.filter((fieldTag) =>
       fieldTagIDs.includes(fieldTag.fieldtagID)// && fieldTag.templateID === templateID
     );
-  
-    // extract tag values from filtered field tags
-    const tags = filteredFieldTags.map((fieldTag) => fieldTag.tag);
-  
-    // set tags in state
-    setFieldTags(filteredFieldTags);
 
-   
     const newfieldTags = {
       fieldtags: fields.map((field, index) => ({
         fieldtagID: field.fieldtagID,
@@ -82,37 +60,13 @@ const Fields = (props) => {
       }))
     };
     setFieldTags(newfieldTags);
-   // setAllFieldTags(fields);
 
-    console.log("fields ", fields);
-    console.log("field tags ids", fieldTagIDs);
-    console.log("filtered field tags ", filteredFieldTags);
-    console.log("tags ", tags);
-    console.log("new field tags ", newfieldTags);
-    console.log("all field tags ", allFieldTags);
-  }
- 
-    // console.log("fields: ", fields)
-    // console.log("template: ", template)
-
-   getFieldTags(fields)
-}, [template, allFieldTags]);
-
+  }, [fields, allFieldTags]);
 
 
 
   const title = props.ticket.title;
   const info =  props.ticket.info;
-
-
-
- 
-  // const [selectedTags, setSelectedTags] = useState(
-  //   fields.reduce((obj, field) => {
-  //     obj[field.fieldtagID] = field.tag;
-  //     return obj;
-  //   }, {})
-  // );
 
   const [selectedTags, setSelectedTags] = useState([]);
 
@@ -138,29 +92,12 @@ const Fields = (props) => {
     const matchingField = fieldTags.fieldtags.find(
       (field) => field.fieldtagID === fieldtagID
     );
-    console.log("fieldtagss ", fieldTags);
-    console.log("fieldtag id ", fieldtagID);
-    console.log("match ", matchingField);
+
     if (!matchingField) return null;
 
-  
-    return (
-      matchingField && matchingField.tags ? (
-        matchingField.tags.map((tag) => (
-          <MenuItem key={tag} value={tag}>
-            {tag}
-          </MenuItem>
-        ))
-      ) : (
-        <MenuItem disabled>No tags found</MenuItem>
-      )
-    );
-
-
-
     return matchingField.tags.map((tag) => (
-      <MenuItem key={tag.tag} value={tag.tag}>
-        {tag.tag}
+      <MenuItem key={tag} value={tag}>
+        {tag}
       </MenuItem>
     ));
   };
