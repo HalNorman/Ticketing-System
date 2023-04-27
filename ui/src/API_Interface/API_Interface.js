@@ -41,6 +41,9 @@ export default class APIInterface {
     async getTheme(){
         return axiosAgent.get(`theme/theme`);
     }
+    async getTemplateFieldsByID(templateID){
+        return axiosAgent.get(`template/${templateID}/template-fields-byID`);
+    }
     async getAllTemplatesFields(){
         return axiosAgent.get(`template/all-templates-fields`);
     }
