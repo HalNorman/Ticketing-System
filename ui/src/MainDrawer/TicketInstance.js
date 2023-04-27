@@ -106,21 +106,32 @@ import {
 //   };
 
 const Fields = (props) => {
-  console.log(props.title);
-  console.log(props.info);
-  console.log(props.id);
+  console.log("ksbjhsg");
+  console.log("dfjkfdkjhfj ", props.ticket);
+  
+
+  const[fieldtags, setFieldTags] = useState([]);
+  const[ticket, setTicket] = useState([]);
 
   useEffect(() => {
     const api = new API();
 
     async function getTickets() {
-        const routesJSONString = await  api.getTicketByID(props.id);
+        const routesJSONString = await  api.getTicketByID(props.ticket.ticketID);
         console.log(`Tickets from the DB ${JSON.stringify(routesJSONString)}`);
-        //setTicketInstanceIDs(routesJSONString.data);
+        setTicket(routesJSONString.data);
     }
 
+    async function getFieldTags() {
+      const routesJSONString = await  api.getAllFieldTags();
+      console.log(`Field Tags from the DB ${JSON.stringify(routesJSONString)}`);
+      setFieldTags(routesJSONString.data);
+  }
     getTickets();
+    getFieldTags();
+    console.log("firsrdhg ", ticket);
 }, []);
+
 
   const template =
   {
