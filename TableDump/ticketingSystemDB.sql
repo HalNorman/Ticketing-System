@@ -135,7 +135,7 @@ INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 2);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 4);
 
-INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`) VALUES ("Default", "cyan", "yellow", "black");
+INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`) VALUES ("Default", "#00ffff", "ffff00", "000000");
 
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template", "explain how this template is useful");
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template2", "explain how this template is useful");

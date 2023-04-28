@@ -29,9 +29,9 @@ export default function MenuAppBar(props) {
 
     return (
         <Box>
-            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, background: "red" }} >
+            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
                 <Toolbar>
-                    <img src = {require('../TicketLogo2-export.png')} alt = "logo "/>
+                    <img src = {require('../TicketLogo2-export.png')} alt = "logo " onClick={() => props.handlePageChange("MainDrawer")}/>
                     <FormControlLabel control={
                         <Switch
                             checked={checked}
@@ -44,15 +44,15 @@ export default function MenuAppBar(props) {
                     {props.admin &&
                         <Fragment>
                             <IconButton>
-                                <AddIcon/>
+                                <AddIcon onClick={() => props.handlePageChange("AddTemplate")}/>
                             </IconButton>
                             <IconButton>
-                                <SettingsIcon/>
+                                <SettingsIcon onClick={() => props.handlePageChange("Settings")}/>
                             </IconButton>
                         </Fragment>
                     }
                     <IconButton>
-                        <AccountCircle/>
+                        <AccountCircle onClick={() => props.handlePageChange("Profile")}/>
                     </IconButton>
                 </Toolbar>
             </AppBar>
