@@ -39,7 +39,7 @@ export default class APIInterface {
         return axiosAgent.get(`ticket/${ticket_id}/ticketID`);
     }
     async getTheme(){
-        return axiosAgent.get(`theme/theme`);
+        return axiosAgent.get(`theme/getTheme`);
     }
     async getTemplateFieldsByID(templateID){
         return axiosAgent.get(`template/${templateID}/template-fields-byID`);
