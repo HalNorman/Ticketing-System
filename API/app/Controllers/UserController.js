@@ -102,7 +102,6 @@ const editUsernamePassword = async (ctx) => {
 const deleteUser = async (ctx) => {
     console.log('users deleteUser called.');
     return new Promise((resolve, reject) => {
-        const userCredentials = ctx.request.body;
         const query = `
                         DELETE FROM 
                             ticketingsystem.user 
@@ -111,7 +110,7 @@ const deleteUser = async (ctx) => {
                         `;
         dbConnection.query({
             sql: query,
-            values: [userCredentials.username, userCredentials.password, userCredentials.userID]
+            values: [ctx.params.userID]
         }, (error, tuples) => {
             if (error) {
                 console.log("Connection error in UserController::deleteUser", error);
