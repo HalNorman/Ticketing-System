@@ -270,10 +270,10 @@ const fieldTags = {
 
   return (
     <Box >
-      <Typography variant="h3" sx={{color: "secondary.main"}}>
+      <Typography variant="h3" sx={{color: "text.primary"}}>
         {title}
       </Typography>
-      <Typography variant="h5" sx={{color: "secondary.main"}}>
+      <Typography variant="h5" sx={{color: "text.primary"}}>
         {info}
       </Typography>
       {fields.map((field) => (
