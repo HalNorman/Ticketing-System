@@ -3,7 +3,7 @@ const dateFormat = require('dateformat');
 
 
 function now() {
-    return dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    return dateFormat(new Date(), "yyyy-mm-dd");
 }
 
 const allTemplatesWithFields = async (ctx) => {
@@ -81,6 +81,37 @@ const templateWithFieldsByTemplateID = async (ctx) => {
     });
 }
 
+const addTemplate = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const template = ctx.request.body;
+        const query =  `INSERT INTO 
+                            ticketingsystem.template
+                        VALUES
+                            (?, ?)
+                    `;
+        dbConnection.query({
+            sql: query,
+            values: [template.title, template.info]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in TemplateController::addTemplate", error);
+                ctx.body = [];
+                ctx.status = 200;
+                return reject(error);
+            }
+            ctx.body = tuples;
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in addTemplate.", err);
+        // The UI side will have to look for the value of status and
+        // if it is not 200, act appropriately.
+        ctx.body = [];
+        ctx.status = 500;
+    });
+}
+
 const allTemplates = async (ctx) => {
     console.log('templates all allTemplates called.');
     return new Promise((resolve, reject) => {
@@ -111,5 +142,6 @@ const allTemplates = async (ctx) => {
 module.exports = {
     allTemplatesWithFields,
     allTemplates,
-    templateWithFieldsByTemplateID
+    templateWithFieldsByTemplateID,
+    addTemplate
 };

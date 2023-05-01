@@ -37,6 +37,17 @@ const loginRouter = require('koa-router')({
 });
 loginRouter.get('/:username/:password', LoginController.authorizeUser, (err) => console.log("ticketing_system_routes.js: login-route error:", err));
 
+// User router
+const UserController = require('../app/Controllers/UserController.js');
+const userRouter = require('koa-router')({
+    prefix: '/user'
+});
+
+userRouter.get('/allActiveUsers', UserController.allActiveUsers, (err) => console.log(`allActiveUsers ran into an error: ${err}`));
+userRouter.put('/addUsers', UserController.addUser, (err) => console.log(`addUsers ran into an error: ${err}`));
+userRouter.put('/editUserNamePassword', UserController.editUsernamePassword, (err) => console.log(`editUsernamePassword ran into an error: ${err}`));
+
+
 // Ticket router configuration.
 
 const TicketController = require('../app/Controllers/TicketController.js');
@@ -48,6 +59,8 @@ ticketRouter.use(VerifyJWT);
 ticketRouter.get('/all-tickets', Authorize('admin'), TicketController.allTickets, err => console.log(`allTicket ran into an error: ${err}`));
 ticketRouter.get('/:userID/all-tickets', Authorize('admin'), TicketController.allTicketsByUserID, err => console.log(`ticketWithUserID ran into an error: ${err}`));
 ticketRouter.get('/:ticketID/ticketID', Authorize('admin'), TicketController.ticketWithTicketID, err => console.log(`ticketWithTicketID ran into an error: ${err}`));
+ticketRouter.put('/addTicket', Authorize('admin'), TicketController.addTicket, err => console.log(`addTicket ran into an error: ${err}`));
+ticketRouter.put('/:ticketID/completeTicket', Authorize('admin'), TicketController.completeTicket, err => console.log(`completeTicket ran into an error: ${err}`));
 
 // Template router configuration
 
@@ -60,6 +73,8 @@ templateRouter.use(VerifyJWT);
 templateRouter.get('/all-templates', Authorize('admin'), TemplateController.allTemplates, err => console.log(`allTemplates ran into an error: ${err}`));
 templateRouter.get('/all-templates-fields', Authorize('admin'), TemplateController.allTemplatesWithFields, err => console.log(`allTemplatesWithFields ran into an error: ${err}`));
 templateRouter.get('/:templateID/template-fields-byID', Authorize('admin'), TemplateController.templateWithFieldsByTemplateID, err => console.log(`allTemplatesWithFields ran into an error: ${err}`));
+templateRouter.put('/addTemplate', Authorize('admin'), TemplateController.addTemplate, err => console.log(`addTemplate ran into an error: ${err}`));
+
 // FieldTag Router configuration
 
 const FieldTagController = require("../app/Controllers/FieldTagController.js");
@@ -69,6 +84,11 @@ const fieldTagRouter = require("koa-router")({
 
 fieldTagRouter.use(VerifyJWT);
 fieldTagRouter.get('/all-fieldTags-valid', Authorize('admin'), FieldTagController.allFieldTags, err => console.log(`allFieldTags ran into an error ${err}`));
+fieldTagRouter.put('/addTicketFieldTags', Authorize('admin'), FieldTagController.applyFieldTagsToTicket, err => console.log(`applyFieldTagsToTicket ran into an error ${err}`));
+fieldTagRouter.put('/addTemplateFieldTags', Authorize('admin'), FieldTagController.applyFieldTagsTotemplate, err => console.log(`applyFieldTagsTotemplate ran into an error ${err}`));
+fieldTagRouter.put('/addFieldTag', Authorize('admin'), FieldTagController.addFieldTag, err => console.log(`addFieldTag ran into an error ${err}`));
+
+
 /**
  * Register all of the controllers into the default controller.
  */
