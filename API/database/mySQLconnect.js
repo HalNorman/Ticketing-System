@@ -17,8 +17,8 @@ var connection = mysql.createConnection({
 
     host: 'localhost',
     port: 3306,
-    user: 'TannerSamples',
-    password: 'keyfigpotpan',
+    user: 'root',
+    password: 'VaHVEYX2a2Gn#',
     database: 'ticketingsystem'
 });
 
