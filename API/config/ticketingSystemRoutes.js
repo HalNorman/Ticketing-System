@@ -11,14 +11,21 @@ const VerifyJWT = require('../app/Middleware/VerifyJWT.js');
 | controller. Also used as a parent container for the other routers.
 |
 */
+
+
 const router = require('koa-router')({
     prefix: '/api/v1'
 });
+
+
 
 router.get('/', function (ctx) {
     console.log('router.get(/)');
     return ctx.body = 'API is running';
 });
+
+
+
 
 // Theme router configuration
 
@@ -27,7 +34,11 @@ const themeRouter = require('koa-router')({
     prefix: '/theme'
 });
 
-themeRouter.get('/getTheme', ThemeController.getTheme, err => console.log("ticketing_system_routes.js: theme route error", err));
+
+
+themeRouter.get('/getTheme', ThemeController.getTheme, err => console.log("ticketing_system_routes.js: geTheme route error", err));
+
+themeRouter.post('/setTheme/:primaryColor/:secondaryColor/:textColor', ThemeController.setTheme, err => console.log("ticketing_system_routes.js: setTheme route error", err))
 
 // Login router configuration.
 
