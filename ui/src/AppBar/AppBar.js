@@ -14,8 +14,6 @@ import {FormControlLabel, IconButton} from "@mui/material";
 import {Switch} from "@mui/material";
 
 import {useState} from "react";
-import {red} from "@mui/material/colors";
-
 
 export default function MenuAppBar(props) {
 
@@ -39,20 +37,20 @@ export default function MenuAppBar(props) {
                             inputProps={{ 'aria-label': 'controlled' }}
                             color = "default"
                         >
-                        </Switch>} label="Admin" />
+                        </Switch>} label="Admin" sx={{color: "secondary.main"}}/>
                     <Box sx = {{flexGrow: 1}}></Box>
                     {props.admin &&
                         <Fragment>
-                            <IconButton>
-                                <AddIcon onClick={() => props.handlePageChange("AddTemplate")}/>
+                            <IconButton onClick={() => props.handlePageChange("AddTemplate")}>
+                                <AddIcon sx={{color: "secondary.main"}}/>
                             </IconButton>
-                            <IconButton>
-                                <SettingsIcon onClick={() => props.handlePageChange("Settings")}/>
+                            <IconButton onClick={() => props.handlePageChange("Settings")}>
+                                <SettingsIcon sx={{color: "secondary.main"}} />
                             </IconButton>
                         </Fragment>
                     }
-                    <IconButton>
-                        <AccountCircle onClick={() => props.handlePageChange("Profile")}/>
+                    <IconButton onClick={() => props.handlePageChange("Profile")}>
+                        <AccountCircle sx={{color: "secondary.main"}} />
                     </IconButton>
                 </Toolbar>
             </AppBar>

@@ -96,8 +96,10 @@ const Fields = (props) => {
     if (!matchingField) return null;
 
     return matchingField.tags.map((tag) => (
+
       <MenuItem key={tag} value={tag}>
         {tag}
+
       </MenuItem>
     ));
   };
@@ -119,11 +121,11 @@ const Fields = (props) => {
   };
 
   return (
-    <Fragment>
-      <Typography variant="h3">
+    <Box >
+      <Typography variant="h3" sx={{color: "text.primary"}}>
         {title}
       </Typography>
-      <Typography variant="h5">
+      <Typography variant="h5" sx={{color: "text.primary"}}>
         {info}
       </Typography>
       {fields.map((field, index) => (
@@ -134,10 +136,11 @@ const Fields = (props) => {
             alignItems: "center",
             my: 1,
             p: 1,
-            border: "1px solid lightgray",
+            border: "2px solid",
+            borderColor: "secondary.main"
           }}
         >
-          <Typography sx={{ mr: 1 }}>
+          <Typography sx={{ mr: 1, color: "text.primary" }}>
             {field.field}:
           </Typography>
           <Select
@@ -148,10 +151,10 @@ const Fields = (props) => {
           </Select>
         </Box>
       ))}
-      <Button onClick={handleFormSubmit} variant="contained">
+      <Button onClick={handleFormSubmit} variant="contained" >
         Submit
       </Button>
-    </Fragment>
+    </Box>
   );
 };
 

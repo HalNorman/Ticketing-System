@@ -103,31 +103,33 @@ export default function MainDrawer (props) {
                 }}
             >
                 <Toolbar />
-                <Box sx={{ borderColor: 'divider' }}>
-                    <Tabs value={tabValue} centered  aria-label="basic tabs example">
-                        <Tab sx={{border: "1px solid lightgray", width: drawerWidth/2}} label="Tickets " value={1} onClick={() => handleTabChange("Tickets")}/>
-                        <Tab sx={{border: "1px solid lightgray", width: drawerWidth/2}} label="Templates" value={2} onClick={() => handleTabChange("Templates")} />
+                <Box sx={{  borderRight: "1px solid" }}>
+                    <Tabs value={tabValue} centered  aria-label="basic tabs example" >
+                        <Tab sx={{borderRight: "1px solid", width: drawerWidth/2, }} label="Tickets " value={1} onClick={() => handleTabChange("Tickets")} color = "secondary"/>
+                        <Tab sx={{borderLeft: "1px solid",width: drawerWidth/2, }} label="Templates" value={2} onClick={() => handleTabChange("Templates")} color = "secondary" />
                     </Tabs>
                 </Box>
-                <TextField variant = "standard" sx={{borderTop:"1px solid lightgray" }}
+                <TextField variant = "standard" sx={{borderTop:"1px solid",borderRight: "1px solid"}}
                            InputProps={{
                                startAdornment: (
                                    <InputAdornment position="start">
                                        <Icon>
-                                           <SearchIcon />
+                                           <SearchIcon sx={{color: "secondary.main"}}/>
                                        </Icon>
                                    </InputAdornment>
                                ),
                            }}size="small" onChange={(s) => setSearchValue(s.target.value)} ></TextField>
-                <Box sx={{ overflow: 'auto', border: '1px solid lightgray'}} >
+                <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                     {tabValue === "Templates" &&
                         <List>
                         {templates.filter((obj) => {
                           return obj.title.includes(searchValue);
                         }).map((obj, index) => (
                           <div className="font-link">
-                            <ListItem sx={{borderTop: "1px solid lightgray"}} key={obj.ticketID} disablePadding >
-                              <ListItemButton onClick={() => handleTicketTemplateSelection(obj)}>
+
+                            <ListItem sx={{borderTop: "1px solid",borderBottom: "1px solid"}} key={obj.ticketID} disablePadding >
+                              <ListItemButton onClick={() => handleTicketTemplateSelection(obj.title, obj.info, obj.ticketID)}>
+
                                 <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
                               </ListItemButton>
                             </ListItem>
@@ -140,7 +142,7 @@ export default function MainDrawer (props) {
                             {tickets.filter((data) => {
                                 return data.user.includes(searchValue) || data.name.includes(searchValue)
                             }).map((text, index) => (
-                                <ListItem sx={{borderTop: "1px solid lightgray"}} key={text} multiline = "true" disablePadding >
+                                <ListItem sx={{borderBottom: "1px solid",borderTop: "1px solid" }} key={text} multiline = "true" disablePadding >
                                     <ListItemButton onClick={() => handleValueSelection(text.user + " " + text.name)}>
                                         <ListItemText primaryTypographyProps={{fontSize: '18px'}} primary={text.name} secondary ={text.user}/>
                                     </ListItemButton>
