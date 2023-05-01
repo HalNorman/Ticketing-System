@@ -99,8 +99,40 @@ const editUsernamePassword = async (ctx) => {
     });
 }
 
+const deleteUser = async (ctx) => {
+    console.log('users deleteUser called.');
+    return new Promise((resolve, reject) => {
+        const userCredentials = ctx.request.body;
+        const query = `
+                        DELETE FROM 
+                            ticketingsystem.user 
+                        WHERE 
+                            userID = ?
+                        `;
+        dbConnection.query({
+            sql: query,
+            values: [userCredentials.username, userCredentials.password, userCredentials.userID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in UserController::deleteUser", error);
+                return reject(error);
+            }
+            ctx.body = tuples;
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in deleteUser.", err);
+        // The UI side will have to look for the value of status and
+        // if it is not 200, act appropriately.
+        ctx.body = [];
+        ctx.status = 500;
+    });
+}
+
 module.exports = {
     allActiveUsers,
     addUser,
-    editUsernamePassword
+    editUsernamePassword,
+    deleteUser
 };
