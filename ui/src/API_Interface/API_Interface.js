@@ -86,6 +86,9 @@ export default class APIInterface {
         return axiosAgent.put(`user/editUsernamePassword`, username_password)
     }
     async viewUsers(){
-        return axiosAgent.get(`user/allActiveUsers`)
+        return axiosAgent.get(`user/allActiveUsers`);
+    }
+    async deleteUser(user_id){
+        return axiosAgent.delete(`user/${user_id}/deleteUser`);
     }
 }
