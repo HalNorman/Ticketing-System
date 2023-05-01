@@ -246,7 +246,7 @@ const fieldTags = {
     if (!matchingField) return null;
 
     return matchingField.tags.map((tag) => (
-      <MenuItem key={tag.tag} value={tag.tag}>
+      <MenuItem key={tag.tag} value={tag.tag} >
         {tag.tag}
       </MenuItem>
     ));
@@ -269,11 +269,11 @@ const fieldTags = {
   };
 
   return (
-    <Fragment>
-      <Typography variant="h3">
+    <Box >
+      <Typography variant="h3" sx={{color: "secondary.main"}}>
         {title}
       </Typography>
-      <Typography variant="h5">
+      <Typography variant="h5" sx={{color: "secondary.main"}}>
         {info}
       </Typography>
       {fields.map((field) => (
@@ -284,10 +284,11 @@ const fieldTags = {
             alignItems: "center",
             my: 1,
             p: 1,
-            border: "1px solid lightgray",
+            border: "2px solid",
+            borderColor: "secondary.main"
           }}
         >
-          <Typography sx={{ mr: 1 }}>
+          <Typography sx={{ mr: 1, color: "text.primary" }}>
             {field.field}:
           </Typography>
           <Select
@@ -298,10 +299,10 @@ const fieldTags = {
           </Select>
         </Box>
       ))}
-      <Button onClick={handleFormSubmit} variant="contained">
+      <Button onClick={handleFormSubmit} variant="contained" >
         Submit
       </Button>
-    </Fragment>
+    </Box>
   );
 };
 

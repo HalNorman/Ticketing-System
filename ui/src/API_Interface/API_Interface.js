@@ -41,6 +41,11 @@ export default class APIInterface {
     async getTheme(){
         return axiosAgent.get(`theme/getTheme`);
     }
+
+    async setTheme(primaryColor,secondaryColor,textColor){
+        console.log("in apiinterface for setTheme");
+        return axiosAgent.post(`theme/setTheme/${primaryColor}/${secondaryColor}/${textColor}`);
+    }
     async getTemplateFieldsByID(templateID){
         return axiosAgent.get(`template/${templateID}/template-fields-byID`);
     }

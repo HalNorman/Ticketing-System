@@ -10,6 +10,7 @@
   "author": "Ali A. Kooshesh",
   "license": "ISC",
   "dependencies": {
+    "@koa/cors": "^4.0.0",
     "csrf": "^3.0.6",
     "dateformat": "^3.0.3",
     "dotenv": "^4.0.0",
@@ -20,10 +21,12 @@
     "koa-bodyparser": "^4.2.0",
     "koa-bunyan-logger": "^2.0.0",
     "koa-compress": "^2.0.0",
+    "koa-cors": "^0.0.16",
     "koa-jwt": "^3.3.2",
     "koa-router": "^7.3.0",
     "lodash": "^4.17.4",
-    "mysql": "^2.15.0"
+    "mysql": "^2.15.0",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.3"
