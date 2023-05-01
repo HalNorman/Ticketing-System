@@ -73,7 +73,7 @@ const applyFieldTagsToTemplate = async (ctx) => {
 }
 //this should take an object
 const addFieldTag = async (ctx) => {
-    console.log('fieldTags applyFieldTagsToTemplate called.');
+    console.log('fieldTags addFieldTag called.');
     return new Promise((resolve, reject) => {
         const fieldTag = ctx.request.body
             const query = `
@@ -87,7 +87,7 @@ const addFieldTag = async (ctx) => {
             values: [fieldTag.field, fieldTag.tag]
         }, (error, tuples) => {
             if (error) {
-                console.log("Connection error in FieldTagController::applyFieldTagsToTemplate", error);
+                console.log("Connection error in FieldTagController::addFieldTag", error);
                 return reject(error);
             }
             ctx.body = tuples;
@@ -139,5 +139,4 @@ module.exports = {
     applyFieldTagsToTicket,
     applyFieldTagsToTemplate,
     addFieldTag
-
 };
