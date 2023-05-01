@@ -106,5 +106,5 @@ dist
 # DS_Store files for Mac... This should hopefully cover all of them.
 **/.DS_Store
 
-# mySQLconnect.js
+# add mySQLconnect.js
 API/database/mySQLconnect.js

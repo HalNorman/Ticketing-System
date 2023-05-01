@@ -73,6 +73,7 @@ export default function MainDrawer (props) {
     const [info, setInfo] = useState(""); // info for current ticket
     const [templateID, setTemplateID] = useState(-1); // id of current ticket
     const [doRenderTicket, setDoRenderTicket] = useState(false); // id of current ticket
+    const [selectedTicket, setSelectedTicket] = useState(null); // id of current ticket
 
     const handleTabChange = (newValue) => {
         setTabValue(newValue);
@@ -83,10 +84,11 @@ export default function MainDrawer (props) {
 
     }
 
-    const handleTicketTemplateSelection = (title, info, id) => {
-        setTitle(title);
-        setInfo(info);
-        setTemplateID(id);
+    const handleTicketTemplateSelection = (obj) => {
+        // setTitle(title);
+        // setInfo(info);
+        // setTemplateID(id);
+        setSelectedTicket(obj);
         setDoRenderTicket(true);
     }
 
@@ -125,7 +127,7 @@ export default function MainDrawer (props) {
                         }).map((obj, index) => (
                           <div className="font-link">
                             <ListItem sx={{borderTop: "1px solid lightgray"}} key={obj.ticketID} disablePadding >
-                              <ListItemButton onClick={() => handleTicketTemplateSelection(obj.title, obj.info, obj.ticketID)}>
+                              <ListItemButton onClick={() => handleTicketTemplateSelection(obj)}>
                                 <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
                               </ListItemButton>
                             </ListItem>
@@ -154,9 +156,7 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                 {doRenderTicket &&
-                <TicketInstance title = {title}
-                                info = {info}
-                                id = {templateID}/>}
+                <TicketInstance ticket = {selectedTicket}/>}
 
 
             </Box>
