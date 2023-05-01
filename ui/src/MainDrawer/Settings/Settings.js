@@ -77,7 +77,7 @@ export default function Settings(props) {
                         <Box sx={{
                             my: 1,
                             p: 1,
-                            border: "1px solid black",
+                            border: "1px solid ",
                         }} bgcolor={'#' + theme.secondary}/>
                         <Typography>
                             Text:
