@@ -65,22 +65,22 @@ export default class APIInterface {
     // object 1 format - {userID:<int>, title:<string>, info:<string>}
     // object 2 format - [{ticketID:<int>, fieldTagID:<int>},{ticketID:<int>, fieldTagID:<int>},...]
     async createTicketInstance(ticket, ticket_field_array){
-        return axiosAgent.put('ticket/addTicket', ticket).then(axiosAgent.put('fieldTag/addTicketFieldTags', ticket_field_array));
+        return axiosAgent.post('ticket/addTicket', ticket).then(axiosAgent.put('fieldTag/addTicketFieldTags', ticket_field_array));
     }
     //should take two json objects <denotes type>
     // object 1 format - {title:<string>, info:<string>}
     // object 2 format - [{templateID:<int>, fieldTagID:<int>}, {templateID:<int>, fieldTagID:<int>},...]
     async createTicketTemplate(template, template_field_array){
-        return axiosAgent.put('template/addTemplate', template).then(axiosAgent.put('fieldTag/addTemplateFieldTag', template_field_array));
+        return axiosAgent.post('template/addTemplate', template).then(axiosAgent.put('fieldTag/addTemplateFieldTag', template_field_array));
     }
     //ticketID is an id of a ticket instance
     async completeTicket(ticket_id){
-        return axiosAgent.put(`ticket/${ticket_id}/completeTicket`);
+        return axiosAgent.post(`ticket/${ticket_id}/completeTicket`);
     }
     //should take in a json object <denotes type>
     //object format - {field:<string>, tag:<string>}
     async addFieldTag(field_tag){
-        return axiosAgent.put(`fieldTag/addFieldTag`, field_tag);
+        return axiosAgent.post(`fieldTag/addFieldTag`, field_tag);
     }
     //should take in a json object of a user
     //object format - {fName:<string>, lName:<string>, role:<enum: "employee", "user">, username:<string>, password:<string>}
@@ -90,12 +90,15 @@ export default class APIInterface {
     //should take a json object of the users username password
     //object format - {username:<string>, password:<string>}
     async editUserNamePassword(username_password){
-        return axiosAgent.put(`user/editUsernamePassword`, username_password)
+        return axiosAgent.post(`user/editUsernamePassword`, username_password)
     }
     async viewUsers(){
         return axiosAgent.get(`user/allActiveUsers`);
     }
     async deleteUser(user_id){
         return axiosAgent.delete(`user/${user_id}/deleteUser`);
+    }
+    async deleteFieldTag(field_tag_id){
+        return axiosAgent.delete(`fieldTag/${field_tag_id}/removeFieldTag`);
     }
 }
