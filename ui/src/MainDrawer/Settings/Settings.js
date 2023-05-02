@@ -1,5 +1,6 @@
 import {Button, Select, Typography} from "@mui/material";
 import Box from "@mui/material/Box";
+import Stack from '@mui/joy/Stack';
 
 import React, {useState, useEffect, Fragment} from 'react';
 import API from "../../API_Interface/API_Interface";
@@ -11,9 +12,9 @@ export default function Settings(props) {
 
         const themes =[
             {
-                    primary: "2011a2",
-                    secondary: "55e7ff",
-                    text: "ff34b3",
+                primary: "2011a2",
+                secondary: "55e7ff",
+                text: "ff34b3",
             },
             {
                 primary: "242f40",
@@ -54,7 +55,8 @@ export default function Settings(props) {
         }
 
         return(
-            <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
+            <Stack>
+            <Item sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
                 {themes.map((theme,idx) => (
                     <Box key={theme.primary}
                          sx={{
@@ -94,8 +96,14 @@ export default function Settings(props) {
 
                     </Box>
                 ))}
-
-            </Box>
+                </Item>
+                <Item>
+                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                </Item>
+            </Stack>
 
         )
 /*
