@@ -52,7 +52,7 @@ const allTicketsByUserID = async (ctx) => {
                 ticketingsystem.ticket A 
             INNER JOIN 
                 (SELECT 
-                    ticketingsystem.getTicketsByUserID(ticketID, userID, 3) 
+                    ticketingsystem.getTicketsByUserID(ticketID, userID, ?) 
                 AS 
                     ticketID 
                 FROM 

@@ -33,6 +33,7 @@ export default class APIInterface {
                  }));
     }
     async getAllTicketsForUser(user_id){
+        console.log(user_id);
         return axiosAgent.get(`ticket/${user_id}/all-tickets`);
     }
     async getTicketByID(ticket_id){
@@ -88,9 +89,9 @@ export default class APIInterface {
         return axiosAgent.put(`user/addUser`, user);
     }
     //should take a json object of the users username password
-    //object format - {username:<string>, password:<string>}
+    //object format - {username:<string>, password:<string>,userID:<int>}
     async editUserNamePassword(username_password){
-        return axiosAgent.put(`user/editUsernamePassword`, username_password)
+        return axiosAgent.post(`user/editUsernamePassword`, username_password)
     }
     async viewUsers(){
         return axiosAgent.get(`user/allActiveUsers`);
