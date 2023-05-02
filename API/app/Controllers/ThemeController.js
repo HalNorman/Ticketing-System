@@ -1,5 +1,5 @@
-const dbConnection = require('../../database/mySQLconnect');
 
+const dbConnection = require('../../database/mySQLconnect');
 
 const getTheme = async (ctx) => {
     console.log('theme getTheme called.');

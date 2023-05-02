@@ -26,6 +26,8 @@ export default function Settings(props) {
                 text: "016fB9",
             },
 
+
+
         ]
 
         async function setNewTheme(primary,secondary,text) {
