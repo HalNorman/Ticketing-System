@@ -84,7 +84,6 @@ export default function Login({setUser}) {
                     label="Username"
                     placeholder=""
                     value={userName}
-                    helperText="'admin'"
                     onChange={handleInputChange('Username')}
                 />
                 <Divider />
@@ -98,7 +97,6 @@ export default function Login({setUser}) {
                     label="Password"
                     placeholder=""
                     value={password}
-                    helperText="'sudo'"
                     onChange={handleInputChange('Password')}
                 />
                 <Divider />

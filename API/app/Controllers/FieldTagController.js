@@ -14,6 +14,7 @@ const applyFieldTagsToTicket = async (ctx) => {
             const query = `
                         INSERT INTO
                             ticketingsystem.ticketfieldtag 
+                            (templateID, fieldtagId) 
                         VALUES
                             (?, ?)
                         `;
@@ -46,7 +47,8 @@ const applyFieldTagsToTemplate = async (ctx) => {
         fieldTagArray.forEach(element => {
             const query = `
                         INSERT INTO
-                            ticketingsystem.templatefieldtag 
+                            ticketingsystem.templatefieldtag
+                            (templateID, fieldtagId) 
                         VALUES
                             (?, ?)
                         `;
@@ -79,6 +81,7 @@ const addFieldTag = async (ctx) => {
             const query = `
                         INSERT INTO
                             ticketingsystem.fieldtag 
+                            (field, tag)
                         VALUES
                             (?, ?)
                         `;
@@ -133,10 +136,43 @@ const allFieldTags = async (ctx) => {
     });
 }
 
+const removeFieldTag = async (ctx) => {
+    console.log('fieldTags removeFieldTag called.');
+    return new Promise((resolve, reject) => {
+        const fieldTag = ctx.request.body
+            const query = `
+                        UPDATE
+                            ticketingsystem.fieldtag 
+                        SET
+                            valid = 0
+                        WHERE 
+                            fieldtagID = ?
+                        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.fieldTagID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in FieldTagController::removeFieldTag", error);
+                return reject(error);
+            }
+            ctx.body = tuples;
+            ctx.status = 200;
+            return resolve();
+        }); 
+    }).catch(err => {
+        console.log("Database connection error in removeFieldTag.", err);
+        // The UI side will have to look for the value of status and
+        // if it is not 200, act appropriately.
+        ctx.body = [];
+        ctx.status = 500;
+    });
+}
 
 module.exports = {
     allFieldTags,
     applyFieldTagsToTicket,
     applyFieldTagsToTemplate,
-    addFieldTag
+    addFieldTag,
+    removeFieldTag
 };

@@ -1,11 +1,48 @@
 import {Button, FormControl, InputLabel, MenuItem, Typography, Box, TextField, styled, Paper} from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-
-
+/*
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+*/
 import React, {useState, useEffect, Fragment} from 'react';
 import API from "../../API_Interface/API_Interface";
-
-
+/*
+const userTable = [
+    {
+        title: 'UserID',
+        attributeDBName: 'userID',
+        align: 'left'
+    },{
+        title: 'First Name',
+        attributeDBName: 'fName',
+        align: 'left'
+    },
+    {
+        title: 'Last Name',
+        attributeDBName: 'lName',
+        align: 'left'
+    },
+    {
+        title: 'Role',
+        attributeDBName: 'role',
+        align: 'left'
+    },
+    {
+        title: 'Username',
+        attributeDBName: 'username',
+        align: 'left'
+    },
+    {
+        title: 'Password',
+        attributeDBName: 'password',
+        align: 'left'
+    }
+];
+*/
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -18,6 +55,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function Settings(props) {
     
+    const api = new API();
     const [user, setUser] = React.useState(() => 
     {
         return {
@@ -27,80 +65,77 @@ export default function Settings(props) {
         username: '',
         password: ''
     }});
-    const api = new API();
-
-
-        const themes =[
-            {
-                primary: "2011a2",
-                secondary: "55e7ff",
-                text: "ff34b3",
-            },
-            {
-                primary: "242f40",
-                secondary: "cca43b",
-                text: "363636",
-            },
-            {
-                primary: "ec4e20",
-                secondary: "ff9505",
-                text: "016fB9",
-            }
-        ]
-        
-        const newUserRoles = [
-            "Employee",
-            "User"
-        ]
-
-        function editUser(str, value){
-            let newUser = user;
-            if(value === 'fName'){
-                newUser.fName = str;                
-            }
-            else if(value === 'lName'){
-                newUser.lName = str;
-            }
-            else if(value === 'role'){
-                newUser.role = str;
-            }
-            else if(value === 'username'){
-                newUser.username = str;
-            }
-            else if(value === 'password'){
-                newUser.password = str;
-            }
-            setUser(newUser);
+    const [userTable, setUserTable] = React.useState([]);
+    
+    const themes =[
+        {
+            primary: "2011a2",
+            secondary: "55e7ff",
+            text: "ff34b3",
+        },
+        {
+            primary: "242f40",
+            secondary: "cca43b",
+            text: "363636",
+        },
+        {
+            primary: "ec4e20",
+            secondary: "ff9505",
+            text: "016fB9",
         }
-        
-        async function setNewTheme(primary,secondary,text) {
-            console.log("hello")
-            await api.setTheme(primary,secondary,text);
-            props.handleThemeChange(primary,secondary,text);
+    ]
+    /* 
+    useEffect(() => {
+        async function getUsers() {
+            const userJSON = await api.viewUsers();
         }
+    });*/
 
-        async function addUser(){
-            if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.pass !== '' ){
-                await api.addUser(user);
-            }
+    function editUser(str, value){
+        let newUser = user;
+        if(value === 'fName'){
+            newUser.fName = str;                
         }
-
-        const ColorBox = (text,color) => {
-            return(
-                <Fragment>
-                    <Typography>
-                        {text}:
-                            </Typography>
-                                <Box sx={{
-                                    my: 1,
-                                    p: 1,
-                                    border: "1px solid black",
-                                    bgcolor: color.primary
-                                }} />
-                </Fragment>
-        )
+        else if(value === 'lName'){
+            newUser.lName = str;
         }
-
+        else if(value === 'role'){
+            newUser.role = str;
+        }
+        else if(value === 'username'){
+            newUser.username = str;
+        }
+        else if(value === 'password'){
+            newUser.password = str;
+        }
+        setUser(newUser);
+    }
+    
+    async function setNewTheme(primary,secondary,text) {
+        console.log("hello")
+        await api.setTheme(primary,secondary,text);
+        props.handleThemeChange(primary,secondary,text);
+    }
+    async function addUser(){
+        if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.pass !== '' ){
+            await api.addUser(user);
+        }
+    }
+    const ColorBox = (text,color) => {
+        return(
+            <Fragment>
+                <Typography>
+                    {text}:
+                        </Typography>
+                            <Box sx={{
+                                my: 1,
+                                p: 1,
+                                border: "1px solid black",
+                                bgcolor: color.primary
+                            }} />
+            </Fragment>
+    )
+    }
         return(
             <Fragment>
             <Item sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
@@ -171,6 +206,9 @@ export default function Settings(props) {
                 <TextField id="password" label="Password" variant="outlined" onChange={(event) => editUser(event.target.value, "password")}/>
                 <Button onClick={() => addUser()}variant="contained">Select</Button>
                 </Box>
+                </Item>
+                <Item>
+
                 </Item>
             </Fragment>
 

@@ -88,12 +88,13 @@ const addTicket = (ctx) => {
         const ticket = ctx.request.body;
         const query =  `INSERT INTO 
                             ticketingsystem.ticket
+                            (userID, title, info, status, dateCreated, dateCompleted)
                         VALUES
-                            (?, ?, ?, ?, ?, ?, ?)
+                            (?, ?, ?, ?, ?, ?)
                     `;
         dbConnection.query({
             sql: query,
-            values: [ticket.userID, ticket.title, ticket.info, "active", now(), now(), "null"]
+            values: [ticket.userID, ticket.title, ticket.info, "active", now(), now()]
         }, (error, tuples) => {
             if (error) {
                 console.log("Connection error in TicketsController::addTicket", error);

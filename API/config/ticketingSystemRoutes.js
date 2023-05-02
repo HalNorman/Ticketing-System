@@ -67,8 +67,8 @@ ticketRouter.use(VerifyJWT);
 ticketRouter.get('/all-tickets', Authorize('admin'), TicketController.allTickets, err => console.log(`allTicket ran into an error: ${err}`));
 ticketRouter.get('/:userID/all-tickets', Authorize('admin'), TicketController.allTicketsByUserID, err => console.log(`ticketWithUserID ran into an error: ${err}`));
 ticketRouter.get('/:ticketID/ticketID', Authorize('admin'), TicketController.ticketWithTicketID, err => console.log(`ticketWithTicketID ran into an error: ${err}`));
-ticketRouter.put('/addTicket', Authorize('admin'), TicketController.addTicket, err => console.log(`addTicket ran into an error: ${err}`));
-ticketRouter.put('/:ticketID/completeTicket', Authorize('admin'), TicketController.completeTicket, err => console.log(`completeTicket ran into an error: ${err}`));
+ticketRouter.post('/addTicket', Authorize('admin'), TicketController.addTicket, err => console.log(`addTicket ran into an error: ${err}`));
+ticketRouter.post('/:ticketID/completeTicket', Authorize('admin'), TicketController.completeTicket, err => console.log(`completeTicket ran into an error: ${err}`));
 
 // Template router configuration
 
@@ -81,7 +81,7 @@ templateRouter.use(VerifyJWT);
 templateRouter.get('/all-templates', Authorize('admin'), TemplateController.allTemplates, err => console.log(`allTemplates ran into an error: ${err}`));
 templateRouter.get('/all-templates-fields', Authorize('admin'), TemplateController.allTemplatesWithFields, err => console.log(`allTemplatesWithFields ran into an error: ${err}`));
 templateRouter.get('/:templateID/template-fields-byID', Authorize('admin'), TemplateController.templateWithFieldsByTemplateID, err => console.log(`allTemplatesWithFields ran into an error: ${err}`));
-templateRouter.put('/addTemplate', Authorize('admin'), TemplateController.addTemplate, err => console.log(`addTemplate ran into an error: ${err}`));
+templateRouter.post('/addTemplate', Authorize('admin'), TemplateController.addTemplate, err => console.log(`addTemplate ran into an error: ${err}`));
 
 // FieldTag Router configuration
 
@@ -92,9 +92,10 @@ const fieldTagRouter = require("koa-router")({
 
 fieldTagRouter.use(VerifyJWT);
 fieldTagRouter.get('/all-fieldTags-valid', Authorize('admin'), FieldTagController.allFieldTags, err => console.log(`allFieldTags ran into an error ${err}`));
-fieldTagRouter.put('/addTicketFieldTags', Authorize('admin'), FieldTagController.applyFieldTagsToTicket, err => console.log(`applyFieldTagsToTicket ran into an error ${err}`));
-fieldTagRouter.put('/addTemplateFieldTags', Authorize('admin'), FieldTagController.applyFieldTagsToTemplate, err => console.log(`applyFieldTagsTotemplate ran into an error ${err}`));
-fieldTagRouter.put('/addFieldTag', Authorize('admin'), FieldTagController.addFieldTag, err => console.log(`addFieldTag ran into an error ${err}`));
+fieldTagRouter.post('/addTicketFieldTags', Authorize('admin'), FieldTagController.applyFieldTagsToTicket, err => console.log(`applyFieldTagsToTicket ran into an error ${err}`));
+fieldTagRouter.post('/addTemplateFieldTags', Authorize('admin'), FieldTagController.applyFieldTagsToTemplate, err => console.log(`applyFieldTagsTotemplate ran into an error ${err}`));
+fieldTagRouter.post('/addFieldTag', Authorize('admin'), FieldTagController.addFieldTag, err => console.log(`addFieldTag ran into an error ${err}`));
+fieldTagRouter.delete('/:fieldTagID/removeFieldTag', Authorize('admin'), FieldTagController.removeFieldTag, err => console.log(`removeFieldTag ran into an error ${err}`));
 
 
 /**
