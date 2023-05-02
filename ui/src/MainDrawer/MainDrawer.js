@@ -19,6 +19,9 @@ import API from '../API_Interface/API_Interface';
 import TempTicketDisplay from "./TempTicketDisplay";
 import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
+import {AccountCircle} from "@mui/icons-material";
+import AddIcon from '@mui/icons-material/Add';
+
 
 
 
@@ -101,6 +104,7 @@ export default function MainDrawer (props) {
     const handleValueSelection = (data,view) => {
         setSelectedValue(data)
         setTicketOrTemplateDisplay(view)
+        console.log("hello")
 
     }
 
@@ -134,8 +138,10 @@ export default function MainDrawer (props) {
                                    </InputAdornment>
                                ),
                            }}size="small" onChange={(s) => setSearchValue(s.target.value)} ></TextField>
-                <Box sx={{ overflow: 'auto', border: '1px solid'}} >
+
                     {tabValue === "Templates" &&
+                        <div>
+                        <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
                         {ticketTemplateIDs.filter((obj) => {
                           return obj.title.includes(searchValue);
@@ -151,33 +157,45 @@ export default function MainDrawer (props) {
                           </div>
                         ))}
                       </List>
+                        </Box>
+                            {props.admin &&
+                            <IconButton onClick={() => handleValueSelection(null,"AddTemplate")}>
+                                <AddIcon sx={{color: "secondary.main"}} />
+                            </IconButton>}
+                        </div>
+
                     }
                     {tabValue === "Tickets" &&
+                        <div>
+                        <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
                             {ticketInstanceIDs.filter((data) => {
                                 return data.title.includes(searchValue) || data.username.includes(searchValue)
                             }).map((instance, index) => (
-                                <ListItem sx={{borderBottom: "1px solid",borderTop: "1px solid" }} key={instance} multiline = "true" disablePadding >
-                                    <ListItemButton onClick={() => handleValueSelection(instance,"Ticket")}>
-                                        <ListItemText primaryTypographyProps={{fontSize: '18px'}} primary={instance.title} secondary ={instance.user}/>
-                                    </ListItemButton>
-                                </ListItem>
+                                <div>
+                                    <ListItem sx={{borderBottom: "1px solid",borderTop: "1px solid" }} key={instance} multiline = "true" disablePadding >
+                                        <ListItemButton onClick={() => handleValueSelection(instance,"Ticket")}>
+                                            <ListItemText primaryTypographyProps={{fontSize: '18px'}} primary={instance.title} secondary ={instance.user}/>
+                                        </ListItemButton>
+                                    </ListItem>
+                                </div>
                             ))}
                         </List>
+                        </Box>
+                        </div>
                     }
-                </Box>
             </Drawer>
             <Box
                 component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
             >
                 <Toolbar />
-                    {ticketOrTemplateDisplay === "Ticket" &&
+                    {ticketOrTemplateDisplay === "Template" &&
                 <TicketInstance ticket = {selectedValue}/>}
-                {ticketOrTemplateDisplay === "Template" &&
-                <TicketTemplate template = {selectedValue}/>}
-
-
+                {ticketOrTemplateDisplay === "Ticket" &&
+                <TicketInstance ticket = {selectedValue}/>}
+                {ticketOrTemplateDisplay === "AddTemplate" &&
+                <TicketTemplate />}
             </Box>
         </Fragment>
     )
