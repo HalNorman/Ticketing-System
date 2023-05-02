@@ -19,6 +19,9 @@ import API from '../API_Interface/API_Interface';
 import TempTicketDisplay from "./TempTicketDisplay";
 import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
+import {AccountCircle} from "@mui/icons-material";
+import AddIcon from '@mui/icons-material/Add';
+
 
 
 
@@ -29,6 +32,8 @@ const drawerWidth = 210;
 export default function MainDrawer (props) {
 
    const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
+   const [ticketTemplateIDs, setTicketTemplateIDs] = useState([]);
+   const [ticketOrTemplateDisplay,setTicketOrTemplateDisplay] = useState(null)
 
     useEffect(() => {
         const api = new API();
@@ -44,6 +49,20 @@ export default function MainDrawer (props) {
         getTickets();
     }, []);
 
+    useEffect(() => {
+        const api = new API();
+
+        async function getTemplates() {
+            const templatesJSONString = await  api.getAllTemplates();
+            console.log(`routes from the DB ${JSON.stringify(templatesJSONString)}`);
+            setTicketTemplateIDs(templatesJSONString.data);
+        }
+
+
+
+        getTemplates();
+        console.log(ticketTemplateIDs)
+    }, []);
 
 
 
@@ -71,33 +90,25 @@ export default function MainDrawer (props) {
             info: ticket.info,
         })));
       }, [ticketInstanceIDs]);
-    
+
 
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
-    const [title, setTitle] = useState(""); // title of current ticket 
-    const [info, setInfo] = useState(""); // info for current ticket
-    const [templateID, setTemplateID] = useState(-1); // id of current ticket
-    const [doRenderTicket, setDoRenderTicket] = useState(false); // id of current ticket
-    const [selectedTicket, setSelectedTicket] = useState(null); // id of current ticket
+
 
     const handleTabChange = (newValue) => {
         setTabValue(newValue);
     };
 
-    const handleValueSelection = (text,) => {
-        setSelectedValue(text)
+    const handleValueSelection = (data,view) => {
+        setSelectedValue(data)
+        setTicketOrTemplateDisplay(view)
+        console.log("hello")
 
     }
 
-    const handleTicketTemplateSelection = (obj) => {
-        // setTitle(title);
-        // setInfo(info);
-        // setTemplateID(id);
-        setSelectedTicket(obj);
-        setDoRenderTicket(true);
-    }
+
 
 
     return(
@@ -127,16 +138,18 @@ export default function MainDrawer (props) {
                                    </InputAdornment>
                                ),
                            }}size="small" onChange={(s) => setSearchValue(s.target.value)} ></TextField>
-                <Box sx={{ overflow: 'auto', border: '1px solid'}} >
+
                     {tabValue === "Templates" &&
+                        <div>
+                        <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
-                        {templates.filter((obj) => {
+                        {ticketTemplateIDs.filter((obj) => {
                           return obj.title.includes(searchValue);
                         }).map((obj, index) => (
                           <div className="font-link">
 
                             <ListItem sx={{borderTop: "1px solid",borderBottom: "1px solid"}} key={obj.ticketID} disablePadding >
-                              <ListItemButton onClick={() => handleTicketTemplateSelection(obj.title, obj.info, obj.ticketID)}>
+                              <ListItemButton onClick={() => handleValueSelection(obj,"Template")}>
 
                                 <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
                               </ListItemButton>
@@ -144,31 +157,45 @@ export default function MainDrawer (props) {
                           </div>
                         ))}
                       </List>
+                        </Box>
+                            {props.admin &&
+                            <IconButton onClick={() => handleValueSelection(null,"AddTemplate")}>
+                                <AddIcon sx={{color: "secondary.main"}} />
+                            </IconButton>}
+                        </div>
+
                     }
                     {tabValue === "Tickets" &&
+                        <div>
+                        <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
-                            {tickets.filter((data) => {
-                                return data.user.includes(searchValue) || data.name.includes(searchValue)
-                            }).map((text, index) => (
-                                <ListItem sx={{borderBottom: "1px solid",borderTop: "1px solid" }} key={text} multiline = "true" disablePadding >
-                                    <ListItemButton onClick={() => handleValueSelection(text.user + " " + text.name)}>
-                                        <ListItemText primaryTypographyProps={{fontSize: '18px'}} primary={text.name} secondary ={text.user}/>
-                                    </ListItemButton>
-                                </ListItem>
+                            {ticketInstanceIDs.filter((data) => {
+                                return data.title.includes(searchValue) || data.username.includes(searchValue)
+                            }).map((instance, index) => (
+                                <div>
+                                    <ListItem sx={{borderBottom: "1px solid",borderTop: "1px solid" }} key={instance} multiline = "true" disablePadding >
+                                        <ListItemButton onClick={() => handleValueSelection(instance,"Ticket")}>
+                                            <ListItemText primaryTypographyProps={{fontSize: '18px'}} primary={instance.title} secondary ={instance.user}/>
+                                        </ListItemButton>
+                                    </ListItem>
+                                </div>
                             ))}
                         </List>
+                        </Box>
+                        </div>
                     }
-                </Box>
             </Drawer>
             <Box
                 component="main"
                 sx={{ flexGrow: 1, bgcolor: 'background.default', p: 3 }}
             >
                 <Toolbar />
-                {doRenderTicket &&
-                <TicketInstance ticket = {selectedTicket}/>}
-
-
+                    {ticketOrTemplateDisplay === "Template" &&
+                <TicketInstance ticket = {selectedValue}/>}
+                {ticketOrTemplateDisplay === "Ticket" &&
+                <TicketInstance ticket = {selectedValue}/>}
+                {ticketOrTemplateDisplay === "AddTemplate" &&
+                <TicketTemplate />}
             </Box>
         </Fragment>
     )
