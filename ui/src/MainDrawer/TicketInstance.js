@@ -15,7 +15,7 @@ const Fields = (props) => {
 
   const[fieldTags, setFieldTags] = useState([]);
   const[allFieldTags, setAllFieldTags] = useState([]);
-  const [fields, setFields] = useState([]);
+  const[fields, setFields] = useState([]);
 
   useEffect(() => {
     const api = new API();
@@ -30,9 +30,9 @@ const Fields = (props) => {
         tag: ticket.tag,
       })));
     
-  }
+    }
     async function getFieldTags() {
-      const routesJSONString = await  api.getAllFieldTags(props.ticket.ticketID);
+      const routesJSONString = await  api.getAllFieldTags();
       console.log(`All Fields tags from the DB ${JSON.stringify(routesJSONString)}`);
       setAllFieldTags(routesJSONString.data);
     }
