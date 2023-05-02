@@ -1,17 +1,20 @@
 import {Button, FormControl, InputLabel, MenuItem, Typography, Box, TextField, styled, Paper} from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-/*
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-*/
+import Stack from '@mui/joy/Stack';
+
 import React, {useState, useEffect, Fragment} from 'react';
 import API from "../../API_Interface/API_Interface";
-/*
-const userTable = [
+
+
+
+const userTableCols = [
     {
         title: 'UserID',
         attributeDBName: 'userID',
@@ -42,7 +45,7 @@ const userTable = [
         align: 'left'
     }
 ];
-*/
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -50,8 +53,6 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
-
-
 
 export default function Settings(props) {
     
@@ -65,6 +66,7 @@ export default function Settings(props) {
         username: '',
         password: ''
     }});
+    const [updateView, setUpdateView] = React.useState(1);
     const [userTable, setUserTable] = React.useState([]);
     
     const themes =[
@@ -84,15 +86,53 @@ export default function Settings(props) {
             text: "016fB9",
         }
     ]
-    /* 
+    
+    const TRow = ({userObject}) => {
+        return <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+            {userTableCols.map((attr, idx) =>
+                <TableCell key={idx}
+                    align={attr.align}>
+                    {
+                        userObject[attr.attributeDBName]
+                    }
+                    </TableCell>)
+                }
+                {displayDeleteButton(userObject)}
+        </TableRow>
+    }
+    
+    function displayDeleteButton(userObject){
+        if(userObject.role !== 'admin'){
+            return <TableCell>
+                    <Button  onClick={() => deleteUser(userObject.userID)}variant="contained">Delete User</Button>
+                   </TableCell>
+        }
+        else{
+            return  <TableCell>
+                    
+                    </TableCell>
+        }
+    }
+
+
     useEffect(() => {
         async function getUsers() {
             const userJSON = await api.viewUsers();
+            console.log(`usertable from the json ${JSON.stringify(userJSON.data)}`);
+            setUserTable(userJSON.data);
         }
-    });*/
+        getUsers();
+    }, [updateView]);
 
     function editUser(str, value){
-        let newUser = user;
+        let newUser = {
+            fName: user.fName,
+            lName: user.lName,
+            role: user.role,
+            username: user.username,
+            password: user.password
+        };
+        console.log(`setting ${value} to ${str}`);
         if(value === 'fName'){
             newUser.fName = str;                
         }
@@ -111,15 +151,57 @@ export default function Settings(props) {
         setUser(newUser);
     }
     
+    function makeTable(){
+        console.log(userTable.length)
+        return <Fragment>
+                    {
+                    userTable.length > 0 &&
+                    <TableContainer component={Paper}>
+                        <Table sx={{midWidth: 650}} aria-label="User Table">
+                            <TableHead>
+                                <TableRow>
+                                    {
+                                        userTableCols.map((attr, idx) => 
+                                        <TableCell key={idx} align={attr.align}>
+                                            {attr.title}
+                                        </TableCell>)
+                                    }
+                                    <TableCell>
+                                        Remove User
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {
+                                    userTable.map((userObject, idx) => (
+                                        <TRow userObject={userObject} key={idx}/>
+                                    ))
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                }
+            </Fragment>
+    }
+
+
     async function setNewTheme(primary,secondary,text) {
         console.log("hello")
         await api.setTheme(primary,secondary,text);
         props.handleThemeChange(primary,secondary,text);
     }
+
+
     async function addUser(){
         if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.pass !== '' ){
             await api.addUser(user);
+            setUpdateView(updateView + 1);
         }
+    }
+
+    async function deleteUser(user_id){
+        await api.deleteUser(user_id);
+        setUpdateView(updateView + 1);
     }
     const ColorBox = (text,color) => {
         return(
@@ -137,8 +219,9 @@ export default function Settings(props) {
     )
     }
         return(
-            <Fragment>
-            <Item sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
+            <Box sx= {{flexGrow:1}}>
+            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
+                <Item sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
                 {themes.map((theme,idx) => (
                     <Box key={theme.primary}
                          sx={{
@@ -204,14 +287,14 @@ export default function Settings(props) {
                 </FormControl>
                 <TextField id="username" label="Username" variant="outlined" onChange={(event) => editUser(event.target.value, "username")}/>
                 <TextField id="password" label="Password" variant="outlined" onChange={(event) => editUser(event.target.value, "password")}/>
-                <Button onClick={() => addUser()}variant="contained">Select</Button>
+                <Button onClick={() => addUser()}variant="contained">Add User</Button>
                 </Box>
                 </Item>
                 <Item>
-
+                    {makeTable()}
                 </Item>
-            </Fragment>
-
+            </Stack>
+            </Box>
         )
 /*
     return(
@@ -222,7 +305,4 @@ export default function Settings(props) {
         </Box>
     )
 */
-
-
-
 }
