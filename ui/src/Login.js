@@ -59,6 +59,7 @@ export default function Login({setUser}) {
                 const user = userInfo.user;
                 if( userInfo.status === "OK" ) {
                     setUser(user);
+                    console.log(user);
                 } else  {
                     setVerifyUser(false);
                     setAuthFailed(true);

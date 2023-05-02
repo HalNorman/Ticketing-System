@@ -11,7 +11,7 @@ import {useState, useEffect} from "react";
 import {Tabs} from "@mui/material";
 import {TextField} from "@mui/material";
 import {Icon} from "@mui/material";
-import {Typography} from "@mui/material";
+import {Typography, Button} from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import {Fragment} from "react";
@@ -39,6 +39,7 @@ export default function MainDrawer (props) {
         const api = new API();
 
         async function getTickets() {
+            console.log("userID: "+ props.user.userID );
             const routesJSONString = await  api.getAllTicketsForUser(props.user.userID);
             console.log(`routes from the DB ${JSON.stringify(routesJSONString)}`);
             setTicketInstanceIDs(routesJSONString.data);
@@ -95,6 +96,7 @@ export default function MainDrawer (props) {
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
+    const [isButtonVisible, setIsButtonVisible] = useState(false) //current view to be displayed in window
 
 
     const handleTabChange = (newValue) => {
@@ -105,7 +107,14 @@ export default function MainDrawer (props) {
         setSelectedValue(data)
         setTicketOrTemplateDisplay(view)
         console.log("hello")
+        setIsButtonVisible(true)
 
+    }
+
+    const handlePageClear = () => {
+        setSelectedValue(null);
+        setTicketOrTemplateDisplay(null);
+        setIsButtonVisible(false);
     }
 
 
@@ -170,12 +179,14 @@ export default function MainDrawer (props) {
                         <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
                             {ticketInstanceIDs.filter((data) => {
-                                return data.title.includes(searchValue) || data.username.includes(searchValue)
+                            
+                                return data.title.includes(searchValue) || (`${data.fName} ${data.lName}`).includes(searchValue)
+
                             }).map((instance, index) => (
                                 <div>
                                     <ListItem sx={{borderBottom: "1px solid",borderTop: "1px solid" }} key={instance} multiline = "true" disablePadding >
                                         <ListItemButton onClick={() => handleValueSelection(instance,"Ticket")}>
-                                            <ListItemText primaryTypographyProps={{fontSize: '18px'}} primary={instance.title} secondary ={instance.user}/>
+                                            <ListItemText primaryTypographyProps={{fontSize: '18px'}} primary={instance.title} secondary ={`${instance.fName} ${instance.lName}`}/>
                                         </ListItemButton>
                                     </ListItem>
                                 </div>
@@ -196,6 +207,10 @@ export default function MainDrawer (props) {
                 <TicketInstance ticket = {selectedValue}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate />}
+                <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
+
+
+
             </Box>
         </Fragment>
     )

@@ -52,6 +52,7 @@ const userRouter = require('koa-router')({
 });
 userRouter.use(VerifyJWT);
 userRouter.get('/allActiveUsers', UserController.allActiveUsers, (err) => console.log(`allActiveUsers ran into an error: ${err}`));
+
 userRouter.post('/addUser', UserController.addUser, (err) => console.log(`addUsers ran into an error: ${err}`));
 userRouter.post('/editUsernamePassword', UserController.editUsernamePassword, (err) => console.log(`editUsernamePassword ran into an error: ${err}`));
 userRouter.delete('/:userID/deleteUser', UserController.deleteUser, (err) => console.log(`editUsernamePassword ran into an error: ${err}`));
