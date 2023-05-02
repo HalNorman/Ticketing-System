@@ -46,7 +46,7 @@ export default function MainDrawer (props) {
     console.log(ticketInstanceIDs);
 
   
-    const [tickets,setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
+    const [tickets, setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
         return{
             user: "user" + idx,
             name: "ticket" + idx,
