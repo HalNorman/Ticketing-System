@@ -1,10 +1,10 @@
 {
   "dependencies": {
+    "@mui/material": "^5.12.2",
     "dotenv": "^16.0.3",
     "jsonwebtoken": "^9.0.0",
     "kcors": "^2.2.2",
     "koa": "^2.14.2",
     "koa-bodyparser": "^4.4.0"
-
   }
 }
