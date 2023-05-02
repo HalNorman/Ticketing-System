@@ -37,15 +37,32 @@ const allTicketsByUserID = async (ctx) => {
     console.log('tickets all tickets called.');
     return new Promise((resolve, reject) => {
         const query = `
-                        SELECT * FROM 
-                            ticketingsystem.ticket A 
-                        INNER JOIN 
-                            (SELECT 
-                                ticketingsystem.getTicketsByUserID(ticketID, userID, ?) as ticketID 
-                            FROM 
-                                ticketingsystem.ticket) B 
-                        ON 
-                            A.ticketID = B.ticketID
+            SELECT 
+                A.ticketID as ticketID, 
+                A.userID as userID, 
+                A.title as title, 
+                A.info as info, 
+                A.status as status, 
+                A.dateCreated as dateCreated, 
+                A.dateModified as dateModified, 
+                A.dateCompleted as dateCompleted, 
+                C.fName as fName, 
+                C.lName as lName 
+            FROM 
+                ticketingsystem.ticket A 
+            INNER JOIN 
+                (SELECT 
+                    ticketingsystem.getTicketsByUserID(ticketID, userID, 3) 
+                AS 
+                    ticketID 
+                FROM 
+                    ticketingsystem.ticket) B 
+                ON 
+                    A.ticketID = B.ticketID 
+                INNER JOIN 
+                    ticketingsystem.user C 
+                ON 
+                    A.userID = C.userID;
                         `;
         dbConnection.query({
             sql: query,
