@@ -39,8 +39,15 @@ export default function MainDrawer (props) {
             setTicketInstanceIDs(routesJSONString.data);
         }
 
+
+
         getTickets();
     }, []);
+
+
+
+
+
 
     console.log('user ', props.user.userID);
     console.log(ticketInstanceIDs);
@@ -91,6 +98,7 @@ export default function MainDrawer (props) {
         setSelectedTicket(obj);
         setDoRenderTicket(true);
     }
+
 
     return(
         <Fragment>
