@@ -11,7 +11,7 @@ import {useState, useEffect} from "react";
 import {Tabs} from "@mui/material";
 import {TextField} from "@mui/material";
 import {Icon} from "@mui/material";
-import {Typography} from "@mui/material";
+import {Typography, Button} from "@mui/material";
 import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import {Fragment} from "react";
@@ -92,6 +92,7 @@ export default function MainDrawer (props) {
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
+    const [isButtonVisible, setIsButtonVisible] = useState(false) //current view to be displayed in window
 
 
     const handleTabChange = (newValue) => {
@@ -101,7 +102,14 @@ export default function MainDrawer (props) {
     const handleValueSelection = (data,view) => {
         setSelectedValue(data)
         setTicketOrTemplateDisplay(view)
+        setIsButtonVisible(true)
 
+    }
+
+    const handlePageClear = () => {
+        setSelectedValue(null);
+        setTicketOrTemplateDisplay(null);
+        setIsButtonVisible(false);
     }
 
 
@@ -155,7 +163,7 @@ export default function MainDrawer (props) {
                     {tabValue === "Tickets" &&
                         <List>
                             {ticketInstanceIDs.filter((data) => {
-                                return data.title.includes(searchValue) || data.username.includes(searchValue)
+                                return data.title.includes(searchValue) || data.username.includes(searchValue) //
                             }).map((instance, index) => (
                                 <ListItem sx={{borderBottom: "1px solid",borderTop: "1px solid" }} key={instance} multiline = "true" disablePadding >
                                     <ListItemButton onClick={() => handleValueSelection(instance,"Ticket")}>
@@ -176,6 +184,7 @@ export default function MainDrawer (props) {
                 <TicketInstance ticket = {selectedValue}/>}
                 {ticketOrTemplateDisplay === "Template" &&
                 <TicketTemplate template = {selectedValue}/>}
+                <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
 
 
             </Box>
