@@ -3,7 +3,7 @@ const dateFormat = require('dateformat');
 
 
 function now() {
-    return dateFormat(new Date(), "yyyy-mm-dd HH:MM:ss");
+    return dateFormat(new Date(), "yyyy-mm-dd");
 }
 
 const allTickets = async (ctx) => {
@@ -66,11 +66,36 @@ const allTicketsByUserID = async (ctx) => {
     });
 }
 
-/*
-field
-tag
-ticketID
-*/
+const addTicket = (ctx) => {
+    return new Promise((resolve, reject) => {
+        const ticket = ctx.request.body;
+        const query =  `INSERT INTO 
+                            ticketingsystem.ticket
+                        VALUES
+                            (?, ?, ?, ?, ?, ?, ?)
+                    `;
+        dbConnection.query({
+            sql: query,
+            values: [ticket.userID, ticket.title, ticket.info, "active", now(), now(), "null"]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in TicketsController::addTicket", error);
+                ctx.body = [];
+                ctx.status = 200;
+                return reject(error);
+            }
+            ctx.body = tuples;
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in ticketWithTicketID.", err);
+        // The UI side will have to look for the value of status and
+        // if it is not 200, act appropriately.
+        ctx.body = [];
+        ctx.status = 500;
+    });
+}
 
 const ticketWithTicketID = (ctx) => {
         return new Promise((resolve, reject) => {
@@ -108,9 +133,42 @@ const ticketWithTicketID = (ctx) => {
         });
 }
 
+const completeTicket = async (ctx) => {
+    console.log('tickets completeTicket called.');
+    return new Promise((resolve, reject) => {
+        const query = `
+                        UPDATE 
+                            ticketingsystem.ticket
+                        SET
+                            status = "complete",
+                            dateModified = ?,
+                            dateCompleted = ?
+                        WHERE 
+                            ticketID = ?
+                        `;
+        dbConnection.query({
+            sql: query,
+            values: [now(), now(), ctx.params.ticketID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in TicketsController::completeTicket", error);
+                return reject(error);
+            }
+            ctx.body = tuples;
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in completeTicket.", err);
+        ctx.body = [];
+        ctx.status = 500;
+    });
+}
 
 module.exports = {
     allTickets,
     ticketWithTicketID,
     allTicketsByUserID,
+    addTicket,
+    completeTicket
 };

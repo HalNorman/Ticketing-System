@@ -36,13 +36,6 @@ CREATE TABLE `ticketingsystem`.`user` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE TABLE `ticketingsystem`.`usermodticket` (
--- 	`userID` INT UNSIGNED NOT NULL,
--- 	`ticketID` INT UNSIGNED NOT NULL,
---    `modified` DATE NOT NULL,
---    PRIMARY KEY (`userID`)
--- )
-
 
 CREATE TABLE `ticketingsystem`.`fieldtag` (
   `fieldtagID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -72,8 +65,9 @@ CREATE TABLE `ticketingsystem`.`ticketfieldtag` (
 CREATE TABLE `ticketingsystem`.`theme` (
   `themeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL DEFAULT 'TicketingSystem',
-  `primaryColor` INT UNSIGNED NOT NULL DEFAULT 16711680,
-  `secondaryColor` INT UNSIGNED NOT NULL DEFAULT 65535,
+  `primaryColor` VARCHAR(20) NOT NULL DEFAULT "cyan",
+  `secondaryColor` VARCHAR(20) NOT NULL DEFAULT "yellow",
+  `textColor` VARCHAR(20) NOT NULL DEFAULT "black",
   `image` VARCHAR(45) BINARY NULL,
   PRIMARY KEY (`themeID`))
 COMMENT = '16711680 is red, 65535 is blue';
@@ -141,7 +135,7 @@ INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 2);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 4);
 
-INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`) VALUES ("Default", 16711680, 65535);
+INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`) VALUES ("Default", "2011a2", "55e7ff", "ff34b3");
 
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template", "explain how this template is useful");
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template2", "explain how this template is useful");

@@ -12,6 +12,8 @@ const logout = (setUser) => {
 
 export default function Main() {
 
+
+
     const [user, setUser] = useState(undefined);
 
     return (

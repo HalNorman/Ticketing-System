@@ -14,8 +14,6 @@ import {FormControlLabel, IconButton} from "@mui/material";
 import {Switch} from "@mui/material";
 
 import {useState} from "react";
-import {red} from "@mui/material/colors";
-
 
 export default function MenuAppBar(props) {
 
@@ -29,9 +27,9 @@ export default function MenuAppBar(props) {
 
     return (
         <Box>
-            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, background: "red" }} >
+            <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
                 <Toolbar>
-                    <img src = {require('../TicketLogo2-export.png')} alt = "logo "/>
+                    <img src = {require('../TicketLogo2-export.png')} alt = "logo " onClick={() => props.handlePageChange("MainDrawer")}/>
                     <FormControlLabel control={
                         <Switch
                             checked={checked}
@@ -39,20 +37,20 @@ export default function MenuAppBar(props) {
                             inputProps={{ 'aria-label': 'controlled' }}
                             color = "default"
                         >
-                        </Switch>} label="Admin" />
+                        </Switch>} label="Admin" sx={{color: "secondary.main"}}/>
                     <Box sx = {{flexGrow: 1}}></Box>
                     {props.admin &&
                         <Fragment>
-                            <IconButton>
-                                <AddIcon/>
+                            <IconButton onClick={() => props.handlePageChange("AddTemplate")}>
+                                <AddIcon sx={{color: "secondary.main"}}/>
                             </IconButton>
-                            <IconButton>
-                                <SettingsIcon/>
+                            <IconButton onClick={() => props.handlePageChange("Settings")}>
+                                <SettingsIcon sx={{color: "secondary.main"}} />
                             </IconButton>
                         </Fragment>
                     }
-                    <IconButton>
-                        <AccountCircle/>
+                    <IconButton onClick={() => props.handlePageChange("Profile")}>
+                        <AccountCircle sx={{color: "secondary.main"}} />
                     </IconButton>
                 </Toolbar>
             </AppBar>
