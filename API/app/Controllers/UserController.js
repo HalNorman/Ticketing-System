@@ -41,6 +41,7 @@ const addUser = async (ctx) => {
         const query = `
                         INSERT INTO 
                             ticketingsystem.user
+                            (fName, lName, role, username, password)
                         VALUES
                             (?, ?, ?, ?, ?)
                         `;

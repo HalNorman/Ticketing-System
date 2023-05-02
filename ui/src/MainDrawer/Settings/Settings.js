@@ -1,12 +1,32 @@
-import {Button, Select, Typography} from "@mui/material";
-import Box from "@mui/material/Box";
-import Stack from '@mui/joy/Stack';
+import {Button, FormControl, InputLabel, MenuItem, Typography, Box, TextField, styled, Paper} from "@mui/material";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+
 
 import React, {useState, useEffect, Fragment} from 'react';
 import API from "../../API_Interface/API_Interface";
 
 
+const Item = styled(Paper)(({ theme }) => ({
+    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+    color: theme.palette.text.secondary,
+  }));
+
+
+
 export default function Settings(props) {
+    
+    const [user, setUser] = React.useState(() => 
+    {
+        return {
+        fName: '',
+        lName: '',
+        role: '',
+        username: '',
+        password: ''
+    }});
     const api = new API();
 
 
@@ -25,18 +45,45 @@ export default function Settings(props) {
                 primary: "ec4e20",
                 secondary: "ff9505",
                 text: "016fB9",
-            },
-
-
-
+            }
+        ]
+        
+        const newUserRoles = [
+            "Employee",
+            "User"
         ]
 
+        function editUser(str, value){
+            let newUser = user;
+            if(value === 'fName'){
+                newUser.fName = str;                
+            }
+            else if(value === 'lName'){
+                newUser.lName = str;
+            }
+            else if(value === 'role'){
+                newUser.role = str;
+            }
+            else if(value === 'username'){
+                newUser.username = str;
+            }
+            else if(value === 'password'){
+                newUser.password = str;
+            }
+            setUser(newUser);
+        }
+        
         async function setNewTheme(primary,secondary,text) {
             console.log("hello")
             await api.setTheme(primary,secondary,text);
             props.handleThemeChange(primary,secondary,text);
         }
 
+        async function addUser(){
+            if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.pass !== '' ){
+                await api.addUser(user);
+            }
+        }
 
         const ColorBox = (text,color) => {
             return(
@@ -55,7 +102,7 @@ export default function Settings(props) {
         }
 
         return(
-            <Stack>
+            <Fragment>
             <Item sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
                 {themes.map((theme,idx) => (
                     <Box key={theme.primary}
@@ -93,17 +140,39 @@ export default function Settings(props) {
 
                         }} bgcolor={'#' + theme.text} marginRight={3}/>
                         <Button  onClick={() => setNewTheme(theme.primary,theme.secondary,theme.text)}variant="contained">Select</Button>
-
                     </Box>
                 ))}
                 </Item>
-                <Item>
-                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
-                    <TextField id="outlined-basic" label="Outlined" variant="outlined" />
+                <Item sx={{my:8, flexDirection: "up", marginLeft: "5px"}}>
+                    Add a new user
+                <Box
+                    component="form"
+                    sx={{
+                    '& > :not(style)': { m: 1, width: '25ch' },
+                    }}
+                    noValidate
+                    autoComplete="off">
+                <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
+                <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
+                <FormControl fullWidth>
+                <InputLabel id="role-selector">Role</InputLabel>
+                    <Select
+                        labelId="role-selector"
+                        id="role-select"
+                        value={user.role}
+                        label="role"
+                        onChange={(event) => editUser(event.target.value, "role")}
+                        >
+                            <MenuItem value={"employee"}>Employee</MenuItem>
+                            <MenuItem value={"user"}>User</MenuItem>
+                    </Select>
+                </FormControl>
+                <TextField id="username" label="Username" variant="outlined" onChange={(event) => editUser(event.target.value, "username")}/>
+                <TextField id="password" label="Password" variant="outlined" onChange={(event) => editUser(event.target.value, "password")}/>
+                <Button onClick={() => addUser()}variant="contained">Select</Button>
+                </Box>
                 </Item>
-            </Stack>
+            </Fragment>
 
         )
 /*
