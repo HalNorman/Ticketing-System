@@ -86,7 +86,7 @@ export default class APIInterface {
     //should take in a json object of a user
     //object format - {fName:<string>, lName:<string>, role:<enum: "employee", "user">, username:<string>, password:<string>}
     async addUser(user){
-        return axiosAgent.put(`user/addUser`, user);
+        return axiosAgent.post(`user/addUser`, user);
     }
     //should take a json object of the users username password
     //object format - {username:<string>, password:<string>,userID:<int>}

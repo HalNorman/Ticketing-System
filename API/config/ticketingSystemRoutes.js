@@ -34,8 +34,6 @@ const themeRouter = require('koa-router')({
     prefix: '/theme'
 });
 
-
-
 themeRouter.get('/getTheme', ThemeController.getTheme, err => console.log("ticketing_system_routes.js: geTheme route error", err));
 themeRouter.post('/setTheme/:primaryColor/:secondaryColor/:textColor', ThemeController.setTheme, err => console.log("ticketing_system_routes.js: setTheme route error", err))
 
@@ -52,9 +50,10 @@ const UserController = require('../app/Controllers/UserController.js');
 const userRouter = require('koa-router')({
     prefix: '/user'
 });
-
+userRouter.use(VerifyJWT);
 userRouter.get('/allActiveUsers', UserController.allActiveUsers, (err) => console.log(`allActiveUsers ran into an error: ${err}`));
-userRouter.put('/addUser', UserController.addUser, (err) => console.log(`addUsers ran into an error: ${err}`));
+
+userRouter.post('/addUser', UserController.addUser, (err) => console.log(`addUsers ran into an error: ${err}`));
 userRouter.post('/editUsernamePassword', UserController.editUsernamePassword, (err) => console.log(`editUsernamePassword ran into an error: ${err}`));
 userRouter.delete('/:userID/deleteUser', UserController.deleteUser, (err) => console.log(`editUsernamePassword ran into an error: ${err}`));
 
