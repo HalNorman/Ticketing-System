@@ -272,7 +272,7 @@ export default function Settings(props) {
                     autoComplete="off">
                 <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
                 <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
-                <FormControl fullWidth>
+                <FormControl >
                 <InputLabel id="role-selector">Role</InputLabel>
                     <Select
                         labelId="role-selector"
