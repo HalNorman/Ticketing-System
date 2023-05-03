@@ -162,7 +162,7 @@ export default function Settings(props) {
                                 <TableRow>
                                     {
                                         userTableCols.map((attr, idx) => 
-                                        <TableCell align="right" key={idx} align={attr.align}>
+                                        <TableCell key={idx} align="right">
                                             {attr.title}
                                         </TableCell>)
                                     }
