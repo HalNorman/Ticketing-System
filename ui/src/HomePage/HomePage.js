@@ -3,6 +3,7 @@
 import MenuAppBar from "../AppBar/AppBar";
 import Box from "@mui/material/Box";
 import MainDrawer from "../MainDrawer/MainDrawer";
+import TagEditor from "..//MainDrawer/TagEditor";
 import Settings from "../MainDrawer/Settings/Settings"
 import Profile from "../MainDrawer/Profile"
 import AddTemplate from "../MainDrawer/AddTemplate";
@@ -101,9 +102,12 @@ export default function HomePage(props) {
                 {page === "Profile" &&
                     <Profile  admin = {admin}
                               user = {props.user}/>}
-                {page === "AddTemplate" &&
+                {/* {page === "AddTemplate" &&
                     <AddTemplate  admin = {admin}
-                              user = {props.user}/>}
+                              user = {props.user}/>} */}
+                {page === "TagEditor" &&
+                <TagEditor  admin = {admin}
+                    user = {props.user}/>}
 
             </Box>
             </ThemeProvider>}
