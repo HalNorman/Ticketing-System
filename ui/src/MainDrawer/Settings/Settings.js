@@ -87,32 +87,8 @@ export default function Settings(props) {
         }
     ]
     
-    const TRow = ({userObject}) => {
-        return <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-            {userTableCols.map((attr, idx) =>
-                <TableCell key={idx}
-                    align={attr.align}>
-                    {
-                        userObject[attr.attributeDBName]
-                    }
-                    </TableCell>)
-                }
-                {displayDeleteButton(userObject)}
-        </TableRow>
-    }
     
-    function displayDeleteButton(userObject){
-        if(userObject.role !== 'admin'){
-            return <TableCell align="right">
-                    <Button   onClick={() => deleteUser(userObject.userID)}variant="contained">Delete User</Button>
-                   </TableCell>
-        }
-        else{
-            return  <TableCell>
-                    
-                    </TableCell>
-        }
-    }
+    
 
 
     useEffect(() => {
@@ -151,6 +127,21 @@ export default function Settings(props) {
         setUser(newUser);
     }
     
+    const TRow = ({userObject}) => {
+        return <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+            {userTableCols.map((attr, idx) =>
+                <TableCell key={idx}
+                    align="left">
+                    {
+                        userObject[attr.attributeDBName]
+                    }
+                    </TableCell>)
+                }
+                {displayDeleteButton(userObject)}
+        </TableRow>
+    }
+
+
     function makeTable(){
         console.log(userTable.length)
         return <Fragment>
@@ -162,11 +153,11 @@ export default function Settings(props) {
                                 <TableRow>
                                     {
                                         userTableCols.map((attr, idx) => 
-                                        <TableCell key={idx} align="right">
+                                        <TableCell key={idx} align="left" sx={{paddingRight: 5}}>
                                             {attr.title}
                                         </TableCell>)
                                     }
-                                    <TableCell align="right" sx={{paddingRight: 5}} >
+                                    <TableCell align="left" sx={{paddingRight: 5}} >
                                         Remove User
                                     </TableCell>
                                 </TableRow>
@@ -184,7 +175,19 @@ export default function Settings(props) {
                 }
             </Fragment>
     }
-
+    
+    function displayDeleteButton(userObject){
+        if(userObject.role !== 'admin'){
+            return <TableCell align="left">
+                    <Button   onClick={() => deleteUser(userObject.userID)}variant="contained">Delete User</Button>
+                   </TableCell>
+        }
+        else{
+            return  <TableCell>
+                    Cannot Delete Admin
+                    </TableCell>
+        }
+    }
 
     async function setNewTheme(primary,secondary,text) {
         console.log("hello")
