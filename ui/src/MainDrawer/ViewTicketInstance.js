@@ -35,62 +35,11 @@ const Fields = (props) => {
       })));
     
     }
-    // async function getFieldTags() {
-    //   const routesJSONString = await  api.getAllFieldTags();
-    //   console.log(`All Fields tags from the DB ${JSON.stringify(routesJSONString)}`);
-    //   setAllFieldTags(routesJSONString.data);
-    // }
 
     getFields();
-    //getFieldTags();
 }, []);
 
 console.log("fields: " + JSON.stringify(fields));
-  // useEffect(() => {
-  //   const api = new API();
-
-  //   async function getFields() {
-  //     const routesJSONString = await  api.getTemplateFieldsByID(props.ticket.ticketID);
-  //     console.log(`Fields from the DB ${JSON.stringify(routesJSONString)}`);
-
-  //     setFields(routesJSONString.data.map((ticket) => ({
-  //       fieldtagID: ticket.fieldtagID,
-  //       field: ticket.field,
-  //       tag: ticket.tag,
-  //     })));
-    
-  //   }
-  //   async function getFieldTags() {
-  //     const routesJSONString = await  api.getAllFieldTags();
-  //     console.log(`All Fields tags from the DB ${JSON.stringify(routesJSONString)}`);
-  //     setAllFieldTags(routesJSONString.data);
-  //   }
-
-//     getFields();
-//     getFieldTags();
-// }, []);
- 
-
-  // useEffect(() => {
-    
-  //   // extract fieldtagID values from fields array
-  //   const fieldTagIDs = fields.map((field) => field.fieldtagID);
-
-  //   // filter field tags by fieldTagID and templateID
-  //   const filteredFieldTags = allFieldTags.filter((fieldTag) =>
-  //     fieldTagIDs.includes(fieldTag.fieldtagID)// && fieldTag.templateID === templateID
-  //   );
-
-  //   const newfieldTags = {
-  //     fieldtags: fields.map((field, index) => ({
-  //       fieldtagID: field.fieldtagID,
-  //       field: field.field,
-  //       tags: allFieldTags.filter(obj => obj.field === field.field).map(obj => obj.tag)
-  //     }))
-  //   };
-  //   setFieldTags(newfieldTags);
-
-  // }, [fields, allFieldTags]);
 
 
 
