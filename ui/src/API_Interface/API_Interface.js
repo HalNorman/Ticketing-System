@@ -67,7 +67,7 @@ export default class APIInterface {
     // object 2 format - [<int>, <int>, ...]
     async createTicketInstance(ticket, ticket_field_array){
         return axiosAgent.post('ticket/addTicket', ticket)
-            .then(value => ticket_field_array.map(fieldID => {
+            .then(value => ticket_field_array.map(fieldTagID => {
                 return {
                     ticketID:value.data.insertId,
                     fieldTagID:fieldTagID 
