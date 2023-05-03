@@ -6,62 +6,91 @@ import {
   MenuItem,
   Select,
   Button,
+  TextField
 } from "@mui/material";
+import Stack from '@mui/joy/Stack';
 
 
 
 const Fields = (props) => {
+
+  console.log( "this is the ticket: " + JSON.stringify(props.ticket));
  
 
   const[fieldTags, setFieldTags] = useState([]);
   const[allFieldTags, setAllFieldTags] = useState([]);
   const[fields, setFields] = useState([]);
 
+
   useEffect(() => {
     const api = new API();
 
     async function getFields() {
-      const routesJSONString = await  api.getTemplateFieldsByID(props.ticket.ticketID);
-      console.log(`Fields from the DB ${JSON.stringify(routesJSONString)}`);
+      const routesJSONString = await  api.getTicketByID(props.ticket.ticketID);
+      console.log(`Ticket by ticket ID: ${props.ticket.ticketID}, ${JSON.stringify(routesJSONString)}`);
 
       setFields(routesJSONString.data.map((ticket) => ({
-        fieldtagID: ticket.fieldtagID,
         field: ticket.field,
         tag: ticket.tag,
       })));
     
     }
-    async function getFieldTags() {
-      const routesJSONString = await  api.getAllFieldTags();
-      console.log(`All Fields tags from the DB ${JSON.stringify(routesJSONString)}`);
-      setAllFieldTags(routesJSONString.data);
-    }
+    // async function getFieldTags() {
+    //   const routesJSONString = await  api.getAllFieldTags();
+    //   console.log(`All Fields tags from the DB ${JSON.stringify(routesJSONString)}`);
+    //   setAllFieldTags(routesJSONString.data);
+    // }
 
     getFields();
-    getFieldTags();
+    //getFieldTags();
 }, []);
+
+console.log("fields: " + JSON.stringify(fields));
+  // useEffect(() => {
+  //   const api = new API();
+
+  //   async function getFields() {
+  //     const routesJSONString = await  api.getTemplateFieldsByID(props.ticket.ticketID);
+  //     console.log(`Fields from the DB ${JSON.stringify(routesJSONString)}`);
+
+  //     setFields(routesJSONString.data.map((ticket) => ({
+  //       fieldtagID: ticket.fieldtagID,
+  //       field: ticket.field,
+  //       tag: ticket.tag,
+  //     })));
+    
+  //   }
+  //   async function getFieldTags() {
+  //     const routesJSONString = await  api.getAllFieldTags();
+  //     console.log(`All Fields tags from the DB ${JSON.stringify(routesJSONString)}`);
+  //     setAllFieldTags(routesJSONString.data);
+  //   }
+
+//     getFields();
+//     getFieldTags();
+// }, []);
  
 
-  useEffect(() => {
+  // useEffect(() => {
     
-    // extract fieldtagID values from fields array
-    const fieldTagIDs = fields.map((field) => field.fieldtagID);
+  //   // extract fieldtagID values from fields array
+  //   const fieldTagIDs = fields.map((field) => field.fieldtagID);
 
-    // filter field tags by fieldTagID and templateID
-    const filteredFieldTags = allFieldTags.filter((fieldTag) =>
-      fieldTagIDs.includes(fieldTag.fieldtagID)// && fieldTag.templateID === templateID
-    );
+  //   // filter field tags by fieldTagID and templateID
+  //   const filteredFieldTags = allFieldTags.filter((fieldTag) =>
+  //     fieldTagIDs.includes(fieldTag.fieldtagID)// && fieldTag.templateID === templateID
+  //   );
 
-    const newfieldTags = {
-      fieldtags: fields.map((field, index) => ({
-        fieldtagID: field.fieldtagID,
-        field: field.field,
-        tags: allFieldTags.filter(obj => obj.field === field.field).map(obj => obj.tag)
-      }))
-    };
-    setFieldTags(newfieldTags);
+  //   const newfieldTags = {
+  //     fieldtags: fields.map((field, index) => ({
+  //       fieldtagID: field.fieldtagID,
+  //       field: field.field,
+  //       tags: allFieldTags.filter(obj => obj.field === field.field).map(obj => obj.tag)
+  //     }))
+  //   };
+  //   setFieldTags(newfieldTags);
 
-  }, [fields, allFieldTags]);
+  // }, [fields, allFieldTags]);
 
 
 
@@ -121,42 +150,33 @@ const Fields = (props) => {
   };
 
   return (
-    <Box >
+  <Box > 
       <Typography variant="h3" sx={{color: "text.primary"}}>
         {title}
       </Typography>
       <Typography variant="h5" sx={{color: "text.primary"}}>
         {info}
       </Typography>
-      {fields.map((field, index) => (
-        <Box
-          key={field.fieldtagID}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            my: 1,
-            p: 1,
-            border: "2px solid",
-            borderColor: "secondary.main"
-          }}
-        >
-          <Typography sx={{ mr: 1, color: "text.primary" }}>
-            {field.field}:
-          </Typography>
-          <Select
-            value={selectedTags[index]?  selectedTags[index].tag: null}
-            onChange={(event) => handleTagChange(event, index)}
+      <Stack direction="column">
+        {fields.map((field, index) => (
+          <Box
+            key={field.fieldtagID}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              my: 1,
+              p: 1,
+              border: "2px solid",
+              borderColor: "secondary.main"
+            }}
           >
-            {getMenuItems(field.fieldtagID)}
-          </Select>
-        </Box>
-      ))}
-
-
-      <Button onClick={handleFormSubmit} variant="contained" >
-        Submit
-      </Button>
-    </Box>
+            <Typography sx={{ mr: 1, color: "text.primary" }}>
+              {field.field}: {field.tag}
+            </Typography>
+          </Box>
+        ))}
+    </Stack>
+  </Box>
   );
 };
 
