@@ -67,9 +67,9 @@ ticketRouter.use(VerifyJWT);
 ticketRouter.get('/all-tickets', Authorize('admin'), TicketController.allTickets, err => console.log(`allTicket ran into an error: ${err}`));
 ticketRouter.get('/:userID/all-tickets', Authorize('admin'), TicketController.allTicketsByUserID, err => console.log(`ticketWithUserID ran into an error: ${err}`));
 ticketRouter.get('/:ticketID/ticketID', Authorize('admin'), TicketController.ticketWithTicketID, err => console.log(`ticketWithTicketID ran into an error: ${err}`));
+ticketRouter.get('/getLatestTicket', Authorize('admin'), TicketController.getLatestTicketWithUserIDTitle, err => console.log(`getLatestTicketWithUserIDTitle ran into an error: ${err}`));
 ticketRouter.post('/addTicket', Authorize('admin'), TicketController.addTicket, err => console.log(`addTicket ran into an error: ${err}`));
 ticketRouter.post('/:ticketID/completeTicket', Authorize('admin'), TicketController.completeTicket, err => console.log(`completeTicket ran into an error: ${err}`));
-
 // Template router configuration
 
 const TemplateController = require("../app/Controllers/TemplateController.js");
