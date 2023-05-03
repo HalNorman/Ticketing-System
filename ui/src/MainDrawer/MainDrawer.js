@@ -21,6 +21,7 @@ import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
 import {AccountCircle} from "@mui/icons-material";
 import AddIcon from '@mui/icons-material/Add';
+import ViewTicketInstance from "./ViewTicketInstance";
 
 
 
@@ -94,13 +95,19 @@ export default function MainDrawer (props) {
 
 
     const [searchValue, setSearchValue] = useState(""); //value in search bar
-    const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
+    const [tabValue, setTabValue] = useState(2); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
     const [isButtonVisible, setIsButtonVisible] = useState(false) //current view to be displayed in window
 
 
     const handleTabChange = (newValue) => {
-        setTabValue(newValue);
+        if (newValue === "Templates") {
+            setTabValue(1);
+        }
+        else if (newValue === "Tickets") {
+            setTabValue(2);
+        }
+        console.log( "tab value: " + newValue);
     };
 
     const handleValueSelection = (data,view) => {
@@ -148,7 +155,7 @@ export default function MainDrawer (props) {
                                ),
                            }}size="small" onChange={(s) => setSearchValue(s.target.value)} ></TextField>
 
-                    {tabValue === "Templates" &&
+                    {tabValue === 1 && //Templates
                         <div>
                         <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
@@ -174,7 +181,7 @@ export default function MainDrawer (props) {
                         </div>
 
                     }
-                    {tabValue === "Tickets" &&
+                    {tabValue === 2 && //Tickets 
                         <div>
                         <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
@@ -202,9 +209,9 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance ticket = {selectedValue}/>}
+                <TicketInstance ticket = {selectedValue}/>} 
                 {ticketOrTemplateDisplay === "Ticket" &&
-                <TicketInstance ticket = {selectedValue}/>}
+                <ViewTicketInstance ticket = {selectedValue}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate />}
                 <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>

@@ -97,6 +97,7 @@ export default function Login({setUser}) {
                     error={authFailed}
                     id="outlined-error-helper-text"
                     label="Password"
+                    type="password"
                     placeholder=""
                     value={password}
                     helperText="'sudo'"
