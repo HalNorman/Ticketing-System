@@ -64,15 +64,29 @@ export default class APIInterface {
     //functions below this are not tested, and may have issues regarding how they work
     //should take two json objects <denotes type>
     // object 1 format - {userID:<int>, title:<string>, info:<string>}
-    // object 2 format - [{ticketID:<int>, fieldTagID:<int>},{ticketID:<int>, fieldTagID:<int>},...]
+    // object 2 format - [<int>, <int>, ...]
     async createTicketInstance(ticket, ticket_field_array){
-        return axiosAgent.post('ticket/addTicket', ticket).then(axiosAgent.put('fieldTag/addTicketFieldTags', ticket_field_array));
+        return axiosAgent.post('ticket/addTicket', ticket)
+            .then(value => ticket_field_array.map(fieldTagID => {
+                return {
+                    ticketID:value.data.insertId,
+                    fieldTagID:fieldTagID 
+                }
+            }))
+            .then(value => axiosAgent.post('fieldTag/addTicketFieldTags', value));
     }
     //should take two json objects <denotes type>
     // object 1 format - {title:<string>, info:<string>}
-    // object 2 format - [{templateID:<int>, fieldTagID:<int>}, {templateID:<int>, fieldTagID:<int>},...]
+    // object 2 format - [<int>, <int>, ...]
     async createTicketTemplate(template, template_field_array){
-        return axiosAgent.post('template/addTemplate', template).then(axiosAgent.put('fieldTag/addTemplateFieldTag', template_field_array));
+        return axiosAgent.post('template/addTemplate', template)
+            .then(value => template_field_array.map(fieldTagID => {
+                return {
+                    templateID:value.data.insertId,
+                    fieldTagID:fieldTagID
+                }
+            }))
+            .then(value => axiosAgent.post('fieldTag/addTemplateFieldTag', value));
     }
     //ticketID is an id of a ticket instance
     async completeTicket(ticket_id){

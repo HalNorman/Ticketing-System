@@ -103,8 +103,8 @@ export default function Settings(props) {
     
     function displayDeleteButton(userObject){
         if(userObject.role !== 'admin'){
-            return <TableCell>
-                    <Button  onClick={() => deleteUser(userObject.userID)}variant="contained">Delete User</Button>
+            return <TableCell align="right">
+                    <Button   onClick={() => deleteUser(userObject.userID)}variant="contained">Delete User</Button>
                    </TableCell>
         }
         else{
@@ -156,17 +156,17 @@ export default function Settings(props) {
         return <Fragment>
                     {
                     userTable.length > 0 &&
-                    <TableContainer component={Paper}>
-                        <Table sx={{midWidth: 650}} aria-label="User Table">
+                    <TableContainer component={Paper} >
+                        <Table sx={{midWidth: 650}} aria-label="User Table" >
                             <TableHead>
                                 <TableRow>
                                     {
                                         userTableCols.map((attr, idx) => 
-                                        <TableCell key={idx} align={attr.align}>
+                                        <TableCell align="right" key={idx} align={attr.align}>
                                             {attr.title}
                                         </TableCell>)
                                     }
-                                    <TableCell>
+                                    <TableCell align="right" sx={{paddingRight: 5}} >
                                         Remove User
                                     </TableCell>
                                 </TableRow>
@@ -174,6 +174,7 @@ export default function Settings(props) {
                             <TableBody>
                                 {
                                     userTable.map((userObject, idx) => (
+
                                         <TRow userObject={userObject} key={idx}/>
                                     ))
                                 }
@@ -203,35 +204,23 @@ export default function Settings(props) {
         await api.deleteUser(user_id);
         setUpdateView(updateView + 1);
     }
-    const ColorBox = (text,color) => {
+
         return(
-            <Fragment>
-                <Typography>
-                    {text}:
-                        </Typography>
-                            <Box sx={{
-                                my: 1,
-                                p: 1,
-                                border: "1px solid black",
-                                bgcolor: color.primary
-                            }} />
-            </Fragment>
-    )
-    }
-        return(
-            <Box sx= {{flexGrow:1}}>
-            <Stack spacing={{ xs: 1, sm: 2 }} direction="row" useFlexGap flexWrap="wrap">
+            <Box sx= {{flexGrow:1,p: 3 }} >
                 <Item sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
+                    <Typography variant = "h5">
+                        Theme Select
+                    </Typography>
                 {themes.map((theme,idx) => (
                     <Box key={theme.primary}
                          sx={{
-                             display: "flex",
                              alignItems: "center",
                              my: 1,
                              p: 1,
                              border: "1px solid",
-                         }}
+                                 }}
                     >
+                        <Stack direction = "row" justifyContent="space-between">
                         <Typography>
                             Primary:
                         </Typography>
@@ -239,6 +228,7 @@ export default function Settings(props) {
                             my: 1,
                             p: 1,
                             border: "1px solid",
+                            width: "25vh"
                         }} bgcolor={'#' + theme.primary} />
                         <Typography>
                             Secondary:
@@ -247,6 +237,7 @@ export default function Settings(props) {
                             my: 1,
                             p: 1,
                             border: "1px solid ",
+                            width: "25vh"
                         }} bgcolor={'#' + theme.secondary}/>
                         <Typography>
                             Text:
@@ -255,31 +246,34 @@ export default function Settings(props) {
                             my: 1,
                             p: 1,
                             border: "1px solid",
-
-                        }} bgcolor={'#' + theme.text} marginRight={3}/>
+                            width: "25vh"
+                        }} bgcolor={'#' + theme.text}/>
                         <Button  onClick={() => setNewTheme(theme.primary,theme.secondary,theme.text)}variant="contained">Select</Button>
+                        </Stack>
                     </Box>
                 ))}
                 </Item>
-                <Item sx={{my:8, flexDirection: "up", marginLeft: "5px"}}>
-                    Add a new user
+                <Item sx={{my:8, marginLeft: "5px"}} >
+                    <Typography variant = "h5">
+                        Add User
+                    </Typography>
                 <Box
                     component="form"
-                    sx={{
-                    '& > :not(style)': { m: 1, width: '25ch' },
-                    }}
                     noValidate
-                    autoComplete="off">
+                    autoComplete="off"
+                justifyContent="space-between"
+                sx={{marginTop: "5px"}}>
+                    <Stack direction="row" justifyContent="space-between">
                 <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
                 <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
-                <FormControl fullWidth>
+                <FormControl  sx={{width: "20vh"}}>
                 <InputLabel id="role-selector">Role</InputLabel>
                     <Select
                         labelId="role-selector"
                         id="role-select"
-                        value={user.role}
                         label="role"
                         onChange={(event) => editUser(event.target.value, "role")}
+                        value={user.role}
                         >
                             <MenuItem value={"employee"}>Employee</MenuItem>
                             <MenuItem value={"user"}>User</MenuItem>
@@ -288,12 +282,12 @@ export default function Settings(props) {
                 <TextField id="username" label="Username" variant="outlined" onChange={(event) => editUser(event.target.value, "username")}/>
                 <TextField id="password" label="Password" variant="outlined" onChange={(event) => editUser(event.target.value, "password")}/>
                 <Button onClick={() => addUser()}variant="contained">Add User</Button>
+                    </Stack>
                 </Box>
                 </Item>
                 <Item>
                     {makeTable()}
                 </Item>
-            </Stack>
             </Box>
         )
 /*
