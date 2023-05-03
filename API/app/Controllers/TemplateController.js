@@ -86,6 +86,7 @@ const addTemplate = (ctx) => {
         const template = ctx.request.body;
         const query =  `INSERT INTO 
                             ticketingsystem.template
+                            (title, info)
                         VALUES
                             (?, ?)
                     `;

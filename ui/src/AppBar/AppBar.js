@@ -41,7 +41,7 @@ export default function MenuAppBar(props) {
                     <Box sx = {{flexGrow: 1}}></Box>
                     {props.admin &&
                         <Fragment>
-                            <IconButton onClick={() => props.handlePageChange("AddTemplate")}>
+                            <IconButton onClick={() => props.handlePageChange("TagEditor")}>
                                 <AddIcon sx={{color: "secondary.main"}}/>
                             </IconButton>
                             <IconButton onClick={() => props.handlePageChange("Settings")}>
