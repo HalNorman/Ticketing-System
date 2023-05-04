@@ -20,6 +20,14 @@ const Fields = (props) => {
   const[fieldTags, setFieldTags] = useState([]);
   const[allFieldTags, setAllFieldTags] = useState([]);
   const[fields, setFields] = useState([]);
+  // const[ticketID, setTicketID] = useState([props.ticket.ticketID]);
+
+  const title = props.ticket.title;
+  const info =  props.ticket.info;
+  const ticketID = props.ticket.ticketID;
+
+  console.log("fields: " + JSON.stringify(fields));
+  console.log("ticketID: " + JSON.stringify(ticketID));
 
 
   useEffect(() => {
@@ -37,14 +45,13 @@ const Fields = (props) => {
     }
 
     getFields();
-}, []);
-
-console.log("fields: " + JSON.stringify(fields));
+}, [ticketID]);
 
 
 
-  const title = props.ticket.title;
-  const info =  props.ticket.info;
+
+
+
 
   const [selectedTags, setSelectedTags] = useState([]);
 
