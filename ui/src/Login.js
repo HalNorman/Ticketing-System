@@ -11,12 +11,13 @@ import Divider from '@mui/material/Divider';
 import { Typography } from '@mui/material';
 
 
-export default function Login({setUser}) {
+export default function Login({setUser, title}) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [verifyUser, setVerifyUser] = useState(false);
     const [authFailed, setAuthFailed] = useState(false);
 
+    console.log(title);
 
     const handleInputChange = (label) => event => {
         console.log("handleInputChange called.");
@@ -74,7 +75,7 @@ export default function Login({setUser}) {
        <Fragment>
             <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
 
-                Ticketing System
+                {title}
 
             </Typography>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>

@@ -38,11 +38,6 @@ const userTableCols = [
         title: 'Username',
         attributeDBName: 'username',
         align: 'left'
-    },
-    {
-        title: 'Password',
-        attributeDBName: 'password',
-        align: 'left'
     }
 ];
 
@@ -60,7 +55,8 @@ export default function Settings(props) {
     }});
     const [updateView, setUpdateView] = React.useState(1);
     const [userTable, setUserTable] = React.useState([]);
-    
+    const [systemName, setSystemName] = React.useState('');
+
     const themes =[
         {
             primary: "242f40",
@@ -217,7 +213,11 @@ export default function Settings(props) {
             setUpdateView(updateView + 1);
         }
     }
-
+    async function setSystemNameInApi(){
+        if(systemName !== ''){
+            await api.setThemeName(systemName);
+        }
+    }
     async function deleteUser(user_id){
         await api.deleteUser(user_id);
         setUpdateView(updateView + 1);
@@ -225,6 +225,15 @@ export default function Settings(props) {
 
         return(
             <Box sx= {{flexGrow:1,p: 3 }} >
+                <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
+                    <Typography variant = "h5">
+                        Change System Name
+                    </Typography>
+                    <Stack direction = "row" justifyContent="center">
+                        <TextField id="Ticketing System Name" label="Ticketing System Name" variant="outlined" onChange={(event) => setSystemName(event.target.value)}/>
+                        <Button onClick={() => setSystemNameInApi()}variant="contained">Set Name</Button>
+                    </Stack>
+                </Box>
                 <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
                     <Typography variant = "h5">
                         Theme Select
