@@ -19,9 +19,10 @@ const Fields = (props) => {
 
   useEffect(() => {
     const api = new API();
+    console.log("template id ", props.ticket.templateID);
 
     async function getFields() {
-      const routesJSONString = await  api.getTemplateFieldsByID(props.ticket.ticketID);
+      const routesJSONString = await  api.getTemplateFieldsByID(props.ticket.templateID);
       console.log(`Fields from the DB ${JSON.stringify(routesJSONString)}`);
 
       setFields(routesJSONString.data.map((ticket) => ({
