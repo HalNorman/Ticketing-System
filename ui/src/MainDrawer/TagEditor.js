@@ -82,7 +82,7 @@ export default function FieldForm() {
   );
 
   return (
-    <Box sx={{ my: 8 }}>
+    <Box sx={{ my: 8}}  >
       <form onSubmit={handleAddFieldAndTag}>
         <label htmlFor="field">Field:</label>
         <input type="text" id="field" name="field" />

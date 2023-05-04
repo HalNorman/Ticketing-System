@@ -124,6 +124,11 @@ export default function MainDrawer (props) {
         <Fragment>
             <Drawer
                 variant="permanent"
+                PaperProps={{
+                    sx: {
+                        backgroundColor: "background.default",
+                    }
+                }}
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
@@ -131,10 +136,10 @@ export default function MainDrawer (props) {
                 }}
             >
                 <Toolbar />
-                <Box sx={{  borderRight: "1px solid" }}>
+                <Box sx={{  borderRight: "1px solid", }}>
                     <Tabs value={tabValue} centered  aria-label="basic tabs example" >
-                        <Tab sx={{borderRight: "1px solid", width: drawerWidth/2, }} label="Tickets " value={1} onClick={() => handleTabChange("Tickets")} color = "secondary"/>
-                        <Tab sx={{borderLeft: "1px solid",width: drawerWidth/2, }} label="Templates" value={2} onClick={() => handleTabChange("Templates")} color = "secondary" />
+                        <Tab sx={{borderRight: "1px solid", width: drawerWidth/2,backgroundColor: "background.default" }} label="Tickets " value={1} onClick={() => handleTabChange("Tickets")} color = "secondary"/>
+                        <Tab sx={{borderLeft: "1px solid",width: drawerWidth/2, backgroundColor: "background.default"}} label="Templates" value={2} onClick={() => handleTabChange("Templates")} color = "secondary" />
                     </Tabs>
                 </Box>
                 <TextField variant = "standard" sx={{borderTop:"1px solid",borderRight: "1px solid"}}

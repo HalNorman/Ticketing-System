@@ -71,19 +71,22 @@ export default function Settings(props) {
     
     const themes =[
         {
-            primary: "2011a2",
-            secondary: "55e7ff",
-            text: "ff34b3",
+            primary: "201148",
+            secondary: "00ccfd",
+            text: "55e7ff",
+            background:"000000"
         },
         {
             primary: "242f40",
             secondary: "cca43b",
             text: "363636",
+            background:"ffffff"
         },
         {
             primary: "ec4e20",
             secondary: "ff9505",
             text: "016fB9",
+            background:"ffffff"
         }
     ]
     
@@ -148,7 +151,9 @@ export default function Settings(props) {
                     {
                     userTable.length > 0 &&
                     <TableContainer component={Paper} >
-                        <Table sx={{midWidth: 650}} aria-label="User Table" >
+                        <Table sx={{midWidth: 650,   '&:nth-of-type(odd)': {
+                                backgroundColor: "background.default",
+                            },}} aria-label="User Table" >
                             <TableHead>
                                 <TableRow>
                                     {
@@ -189,10 +194,10 @@ export default function Settings(props) {
         }
     }
 
-    async function setNewTheme(primary,secondary,text) {
+    async function setNewTheme(primary,secondary,text,background) {
         console.log("hello")
-        await api.setTheme(primary,secondary,text);
-        props.handleThemeChange(primary,secondary,text);
+        await api.setTheme(primary,secondary,text,background);
+        props.handleThemeChange(primary,secondary,text,background);
     }
 
 
@@ -210,7 +215,7 @@ export default function Settings(props) {
 
         return(
             <Box sx= {{flexGrow:1,p: 3 }} >
-                <Item sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
+                <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
                     <Typography variant = "h5">
                         Theme Select
                     </Typography>
@@ -251,21 +256,22 @@ export default function Settings(props) {
                             border: "1px solid",
                             width: "25vh"
                         }} bgcolor={'#' + theme.text}/>
-                        <Button  onClick={() => setNewTheme(theme.primary,theme.secondary,theme.text)}variant="contained">Select</Button>
+                        <Button  onClick={() => setNewTheme(theme.primary,theme.secondary,theme.text,theme.background)}variant="contained">Select</Button>
                         </Stack>
                     </Box>
                 ))}
-                </Item>
-                <Item sx={{my:8, marginLeft: "5px"}} >
+                </Box>
+                <Box   sx={{my:8, marginLeft: "5px",border: "1px solid"}} >
                     <Typography variant = "h5">
                         Add User
                     </Typography>
                 <Box
+
                     component="form"
                     noValidate
                     autoComplete="off"
                 justifyContent="space-between"
-                sx={{marginTop: "5px"}}>
+                sx={{marginTop: "5px", }} padding="20px">
                     <Stack direction="row" justifyContent="space-between">
                 <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
                 <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
@@ -287,10 +293,10 @@ export default function Settings(props) {
                 <Button onClick={() => addUser()}variant="contained">Add User</Button>
                     </Stack>
                 </Box>
-                </Item>
-                <Item>
+                </Box>
+                <Box>
                     {makeTable()}
-                </Item>
+                </Box>
             </Box>
         )
 /*

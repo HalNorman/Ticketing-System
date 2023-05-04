@@ -81,7 +81,7 @@ function TicketTemplate() {
           label="Info"
           value={info}
           onChange={(e) => setInfo(e.target.value)}
-          sx={{ mb: 2 }}
+          sx={{ mb: 4 }}
         />
         <Grid container spacing={2}>
           {selectedFields.map((selectedField, index) => (

@@ -35,7 +35,7 @@ const themeRouter = require('koa-router')({
 });
 
 themeRouter.get('/getTheme', ThemeController.getTheme, err => console.log("ticketing_system_routes.js: geTheme route error", err));
-themeRouter.post('/setTheme/:primaryColor/:secondaryColor/:textColor', ThemeController.setTheme, err => console.log("ticketing_system_routes.js: setTheme route error", err))
+themeRouter.post('/setTheme/:primaryColor/:secondaryColor/:textColor/:backgroundColor', ThemeController.setTheme, err => console.log("ticketing_system_routes.js: setTheme route error", err))
 
 // Login router configuration.
 
