@@ -65,9 +65,6 @@ export default function MainDrawer (props) {
     }, []);
 
 
-
-
-
     console.log('user ', props.user.userID);
     console.log(ticketInstanceIDs);
 
@@ -181,9 +178,9 @@ export default function MainDrawer (props) {
                     {tabValue === "Tickets" &&
                         <div>
                         <Box>
-                        <FormControl sx={{width: "20vh"}}>
+                        <FormControl sx={{display: "flex",border: "1px solid", borderColor: `text.default`}} >
                             <InputLabel id="role-selector"></InputLabel>
-                                <Select
+                                <Select sx={{flexGrow: 1}}
                                     labelId="role-selector"
                                     id="role-select"
                                     onChange={(event) => setTicketStatus(event.target.value, "role")}

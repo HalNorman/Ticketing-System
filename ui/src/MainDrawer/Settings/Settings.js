@@ -71,30 +71,41 @@ export default function Settings(props) {
     
     const themes =[
         {
+            primary: "242f40",
+            secondary: "cca43b",
+            text: "363636",
+            background:"F6F1F1"
+        },
+        {
             primary: "F1F6F9",
             secondary: "394867",
             text: "212A3E",
             background:"9BA4B5"
         },
         {
-            primary: "FFF7D4",
-            secondary: "FFD95A",
-            text: "C07F00",
-            background:"4C3D3D"
-        },
-
-        {
-            primary: "242f40",
-            secondary: "cca43b",
-            text: "363636",
-            background:"ffffff"
+            primary: "393646",
+            secondary: "4F4557",
+            text: "6D5D6E",
+            background:"F4EEE0"
         },
         {
-            primary: "ec4e20",
-            secondary: "ff9505",
-            text: "016fB9",
-            background:"ffffff"
-        }
+            primary: "2C3333",
+            secondary: "2E4F4F",
+            text: "0E8388",
+            background:"CBE4DE"
+        },
+        {
+            primary: "301E67",
+            secondary: "5B8FB9",
+            text: "B6EADA",
+            background:"03001C"
+        },
+        {
+            primary: "3C2A21",
+            secondary: "D5CEA3",
+            text: "E5E5CB",
+            background:"1A120B"
+        },
     ]
     
     
