@@ -224,7 +224,7 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance ticket = {selectedValue}/>} 
+                <TicketInstance ticket = {selectedValue} userID = {props.user.userID}/>} 
                 {ticketOrTemplateDisplay === "Ticket" &&
                 <ViewTicketInstance ticket = {selectedValue} role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
