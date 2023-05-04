@@ -1,115 +1,172 @@
-import React, { useState } from 'react';
-import fieldTags from './data.json';
+import React, { useState, useEffect } from 'react';
+import API from '../API_Interface/API_Interface';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+  Grid
+} from '@mui/material';
 
-function StringInputForm() {
-  const [inputFields, setInputFields] = useState([]);
-  const [newTag, setNewTag] = useState('');
-  const [dropDownOptions, setDropDownOptions] = useState(fieldTags.fieldtags);
+function TicketTemplate() {
+  const [fields, setFields] = useState([]);
+  const [selectedFields, setSelectedFields] = useState([]);
+  const [title, setTitle] = useState('');
+  const [info, setInfo] = useState('');
 
-  const handleAddField = () => {
-    setInputFields([...inputFields, { leftFieldId: '', leftFieldOther: '', rightFieldId: '' }]);
-  };
+  useEffect(() => {
+    const api = new API();
 
-  const handleRemoveField = (indexToRemove) => {
-    setInputFields(inputFields.filter((_, index) => index !== indexToRemove));
-  };
-
-  const handleFieldChange = (index, key, value) => {
-    const newFields = [...inputFields];
-    newFields[index][key] = value;
-    if (key === 'leftFieldId') {
-      const fieldTag = fieldTags.fieldtags.find((fieldTag) => fieldTag.field === value);
-      const rightOptions =fieldTag ? fieldTag.tags : [];
-      if (newTag !== '') {
-        rightOptions.push({ tag: newTag });
-      }
-      newFields[index]['rightFieldId'] = '';
-      setInputFields(newFields);
-      setInputFields((prev) =>
-        prev.map((input, i) => {
-          if (i === index) {
-            return { ...input, rightFieldId: '', rightDropdownOptions: rightOptions };
-          }
-          return input;
-        })
-      );
-    } else {
-      setInputFields(newFields);
+    async function getFieldTags() {
+      const routesJSONString = await api.getAllFieldTags();
+      setFields(routesJSONString.data);
     }
-  };
 
-  const handleNewTagChange = (e) => {
-    setNewTag(e.target.value);
-    setDropDownOptions([...dropDownOptions, { field: newTag, tags: [] }]);
-  };
+    getFieldTags();
+  }, []);
 
-  const leftDropdownOptions = [
-    { label: 'Select Field', value: '' },
-    ...dropDownOptions.map((fieldTag) => ({ label: fieldTag.field, value: fieldTag.field })),
-    { label: 'Other', value: 'Other' },
-  ];
+  function handleAddField(field) {
+    setSelectedFields([...selectedFields, { field, fieldTag: null }]);
+  }
+
+  function handleDeleteField(index) {
+    const updatedSelectedFields = [...selectedFields];
+    updatedSelectedFields.splice(index, 1);
+    setSelectedFields(updatedSelectedFields);
+  }
+
+  function handleSelectFieldTag(index, fieldTag) {
+    const updatedSelectedFields = [...selectedFields];
+    updatedSelectedFields[index].fieldTag = fieldTag;
+    setSelectedFields(updatedSelectedFields);
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    const api = new API();
+    const template = { title, info };
+    const template_field_array = selectedFields.map((field) => field.fieldTag.fieldtagID);
+    await api.createTicketTemplate(template, template_field_array);
+  }
+
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-      {inputFields.map((field, index) => (
-        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '10px' }}>
-          <select
-            value={field.leftFieldId}
-            onChange={(e) => handleFieldChange(index, 'leftFieldId', e.target.value)}
-            style={{ width: '40%', height: '50px', marginRight: '10px' }}
-          >
-            {leftDropdownOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          {field.leftFieldId === 'Other' && (
-            <input
-              type="text"
-              value={field.leftFieldOther}
-              onChange={(e) => handleFieldChange(index, 'leftFieldOther', e.target.value)}
-              placeholder="Enter Value"
-              style={{ width: '20%', height: '50px', marginRight:'10px' }}
-            />
-          )}
-          <select
-            value={field.rightFieldId}
-            onChange={(e) => handleFieldChange(index, 'rightFieldId', e.target.value)}
-            style={{ width: '40%', height: '50px', marginRight: '10px' }}
-          >
-            <option value="">Select Field</option>
-            <option value="New Tag">New Tag</option>
-            {field.rightDropdownOptions &&
-              field.rightDropdownOptions.map((option) => (
-                <option key={option.tag} value={option.tag}>
-                  {option.tag}
-                </option>
-              ))}
-          </select>
-          {field.rightFieldId === 'New Tag' && (
-            <input
-              type="text"
-              value={newTag}
-              onChange={handleNewTagChange}
-              placeholder="Enter Value"
-              style={{ width: '20%', height: '50px', marginRight: '10px' }}
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
-                  //close dropdown
-                  document.getElementsByClassName('dropdown')[0].style.display = 'none';
-                  //clear field
-                  setNewTag('');
-                }
-              }}
-            />
-          )}
-          <button onClick={() => handleRemoveField(index)}>-</button>
-        </div>
-      ))}
-      <button onClick={handleAddField} style={{ padding: '10px 20px', marginTop: '10px' }}>Add Field</button>
+    <div>
+      <h1>TicketTemplate</h1>
+      <form onSubmit={handleSubmit}>
+        <TextField
+          label="Title"
+          required
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <br />
+        <TextField
+          label="Info"
+          value={info}
+          onChange={(e) => setInfo(e.target.value)}
+          sx={{ mb: 2 }}
+        />
+        <Grid container spacing={2}>
+          {selectedFields.map((selectedField, index) => (
+            <React.Fragment key={index}>
+              <Grid item xs={6}>
+                {selectedField.field}
+              </Grid>
+              <Grid item xs={6}>
+                <FieldTagSelector
+                  field={selectedField.field}
+                  fields={fields}
+                  onSelectFieldTag={(fieldTag) =>
+                    handleSelectFieldTag(index, fieldTag)
+                  }
+                />
+                <button type="button" onClick={() => handleDeleteField(index)}>
+                  -
+                </button>
+              </Grid>
+            </React.Fragment>
+          ))}
+        </Grid>
+        <AddFieldButton fields={fields} onAddField={handleAddField} />
+        <Button type="submit" variant="contained" sx={{ mt: 2 }}>Submit</Button>
+      </form>
     </div>
   );
 }
 
-export default StringInputForm;
+
+function AddFieldButton({ fields, onAddField }) {
+  const [selectedField, setSelectedField] = useState('');
+
+  const handleChange = (event) => {
+    setSelectedField(event.target.value);
+    onAddField(event.target.value);
+  };
+
+  const uniqueFields = [...new Set(fields.map((field) => field.field))];
+
+  return (
+    <div>
+      <FormControl fullWidth>
+        <InputLabel id="add-field-label">Add Field</InputLabel>
+        <Select
+          labelId="add-field-label"
+          id="add-field"
+          value={selectedField}
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {uniqueFields.map((field) => (
+            <MenuItem key={field} value={field}>
+              {field}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
+  );
+}
+
+function FieldTagSelector({ field, fields, onSelectFieldTag }) {
+  const [selectedFieldTag, setSelectedFieldTag] = useState(null);
+
+  const handleChange = (event) => {
+    setSelectedFieldTag(event.target.value);
+    onSelectFieldTag(event.target.value);
+  };
+
+  const fieldTags = fields.filter((f) => f.field === field);
+
+  return (
+    <div>
+      <FormControl fullWidth>
+        <InputLabel id={`select-field-tag-label-${field}`}>Select Field Tag</InputLabel>
+        <Select
+          labelId={`select-field-tag-label-${field}`}
+          id={`select-field-tag-${field}`}
+          value={selectedFieldTag}
+          onChange={handleChange}
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          {fieldTags.map((fieldTag) => (
+            <MenuItem key={fieldTag.fieldtagID} value={fieldTag}>
+              {fieldTag.tag}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+    </div>
+  );
+}
+
+export default TicketTemplate;
