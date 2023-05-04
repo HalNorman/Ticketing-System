@@ -240,7 +240,7 @@ export default function Settings(props) {
                                  }}
                     >
                         <Stack direction = "row" justifyContent="space-between">
-                        <Typography>
+                        <Typography sx={{color: `#${theme.primary}`}}>
                             Primary:
                         </Typography>
                         <Box sx={{
@@ -249,7 +249,7 @@ export default function Settings(props) {
                             border: "1px solid",
                             width: "25vh"
                         }} bgcolor={'#' + theme.primary} />
-                        <Typography>
+                        <Typography  sx={{color: `#${theme.primary}`}}>
                             Secondary:
                         </Typography>
                         <Box sx={{
@@ -258,7 +258,7 @@ export default function Settings(props) {
                             border: "1px solid ",
                             width: "25vh"
                         }} bgcolor={'#' + theme.secondary}/>
-                        <Typography>
+                        <Typography  sx={{color: `#${theme.primary}`}}>
                             Text:
                         </Typography>
                         <Box sx={{
@@ -286,7 +286,7 @@ export default function Settings(props) {
                     <Stack direction="row" justifyContent="space-between">
                 <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
                 <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
-                <FormControl  sx={{width: "20vh"}}>
+                <FormControl  sx={{width: "20vh"}} >
                 <InputLabel id="role-selector">Role</InputLabel>
                     <Select
                         labelId="role-selector"
