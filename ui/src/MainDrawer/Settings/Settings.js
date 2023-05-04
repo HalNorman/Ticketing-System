@@ -197,7 +197,7 @@ export default function Settings(props) {
 
 
     async function addUser(){
-        if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.pass !== '' ){
+        if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.password !== '' ){
             await api.addUser(user);
             setUpdateView(updateView + 1);
         }
