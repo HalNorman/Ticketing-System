@@ -101,7 +101,7 @@ export default function Login({setUser, title}) {
                     placeholder=""
                     value={password}
                     onChange={handleInputChange('Password')}
-                    type="password"
+                    
                 />
                 <Divider />
            </Box>
