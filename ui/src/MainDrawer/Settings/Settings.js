@@ -62,13 +62,17 @@ export default function Settings(props) {
     const [userTable, setUserTable] = React.useState([]);
     
     const themes =[
+        
         {
+
+
             primary: "242f40",
             secondary: "cca43b",
             text: "363636",
             background:"F6F1F1"
         },
         {
+
             primary: "F1F6F9",
             secondary: "394867",
             text: "212A3E",
@@ -98,6 +102,7 @@ export default function Settings(props) {
             text: "E5E5CB",
             background:"1A120B"
         },
+
     ]
     
     
