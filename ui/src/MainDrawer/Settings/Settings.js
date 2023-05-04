@@ -71,11 +71,18 @@ export default function Settings(props) {
     
     const themes =[
         {
-            primary: "201148",
-            secondary: "00ccfd",
-            text: "55e7ff",
-            background:"000000"
+            primary: "F1F6F9",
+            secondary: "394867",
+            text: "212A3E",
+            background:"9BA4B5"
         },
+        {
+            primary: "FFF7D4",
+            secondary: "FFD95A",
+            text: "C07F00",
+            background:"4C3D3D"
+        },
+
         {
             primary: "242f40",
             secondary: "cca43b",
@@ -226,6 +233,7 @@ export default function Settings(props) {
                              my: 1,
                              p: 1,
                              border: "1px solid",
+                             backgroundColor: `#${theme.background}`
                                  }}
                     >
                         <Stack direction = "row" justifyContent="space-between">
@@ -256,7 +264,7 @@ export default function Settings(props) {
                             border: "1px solid",
                             width: "25vh"
                         }} bgcolor={'#' + theme.text}/>
-                        <Button  onClick={() => setNewTheme(theme.primary,theme.secondary,theme.text,theme.background)}variant="contained">Select</Button>
+                        <Button sx={{backgroundColor: `#${theme.secondary}`}} onClick={() => setNewTheme(theme.primary,theme.secondary,theme.text,theme.background)}variant="contained">Select</Button>
                         </Stack>
                     </Box>
                 ))}
@@ -294,7 +302,7 @@ export default function Settings(props) {
                     </Stack>
                 </Box>
                 </Box>
-                <Box>
+                <Box sx={{border: "1px solid"}}>
                     {makeTable()}
                 </Box>
             </Box>
