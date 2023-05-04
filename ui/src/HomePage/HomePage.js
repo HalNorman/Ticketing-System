@@ -10,11 +10,15 @@ import AddTemplate from "../MainDrawer/AddTemplate";
 import React, {useState, useEffect} from "react";
 import API from "../API_Interface/API_Interface";
 import {createTheme,ThemeProvider} from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+
 
 export default function HomePage(props) {
 
-    const [admin,setAdmin] = useState(true);
+    const [admin,setAdmin] = useState(props.user.role === "admin");
     const [page,setPage] = useState("MainDrawer");
+    
+    
     const [theme,setTheme] = useState()
 
     useEffect(() => {
@@ -40,6 +44,9 @@ export default function HomePage(props) {
                                 secondary: '#'+themeData[0].textColor,
                                 disabled: '#'+themeData[0].textColor,
                             },
+                            background: {
+                                default: '#'+themeData[0].backgroundColor
+                            }
                         },
                     }))
 
@@ -49,7 +56,27 @@ export default function HomePage(props) {
         getTheme();
     }, []);
 
+    const handleThemeChange = (primaryColor,secondaryColor,textColor,backgroundColor) => {
+        setTheme(createTheme({
+            palette: {
+                primary: {
+                    main: '#'+primaryColor,
+                },
+                secondary: {
+                    main: '#'+secondaryColor,
+                },
+                text: {
+                    primary: '#' + textColor,
+                    secondary: '#' + textColor,
+                    disabled: '#' + textColor,
+                },
+                background: {
+                    default: '#'+backgroundColor
+                }
 
+            },
+        }))
+    }
 
 
 
@@ -64,33 +91,18 @@ export default function HomePage(props) {
         setPage(page);
     }
 
-    const handleThemeChange = (primaryColor,secondaryColor,textColor) => {
-        setTheme(createTheme({
-            palette: {
-                primary: {
-                    main: '#'+primaryColor,
-                },
-                secondary: {
-                    main: '#'+secondaryColor,
-                },
-                text: {
-                    primary: '#' + textColor,
-                    secondary: '#' + textColor,
-                    disabled: '#' + textColor,
-                },
-
-            },
-        }))
-    }
 
     return (
         <div className="HomePage" >
             {theme != null &&
             <ThemeProvider theme={theme} >
+                <CssBaseline />
             <Box sx={{ display: 'flex',}} >
                 <MenuAppBar adminSwitch = {adminSwitch}
-                            admin = {admin}
-                            handlePageChange={handlePageChange}/>
+                    admin = {admin}
+                        handlePageChange={handlePageChange}
+                            user={props.user}
+                        />
                 {page === "MainDrawer" &&
                     <MainDrawer admin = {admin}
                           user = {props.user}
@@ -108,7 +120,7 @@ export default function HomePage(props) {
                 {page === "TagEditor" &&
                 <TagEditor  admin = {admin}
                     user = {props.user}/>}
-
+                
             </Box>
             </ThemeProvider>}
         </div>

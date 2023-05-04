@@ -21,6 +21,10 @@ import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
 import {AccountCircle} from "@mui/icons-material";
 import AddIcon from '@mui/icons-material/Add';
+import {FormControl, InputLabel, MenuItem} from "@mui/material";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import ViewTicketInstance from "./ViewTicketInstance";
+
 
 
 
@@ -31,10 +35,9 @@ const drawerWidth = 210;
 
 export default function MainDrawer (props) {
 
-   const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
-   const [ticketTemplateIDs, setTicketTemplateIDs] = useState([]);
-   const [ticketOrTemplateDisplay,setTicketOrTemplateDisplay] = useState(null)
-
+    const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
+    const [ticketTemplateIDs, setTicketTemplateIDs] = useState([]);
+    const [ticketOrTemplateDisplay,setTicketOrTemplateDisplay] = useState(null)
     useEffect(() => {
         const api = new API();
 
@@ -44,9 +47,6 @@ export default function MainDrawer (props) {
             console.log(`routes from the DB ${JSON.stringify(routesJSONString)}`);
             setTicketInstanceIDs(routesJSONString.data);
         }
-
-
-
         getTickets();
     }, []);
 
@@ -64,9 +64,6 @@ export default function MainDrawer (props) {
         getTemplates();
         console.log(ticketTemplateIDs)
     }, []);
-
-
-
 
 
     console.log('user ', props.user.userID);
@@ -94,13 +91,19 @@ export default function MainDrawer (props) {
 
 
     const [searchValue, setSearchValue] = useState(""); //value in search bar
-    const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
+    const [tabValue, setTabValue] = useState(2); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
     const [isButtonVisible, setIsButtonVisible] = useState(false) //current view to be displayed in window
-
+    const [ticketStatus, setTicketStatus] = useState('active');
 
     const handleTabChange = (newValue) => {
-        setTabValue(newValue);
+        if (newValue === "Templates") {
+            setTabValue(1);
+        }
+        else if (newValue === "Tickets") {
+            setTabValue(2);
+        }
+        console.log( "tab value: " + newValue);
     };
 
     const handleValueSelection = (data,view) => {
@@ -124,6 +127,11 @@ export default function MainDrawer (props) {
         <Fragment>
             <Drawer
                 variant="permanent"
+                PaperProps={{
+                    sx: {
+                        backgroundColor: "background.default",
+                    }
+                }}
                 sx={{
                     width: drawerWidth,
                     flexShrink: 0,
@@ -131,10 +139,10 @@ export default function MainDrawer (props) {
                 }}
             >
                 <Toolbar />
-                <Box sx={{  borderRight: "1px solid" }}>
+                <Box sx={{  borderRight: "1px solid", }}>
                     <Tabs value={tabValue} centered  aria-label="basic tabs example" >
-                        <Tab sx={{borderRight: "1px solid", width: drawerWidth/2, }} label="Tickets " value={1} onClick={() => handleTabChange("Tickets")} color = "secondary"/>
-                        <Tab sx={{borderLeft: "1px solid",width: drawerWidth/2, }} label="Templates" value={2} onClick={() => handleTabChange("Templates")} color = "secondary" />
+                        <Tab sx={{borderRight: "1px solid", width: drawerWidth/2,backgroundColor: "background.default" }} label="Tickets " value={1} onClick={() => handleTabChange("Tickets")} color = "secondary"/>
+                        <Tab sx={{borderLeft: "1px solid",width: drawerWidth/2, backgroundColor: "background.default"}} label="Templates" value={2} onClick={() => handleTabChange("Templates")} color = "secondary" />
                     </Tabs>
                 </Box>
                 <TextField variant = "standard" sx={{borderTop:"1px solid",borderRight: "1px solid"}}
@@ -148,7 +156,7 @@ export default function MainDrawer (props) {
                                ),
                            }}size="small" onChange={(s) => setSearchValue(s.target.value)} ></TextField>
 
-                    {tabValue === "Templates" &&
+                    {tabValue === 1 && //Templates
                         <div>
                         <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
@@ -174,13 +182,27 @@ export default function MainDrawer (props) {
                         </div>
 
                     }
-                    {tabValue === "Tickets" &&
+                    {tabValue === 2 && //Tickets 
                         <div>
+                        <Box>
+                        <FormControl sx={{display: "flex",border: "1px solid", borderColor: `text.default`}} >
+                            <InputLabel id="role-selector"></InputLabel>
+                                <Select sx={{flexGrow: 1}}
+                                    labelId="role-selector"
+                                    id="role-select"
+                                    onChange={(event) => setTicketStatus(event.target.value, "role")}
+                                    value={ticketStatus}
+                                    >
+                                <MenuItem value={"active"}>Active</MenuItem>
+                                <MenuItem value={"complete"}>Complete</MenuItem>
+                            </Select>
+                        </FormControl> 
+                        </Box>
                         <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
                             {ticketInstanceIDs.filter((data) => {
                             
-                                return data.title.includes(searchValue) || (`${data.fName} ${data.lName}`).includes(searchValue)
+                                return (data.title.toLowerCase().includes(searchValue.toLowerCase()) || (`${data.fName} ${data.lName}`).toLowerCase().includes(searchValue.toLowerCase())) && data.status === ticketStatus
 
                             }).map((instance, index) => (
                                 <div>
@@ -202,9 +224,9 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance ticket = {selectedValue}/>}
+                <TicketInstance ticket = {selectedValue}/>} 
                 {ticketOrTemplateDisplay === "Ticket" &&
-                <TicketInstance ticket = {selectedValue}/>}
+                <ViewTicketInstance ticket = {selectedValue} role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate />}
                 <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>

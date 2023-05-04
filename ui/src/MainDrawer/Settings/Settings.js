@@ -1,5 +1,5 @@
-import {Button, FormControl, InputLabel, MenuItem, Typography, Box, TextField, styled, Paper} from "@mui/material";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {Button, FormControl, InputLabel, MenuItem, Typography, Box, TextField, Paper} from "@mui/material";
+import Select from '@mui/material/Select';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Stack from '@mui/joy/Stack';
 
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {useEffect, Fragment} from 'react';
 import API from "../../API_Interface/API_Interface";
 
 
@@ -46,14 +46,6 @@ const userTableCols = [
     }
 ];
 
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
-
 export default function Settings(props) {
     
     const api = new API();
@@ -70,49 +62,51 @@ export default function Settings(props) {
     const [userTable, setUserTable] = React.useState([]);
     
     const themes =[
+        
         {
-            primary: "2011a2",
-            secondary: "55e7ff",
-            text: "ff34b3",
-        },
-        {
+
+
             primary: "242f40",
             secondary: "cca43b",
             text: "363636",
+            background:"F6F1F1"
         },
         {
-            primary: "ec4e20",
-            secondary: "ff9505",
-            text: "016fB9",
-        }
+
+            primary: "F1F6F9",
+            secondary: "394867",
+            text: "212A3E",
+            background:"9BA4B5"
+        },
+        {
+            primary: "393646",
+            secondary: "4F4557",
+            text: "6D5D6E",
+            background:"F4EEE0"
+        },
+        {
+            primary: "2C3333",
+            secondary: "2E4F4F",
+            text: "0E8388",
+            background:"CBE4DE"
+        },
+        {
+            primary: "301E67",
+            secondary: "5B8FB9",
+            text: "B6EADA",
+            background:"03001C"
+        },
+        {
+            primary: "3C2A21",
+            secondary: "D5CEA3",
+            text: "E5E5CB",
+            background:"1A120B"
+        },
+
     ]
     
-    const TRow = ({userObject}) => {
-        return <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
-            {userTableCols.map((attr, idx) =>
-                <TableCell key={idx}
-                    align={attr.align}>
-                    {
-                        userObject[attr.attributeDBName]
-                    }
-                    </TableCell>)
-                }
-                {displayDeleteButton(userObject)}
-        </TableRow>
-    }
     
-    function displayDeleteButton(userObject){
-        if(userObject.role !== 'admin'){
-            return <TableCell align="right">
-                    <Button   onClick={() => deleteUser(userObject.userID)}variant="contained">Delete User</Button>
-                   </TableCell>
-        }
-        else{
-            return  <TableCell>
-                    
-                    </TableCell>
-        }
-    }
+    
 
 
     useEffect(() => {
@@ -151,22 +145,39 @@ export default function Settings(props) {
         setUser(newUser);
     }
     
+    const TRow = ({userObject}) => {
+        return <TableRow sx={{'&:last-child td, &:last-child th': {border: 0}}}>
+            {userTableCols.map((attr, idx) =>
+                <TableCell key={idx}
+                    align="left">
+                    {
+                        userObject[attr.attributeDBName]
+                    }
+                    </TableCell>)
+                }
+                {displayDeleteButton(userObject)}
+        </TableRow>
+    }
+
+
     function makeTable(){
         console.log(userTable.length)
         return <Fragment>
                     {
                     userTable.length > 0 &&
                     <TableContainer component={Paper} >
-                        <Table sx={{midWidth: 650}} aria-label="User Table" >
+                        <Table sx={{midWidth: 650,   '&:nth-of-type(odd)': {
+                                backgroundColor: "background.default",
+                            },}} aria-label="User Table" >
                             <TableHead>
                                 <TableRow>
                                     {
                                         userTableCols.map((attr, idx) => 
-                                        <TableCell key={idx} align="right">
+                                        <TableCell key={idx} align="left" sx={{paddingRight: 5}}>
                                             {attr.title}
                                         </TableCell>)
                                     }
-                                    <TableCell align="right" sx={{paddingRight: 5}} >
+                                    <TableCell align="left" sx={{paddingRight: 5}} >
                                         Remove User
                                     </TableCell>
                                 </TableRow>
@@ -184,17 +195,29 @@ export default function Settings(props) {
                 }
             </Fragment>
     }
+    
+    function displayDeleteButton(userObject){
+        if(userObject.role !== 'admin'){
+            return <TableCell align="left">
+                    <Button   onClick={() => deleteUser(userObject.userID)}variant="contained">Delete User</Button>
+                   </TableCell>
+        }
+        else{
+            return  <TableCell>
+                    Cannot Delete Admin
+                    </TableCell>
+        }
+    }
 
-
-    async function setNewTheme(primary,secondary,text) {
+    async function setNewTheme(primary,secondary,text,background) {
         console.log("hello")
-        await api.setTheme(primary,secondary,text);
-        props.handleThemeChange(primary,secondary,text);
+        await api.setTheme(primary,secondary,text,background);
+        props.handleThemeChange(primary,secondary,text,background);
     }
 
 
     async function addUser(){
-        if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.pass !== '' ){
+        if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.password !== '' ){
             await api.addUser(user);
             setUpdateView(updateView + 1);
         }
@@ -207,7 +230,7 @@ export default function Settings(props) {
 
         return(
             <Box sx= {{flexGrow:1,p: 3 }} >
-                <Item sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
+                <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
                     <Typography variant = "h5">
                         Theme Select
                     </Typography>
@@ -218,10 +241,11 @@ export default function Settings(props) {
                              my: 1,
                              p: 1,
                              border: "1px solid",
+                             backgroundColor: `#${theme.background}`
                                  }}
                     >
                         <Stack direction = "row" justifyContent="space-between">
-                        <Typography>
+                        <Typography sx={{color: `#${theme.primary}`}}>
                             Primary:
                         </Typography>
                         <Box sx={{
@@ -230,7 +254,7 @@ export default function Settings(props) {
                             border: "1px solid",
                             width: "25vh"
                         }} bgcolor={'#' + theme.primary} />
-                        <Typography>
+                        <Typography  sx={{color: `#${theme.primary}`}}>
                             Secondary:
                         </Typography>
                         <Box sx={{
@@ -239,7 +263,7 @@ export default function Settings(props) {
                             border: "1px solid ",
                             width: "25vh"
                         }} bgcolor={'#' + theme.secondary}/>
-                        <Typography>
+                        <Typography  sx={{color: `#${theme.primary}`}}>
                             Text:
                         </Typography>
                         <Box sx={{
@@ -248,25 +272,26 @@ export default function Settings(props) {
                             border: "1px solid",
                             width: "25vh"
                         }} bgcolor={'#' + theme.text}/>
-                        <Button  onClick={() => setNewTheme(theme.primary,theme.secondary,theme.text)}variant="contained">Select</Button>
+                        <Button sx={{backgroundColor: `#${theme.secondary}`}} onClick={() => setNewTheme(theme.primary,theme.secondary,theme.text,theme.background)}variant="contained">Select</Button>
                         </Stack>
                     </Box>
                 ))}
-                </Item>
-                <Item sx={{my:8, marginLeft: "5px"}} >
+                </Box>
+                <Box   sx={{my:8, marginLeft: "5px",border: "1px solid"}} >
                     <Typography variant = "h5">
                         Add User
                     </Typography>
                 <Box
+
                     component="form"
                     noValidate
                     autoComplete="off"
                 justifyContent="space-between"
-                sx={{marginTop: "5px"}}>
+                sx={{marginTop: "5px", }} padding="20px">
                     <Stack direction="row" justifyContent="space-between">
                 <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
                 <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
-                <FormControl  sx={{width: "20vh"}}>
+                <FormControl  sx={{width: "20vh"}} >
                 <InputLabel id="role-selector">Role</InputLabel>
                     <Select
                         labelId="role-selector"
@@ -284,10 +309,10 @@ export default function Settings(props) {
                 <Button onClick={() => addUser()}variant="contained">Add User</Button>
                     </Stack>
                 </Box>
-                </Item>
-                <Item>
+                </Box>
+                <Box sx={{border: "1px solid"}}>
                     {makeTable()}
-                </Item>
+                </Box>
             </Box>
         )
 /*
