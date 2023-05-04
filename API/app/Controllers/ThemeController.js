@@ -39,12 +39,13 @@ const setTheme = async (ctx) => {
                         UPDATE theme
                         SET primaryColor = ?,
                         secondaryColor = ?,
-                        textColor = ?
+                        textColor = ?,
+                        backgroundColor = ?
                         WHERE themeID = '1'
                         `;
         dbConnection.query({
             sql: query,
-            values: [ctx.params.primaryColor,ctx.params.secondaryColor,ctx.params.textColor]
+            values: [ctx.params.primaryColor,ctx.params.secondaryColor,ctx.params.textColor,ctx.params.backgroundColor]
         }, (error, tuples) => {
             if (error) {
                 console.log("Connection error in ThemeController::getTheme", error);

@@ -10,6 +10,8 @@ import AddTemplate from "../MainDrawer/AddTemplate";
 import React, {useState, useEffect} from "react";
 import API from "../API_Interface/API_Interface";
 import {createTheme,ThemeProvider} from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+
 
 export default function HomePage(props) {
 
@@ -40,6 +42,9 @@ export default function HomePage(props) {
                                 secondary: '#'+themeData[0].textColor,
                                 disabled: '#'+themeData[0].textColor,
                             },
+                            background: {
+                                default: '#'+themeData[0].backgroundColor
+                            }
                         },
                     }))
 
@@ -64,7 +69,7 @@ export default function HomePage(props) {
         setPage(page);
     }
 
-    const handleThemeChange = (primaryColor,secondaryColor,textColor) => {
+    const handleThemeChange = (primaryColor,secondaryColor,textColor,backgroundColor) => {
         setTheme(createTheme({
             palette: {
                 primary: {
@@ -78,15 +83,20 @@ export default function HomePage(props) {
                     secondary: '#' + textColor,
                     disabled: '#' + textColor,
                 },
+                background: {
+                    default: '#'+backgroundColor
+                }
 
             },
         }))
     }
 
+
     return (
         <div className="HomePage" >
             {theme != null &&
             <ThemeProvider theme={theme} >
+                <CssBaseline />
             <Box sx={{ display: 'flex',}} >
                 <MenuAppBar adminSwitch = {adminSwitch}
                             admin = {admin}
