@@ -71,7 +71,7 @@ CREATE TABLE `ticketingsystem`.`ticketfieldtag` (
 
 CREATE TABLE `ticketingsystem`.`theme` (
   `themeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(80) NOT NULL DEFAULT 'TicketingSystem',
+  `name` VARCHAR(45) NOT NULL DEFAULT 'TicketingSystem',
   `primaryColor` VARCHAR(7) NOT NULL DEFAULT "2011a2", 
   `secondaryColor` VARCHAR(7) NOT NULL DEFAULT "55e7ff", 
   `textColor` VARCHAR(7) NOT NULL DEFAULT "ff34b3",
