@@ -116,4 +116,8 @@ export default class APIInterface {
     async deleteFieldTag(field_tag_id){
         return axiosAgent.delete(`fieldTag/${field_tag_id}/removeFieldTag`);
     }
+    //takes in a string to set the name of the theme
+    async setThemeName(name){
+        return axiosAgent.post(`theme/setThemeName`, {name: name});
+    }
 }
