@@ -97,6 +97,7 @@ export default function Login({setUser, title}) {
                     error={authFailed}
                     id="outlined-error-helper-text"
                     label="Password"
+                    type="password"
                     placeholder=""
                     value={password}
                     onChange={handleInputChange('Password')}
