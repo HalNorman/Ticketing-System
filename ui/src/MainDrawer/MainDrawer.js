@@ -211,7 +211,7 @@ export default function MainDrawer (props) {
                     {ticketOrTemplateDisplay === "Template" &&
                 <TicketInstance ticket = {selectedValue}/>} 
                 {ticketOrTemplateDisplay === "Ticket" &&
-                <ViewTicketInstance ticket = {selectedValue}/>}
+                <ViewTicketInstance ticket = {selectedValue} role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate />}
                 <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>

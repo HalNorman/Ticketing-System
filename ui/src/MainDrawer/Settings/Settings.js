@@ -70,10 +70,21 @@ export default function Settings(props) {
     const [userTable, setUserTable] = React.useState([]);
     
     const themes =[
+        
         {
-            primary: "2011a2",
-            secondary: "55e7ff",
-            text: "ff34b3",
+            primary: "0c0e0c",
+            secondary: "d8323c",
+            text: "0c0e0c",
+        },
+        {
+            primary: "ff1700",
+            secondary: "ffa600",
+            text: "4d6910",
+        },
+        {
+            primary: "d7eaf3",
+            secondary: "77b5d9",
+            text: "14397d",
         },
         {
             primary: "242f40",
@@ -81,9 +92,14 @@ export default function Settings(props) {
             text: "363636",
         },
         {
-            primary: "ec4e20",
-            secondary: "ff9505",
-            text: "016fB9",
+            primary: "13424c",
+            secondary: "218490",
+            text: "ae7c54",
+        },
+        {
+            primary: "fd9047",
+            secondary: "ac5142",
+            text: "4d3532",
         }
     ]
     
@@ -162,7 +178,7 @@ export default function Settings(props) {
                                 <TableRow>
                                     {
                                         userTableCols.map((attr, idx) => 
-                                        <TableCell align="right" key={idx} align={attr.align}>
+                                        <TableCell key={idx}>
                                             {attr.title}
                                         </TableCell>)
                                     }
