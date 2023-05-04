@@ -1,5 +1,5 @@
-import {Button, FormControl, InputLabel, MenuItem, Typography, Box, TextField, styled, Paper} from "@mui/material";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import {Button, FormControl, InputLabel, MenuItem, Typography, Box, TextField, Paper} from "@mui/material";
+import Select from '@mui/material/Select';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,7 +9,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Stack from '@mui/joy/Stack';
 
-import React, {useState, useEffect, Fragment} from 'react';
+import React, {useEffect, Fragment} from 'react';
 import API from "../../API_Interface/API_Interface";
 
 
@@ -45,14 +45,6 @@ const userTableCols = [
         align: 'left'
     }
 ];
-
-const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
 
 export default function Settings(props) {
     

@@ -36,7 +36,7 @@ export default function MenuAppBar(props) {
                     </Switch>} label="Admin" sx={{color: "secondary.main"}}/>;
         }
         else {
-            return <Typography sx={{color:"secondary.main"}}>{`Hello ${user.fName} ${user.lName}`}</Typography>;
+            return <Typography variant = "h2" sx={{color:"secondary.main"}}>{`Hello ${user.fName} ${user.lName}`}</Typography>;
         }
     }
 
