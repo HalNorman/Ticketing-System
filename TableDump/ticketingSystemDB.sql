@@ -68,6 +68,7 @@ CREATE TABLE `ticketingsystem`.`theme` (
   `primaryColor` VARCHAR(20) NOT NULL DEFAULT "cyan",
   `secondaryColor` VARCHAR(20) NOT NULL DEFAULT "yellow",
   `textColor` VARCHAR(20) NOT NULL DEFAULT "black",
+  `backgroundColor` VARCHAR(20) NOT NULL DEFAULT "black",
   `image` VARCHAR(45) BINARY NULL,
   PRIMARY KEY (`themeID`))
 COMMENT = '16711680 is red, 65535 is blue';
@@ -135,7 +136,7 @@ INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 2);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (2, 4);
 
-INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`) VALUES ("Default", "2011a2", "55e7ff", "ff34b3");
+INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("Default", "2011a2", "55e7ff", "ff34b3","ffffff");
 
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template", "explain how this template is useful");
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("This is a template2", "explain how this template is useful");
@@ -155,3 +156,4 @@ SELECT * FROM `ticketingsystem`.`template` A INNER JOIN `ticketingsystem`.`templ
 SELECT * FROM `ticketingsystem`.`ticket` A INNER JOIN (SELECT `ticketingsystem`.`getTicketsByUserID`(`ticketID`, `userID`, 2) as ticketID FROM `ticketingsystem`.`ticket`) B ON A.`ticketID` = B.`ticketID`;
 
 
+select * from `ticketingsystem`.`theme`;
