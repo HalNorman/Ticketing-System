@@ -21,9 +21,8 @@ import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
 import {AccountCircle} from "@mui/icons-material";
 import AddIcon from '@mui/icons-material/Add';
-
-
-
+import {FormControl, InputLabel, MenuItem} from "@mui/material";
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const drawerWidth = 210;
 
@@ -97,7 +96,7 @@ export default function MainDrawer (props) {
     const [tabValue, setTabValue] = useState("Tickets"); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
     const [isButtonVisible, setIsButtonVisible] = useState(false) //current view to be displayed in window
-
+    const [ticketStatus, setTicketStatus] = useState('active');
 
     const handleTabChange = (newValue) => {
         setTabValue(newValue);
@@ -181,11 +180,25 @@ export default function MainDrawer (props) {
                     }
                     {tabValue === "Tickets" &&
                         <div>
+                        <Box>
+                        <FormControl sx={{width: "20vh"}}>
+                            <InputLabel id="role-selector"></InputLabel>
+                                <Select
+                                    labelId="role-selector"
+                                    id="role-select"
+                                    onChange={(event) => setTicketStatus(event.target.value, "role")}
+                                    value={ticketStatus}
+                                    >
+                                <MenuItem value={"active"}>Active</MenuItem>
+                                <MenuItem value={"complete"}>Complete</MenuItem>
+                            </Select>
+                        </FormControl> 
+                        </Box>
                         <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
                             {ticketInstanceIDs.filter((data) => {
                             
-                                return data.title.includes(searchValue) || (`${data.fName} ${data.lName}`).includes(searchValue)
+                                return (data.title.includes(searchValue) || (`${data.fName} ${data.lName}`).includes(searchValue)) && data.status === ticketStatus
 
                             }).map((instance, index) => (
                                 <div>
