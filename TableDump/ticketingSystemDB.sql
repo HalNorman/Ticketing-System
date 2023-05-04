@@ -72,10 +72,10 @@ CREATE TABLE `ticketingsystem`.`ticketfieldtag` (
 CREATE TABLE `ticketingsystem`.`theme` (
   `themeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL DEFAULT 'TicketingSystem',
-  `primaryColor` VARCHAR(7) NOT NULL DEFAULT "2011a2", 
-  `secondaryColor` VARCHAR(7) NOT NULL DEFAULT "55e7ff", 
-  `textColor` VARCHAR(7) NOT NULL DEFAULT "ff34b3",
-  `backgroundColor` VARCHAR(7) NOT NULL DEFAULT "ffffff",
+  `primaryColor` VARCHAR(7) NOT NULL DEFAULT "242f40", 
+  `secondaryColor` VARCHAR(7) NOT NULL DEFAULT "cca43b", 
+  `textColor` VARCHAR(7) NOT NULL DEFAULT "363636",
+  `backgroundColor` VARCHAR(7) NOT NULL DEFAULT "F6F1F1",
   PRIMARY KEY (`themeID`))
 COMMENT = '16711680 is red, 65535 is blue';
 
