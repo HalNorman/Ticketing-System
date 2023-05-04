@@ -86,7 +86,7 @@ export default class APIInterface {
                     fieldTagID:fieldTagID
                 }
             }))
-            .then(value => axiosAgent.post('fieldTag/addTemplateFieldTag', value));
+            .then(value => axiosAgent.post('fieldTag/addTemplateFieldTags', value));
     }
     //ticketID is an id of a ticket instance
     async completeTicket(ticket_id){

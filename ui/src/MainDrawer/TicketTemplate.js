@@ -58,7 +58,10 @@ function TicketTemplate() {
     const api = new API();
     const template = { title, info };
     const template_field_array = selectedFields.map((field) => field.fieldTag.fieldtagID);
+    console.log("template_field_array ", template_field_array);
     await api.createTicketTemplate(template, template_field_array);
+
+    //create the ticket template fields
   }
 
 
