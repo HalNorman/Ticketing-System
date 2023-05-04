@@ -10,7 +10,7 @@ import {Fragment} from "react";
 
 import SettingsIcon from '@mui/icons-material/Settings';
 import {AccountCircle} from "@mui/icons-material";
-import {FormControlLabel, IconButton} from "@mui/material";
+import {FormControlLabel, IconButton, Typography} from "@mui/material";
 import {Switch} from "@mui/material";
 
 import {useState} from "react";
@@ -24,20 +24,28 @@ export default function MenuAppBar(props) {
         props.adminSwitch();
     }
 
+    const displaySwitch = (user) => {
+        if(user.role === 'admin'){
+            return <FormControlLabel control={
+                <Switch
+                    checked={checked}
+                    onChange={handleChange}
+                    inputProps={{ 'aria-label': 'controlled' }}
+                    color = "default"
+                    >
+                    </Switch>} label="Admin" sx={{color: "secondary.main"}}/>;
+        }
+        else {
+            return <Typography sx={{color:"secondary.main"}}>{`Hello ${user.fName} ${user.lName}`}</Typography>;
+        }
+    }
 
     return (
         <Box>
             <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }} >
                 <Toolbar>
                     <img src = {require('../TicketLogo2-export.png')} alt = "logo " onClick={() => props.handlePageChange("MainDrawer")}/>
-                    <FormControlLabel control={
-                        <Switch
-                            checked={checked}
-                            onChange={handleChange}
-                            inputProps={{ 'aria-label': 'controlled' }}
-                            color = "default"
-                        >
-                        </Switch>} label="Admin" sx={{color: "secondary.main"}}/>
+                    {displaySwitch(props.user)}
                     <Box sx = {{flexGrow: 1}}></Box>
                     {props.admin &&
                         <Fragment>

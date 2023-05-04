@@ -30,10 +30,9 @@ const drawerWidth = 210;
 
 export default function MainDrawer (props) {
 
-   const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
-   const [ticketTemplateIDs, setTicketTemplateIDs] = useState([]);
-   const [ticketOrTemplateDisplay,setTicketOrTemplateDisplay] = useState(null)
-
+    const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
+    const [ticketTemplateIDs, setTicketTemplateIDs] = useState([]);
+    const [ticketOrTemplateDisplay,setTicketOrTemplateDisplay] = useState(null)
     useEffect(() => {
         const api = new API();
 
@@ -43,9 +42,6 @@ export default function MainDrawer (props) {
             console.log(`routes from the DB ${JSON.stringify(routesJSONString)}`);
             setTicketInstanceIDs(routesJSONString.data);
         }
-
-
-
         getTickets();
     }, []);
 
@@ -198,7 +194,7 @@ export default function MainDrawer (props) {
                         <List>
                             {ticketInstanceIDs.filter((data) => {
                             
-                                return (data.title.includes(searchValue) || (`${data.fName} ${data.lName}`).includes(searchValue)) && data.status === ticketStatus
+                                return (data.title.toLowerCase().includes(searchValue.toLowerCase()) || (`${data.fName} ${data.lName}`).toLowerCase().includes(searchValue.toLowerCase())) && data.status === ticketStatus
 
                             }).map((instance, index) => (
                                 <div>

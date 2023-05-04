@@ -15,7 +15,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 export default function HomePage(props) {
 
-    const [admin,setAdmin] = useState(true);
+    const [admin,setAdmin] = useState(props.user.role === "admin");
     const [page,setPage] = useState("MainDrawer");
     const [theme,setTheme] = useState()
 
@@ -91,7 +91,6 @@ export default function HomePage(props) {
         }))
     }
 
-
     return (
         <div className="HomePage" >
             {theme != null &&
@@ -99,8 +98,10 @@ export default function HomePage(props) {
                 <CssBaseline />
             <Box sx={{ display: 'flex',}} >
                 <MenuAppBar adminSwitch = {adminSwitch}
-                            admin = {admin}
-                            handlePageChange={handlePageChange}/>
+                    admin = {admin}
+                        handlePageChange={handlePageChange}
+                            user={props.user}
+                        />
                 {page === "MainDrawer" &&
                     <MainDrawer admin = {admin}
                           user = {props.user}
@@ -118,7 +119,7 @@ export default function HomePage(props) {
                 {page === "TagEditor" &&
                 <TagEditor  admin = {admin}
                     user = {props.user}/>}
-
+                
             </Box>
             </ThemeProvider>}
         </div>
