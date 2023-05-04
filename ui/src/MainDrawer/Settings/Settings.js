@@ -229,9 +229,9 @@ export default function Settings(props) {
                     <Typography variant = "h5">
                         Change System Name
                     </Typography>
-                    <Stack direction = "row" justifyContent="center">
-                        <TextField id="Ticketing System Name" label="Ticketing System Name" variant="outlined" onChange={(event) => setSystemName(event.target.value)}/>
-                        <Button onClick={() => setSystemNameInApi()}variant="contained">Set Name</Button>
+                    <Stack direction = "row" spacing={2} >
+                        <TextField id="Ticketing System Name" fullWidth label="Ticketing System Name" variant="outlined" onChange={(event) => setSystemName(event.target.value)}/>
+                        <Button onClick={() => setSystemNameInApi()} variant="contained" margin="normal">Set System Name</Button>
                     </Stack>
                 </Box>
                 <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
@@ -286,7 +286,6 @@ export default function Settings(props) {
                         Add User
                     </Typography>
                 <Box
-
                     component="form"
                     noValidate
                     autoComplete="off"
@@ -315,6 +314,9 @@ export default function Settings(props) {
                 </Box>
                 </Box>
                 <Box sx={{border: "1px solid"}}>
+                <Typography variant = "h5">
+                        Current Users in the System
+                    </Typography>
                     {makeTable()}
                 </Box>
             </Box>
