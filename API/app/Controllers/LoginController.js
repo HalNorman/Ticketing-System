@@ -13,7 +13,7 @@ const authorizeUser = async (ctx) => {
 	    // you can at least make sure that user's input is consistent
 	    // with the format of email addresses. 
             
-            let query = "SELECT * FROM `ticketingsystem`.`user` A WHERE BINARY A.`username` = ? BINARY AND A.`password` = ?";
+            let query = "SELECT * FROM `ticketingsystem`.`user` A WHERE BINARY A.`username` = ? AND BINARY A.`password` = ?";
             dbConnection.query(
                 {
                     sql: query,
