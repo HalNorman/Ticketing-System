@@ -83,43 +83,6 @@ const allTicketsByUserID = async (ctx) => {
     });
 }
 
-const getLatestTicketWithUserIDTitle = (ctx) => {
-    return new Promise((resolve, reject) => {
-        const ticket = ctx.request.body;
-        const query =  `SELECT 
-                            ticketID 
-                        FROM 
-                            ticketingsystem.ticket
-                        WHERE
-                            userID = ? 
-                        AND
-                            title LIKE ?
-                        ORDER BY 
-                            ticketID 
-                        DESC LIMIT 1
-                    `;
-        dbConnection.query({
-            sql: query,
-            values: [ticket.userID, ticket.title]
-        }, (error, tuples) => {
-            if (error) {
-                console.log("Connection error in TicketsController::addTicket", error);
-                ctx.body = [];
-                ctx.status = 200;
-                return reject(error);
-            }
-            ctx.body = tuples;
-            ctx.status = 200;
-            return resolve();
-        });
-    }).catch(err => {
-        console.log("Database connection error in ticketWithTicketID.", err);
-        // The UI side will have to look for the value of status and
-        // if it is not 200, act appropriately.
-        ctx.body = [];
-        ctx.status = 500;
-    });
-}
 
 const addTicket = (ctx) => {
     return new Promise((resolve, reject) => {
@@ -226,6 +189,6 @@ module.exports = {
     ticketWithTicketID,
     allTicketsByUserID,
     addTicket,
-    completeTicket,
-    getLatestTicketWithUserIDTitle
+    completeTicket
+    
 };

@@ -11,11 +11,12 @@ module.exports = (min_type) => {
 
         const user_type = ctx.state.jwtdata.user.role;
 
-        if (user_type === 'admin' || user_type === 'employee' || user_type === 'user') {
-            setAccessToken(ctx, ctx.state.jwtdata.user);
-            return next();
+        if (user_type !== 'admin' && min_type === 'admin') {
+            console.log("user has been rejected for invalid admin credentials");
+            return false;
         }
-        console.log("user has been rejected");
-        return false;
+        setAccessToken(ctx, ctx.state.jwtdata.user);
+        return next();
+        
     };
 };
