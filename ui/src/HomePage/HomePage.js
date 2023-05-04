@@ -17,6 +17,8 @@ export default function HomePage(props) {
 
     const [admin,setAdmin] = useState(props.user.role === "admin");
     const [page,setPage] = useState("MainDrawer");
+    
+    
     const [theme,setTheme] = useState()
 
     useEffect(() => {
@@ -54,21 +56,6 @@ export default function HomePage(props) {
         getTheme();
     }, []);
 
-
-
-
-
-    const adminSwitch = () => {
-        console.log("admin is " + admin)
-        setAdmin(!admin)
-    }
-
-
-    const handlePageChange = (page) => {
-        console.log(`handling page change: ${page}`)
-        setPage(page);
-    }
-
     const handleThemeChange = (primaryColor,secondaryColor,textColor,backgroundColor) => {
         setTheme(createTheme({
             palette: {
@@ -90,6 +77,20 @@ export default function HomePage(props) {
             },
         }))
     }
+
+
+
+    const adminSwitch = () => {
+        console.log("admin is " + admin)
+        setAdmin(!admin)
+    }
+
+
+    const handlePageChange = (page) => {
+        console.log(`handling page change: ${page}`)
+        setPage(page);
+    }
+
 
     return (
         <div className="HomePage" >
