@@ -30,7 +30,15 @@ function TicketTemplate() {
   }, []);
 
   function handleAddField(field) {
-    setSelectedFields([...selectedFields, { field, fieldTag: null }]);
+    // Check if the field already exists in the selectedFields array
+    const fieldExists = selectedFields.some(
+      (selectedField) => selectedField.field === field
+    );
+  
+    // If the field does not exist, add it to the selectedFields array
+    if (!fieldExists) {
+      setSelectedFields([...selectedFields, { field, fieldTag: null }]);
+    }
   }
 
   function handleDeleteField(index) {
