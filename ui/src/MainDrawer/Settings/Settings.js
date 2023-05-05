@@ -310,7 +310,7 @@ export default function Settings(props) {
                     <Stack direction="row" justifyContent="space-between">
                 <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
                 <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
-                <FormControl  sx={{width: "20vh"}} >
+                <FormControl sx={{width: "20vh"}} >
                 <InputLabel id="role-selector">Role</InputLabel>
                     <Select
                         labelId="role-selector"

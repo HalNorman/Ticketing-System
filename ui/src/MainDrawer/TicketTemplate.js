@@ -64,12 +64,14 @@ function TicketTemplate(props) {
     console.log(newSelectedFieldTags);
     setSelectedFieldTags(newSelectedFieldTags);
   }
+  
   function displaySelectedFields(){
     return <Fragment> 
             {selectedFieldTags.length > 0 && 
               selectedFieldTags.map((object) => {
                 return <Stack spacing={3} direction = "row" justifyContent={"center"}>
-                          <Box
+                          <Stack item>
+                          <Box 
                             key={object.field}
                             sx={{
                               display: "flex",
@@ -86,8 +88,9 @@ function TicketTemplate(props) {
                               </Typography>
                             </Paper>
                           </Box>
+                          </Stack>
+                          <Stack item>
                           <Box
-                            key={object.tag}
                             sx={{
                               display: "flex",
                               alignItems: "center",
@@ -103,14 +106,16 @@ function TicketTemplate(props) {
                               </Typography>
                             </Paper>
                           </Box>
+                          </Stack>
+                          <Stack item>
                             <IconButton
-                    
                               onClick={() => handleRemove(object)}
-                              sx={{color:"secondary.main"}}
+                              sx={{color:"secondary.main", my:1}}
                             >
                               <DeleteIcon />
                             </IconButton>
                         </Stack>
+                      </Stack>
               })
             }
           </Fragment>
@@ -129,7 +134,6 @@ function TicketTemplate(props) {
     if(selectedField !== ''){
       const tagArray = fields.filter((fieldTag) => fieldTag.field === selectedField);
       return <Fragment>
-              <FormControl> 
                 <Stack spacing={3} direction = "row" justifyContent={"center"}>
                   <Box
                     sx={{
@@ -146,8 +150,9 @@ function TicketTemplate(props) {
                         </Typography>
                       </Paper>
                     </Box>
-                <InputLabel id="tagSelector">Tag</InputLabel>
-                  <Select 
+                <FormControl sx={{width: "20vh"}}> 
+                  <InputLabel id="tagSelector">Tag</InputLabel>
+                    <Select 
                         fullWidth
                         labelId="tagSelector"
                         id="tagSelect"
@@ -160,18 +165,17 @@ function TicketTemplate(props) {
                           </MenuItem>)
                         )}
                   </Select>
+                  </FormControl>
                 </Stack>
-              </FormControl>
              </Fragment>
     } 
     else if(displayFieldTags.length > 0) {
       console.log(fieldStringArray);
       return <Fragment>
-              <FormControl>
               <Stack spacing={3} direction = "row" justifyContent={"space-between"}>
-              
-              <InputLabel id="fieldSelector">Field</InputLabel>
-                <Select 
+                <FormControl sx={{width: "20vh"}}>
+                  <InputLabel id="fieldSelector">Field</InputLabel>
+                    <Select 
                         fullWidth
                         labelId="fieldSelector"
                         id="fieldSelect"
@@ -185,9 +189,9 @@ function TicketTemplate(props) {
                           </MenuItem>
                         )
                         )}
-                </Select>
+                    </Select>
+                </FormControl>
               </Stack>
-              </FormControl>
              </Fragment>
     }
     else{

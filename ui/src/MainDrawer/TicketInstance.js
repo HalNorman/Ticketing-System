@@ -225,16 +225,20 @@ const TicketInstance = (props) => {
       ))}
     <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
       {getAvailableFieldsToAdd().length > 0 &&
-      <FormControl  sx={{width: "40vh"}} >
-        <InputLabel id="field-selector">Field</InputLabel>     
-        <Select labelId="field-selector" id="field-select" label="field" onChange={(event) => handleAddField(event.target.value)}>
-          {getAvailableFieldsToAdd().map((field) => (
-            <MenuItem key={field} value={field}>
-              {field}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>}
+        <FormControl sx={{width: "20vh"}}>
+          <InputLabel id="field-selector">Field</InputLabel>     
+            <Select 
+              labelId="field-selector" 
+              id="field-select" 
+              label="field"  
+              onChange={(event) => handleAddField(event.target.value)}>
+              {getAvailableFieldsToAdd().map((field) => (
+                <MenuItem key={field} value={field}>
+                  {field}
+                </MenuItem>
+              ))}
+            </Select>
+        </FormControl>}
     </Box>
     </Stack>
     </Stack>
