@@ -24,6 +24,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {FormControl, InputLabel, MenuItem} from "@mui/material";
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import ViewTicketInstance from "./ViewTicketInstance";
+import GenericTemplate from "./GenericTemplate";
 
 
 
@@ -151,10 +152,23 @@ export default function MainDrawer (props) {
                                        </Icon>
                                    </InputAdornment>
                                ),
-                           }}size="small" onChange={(s) => setSearchValue(s.target.value)} ></TextField>
+                           }}size="small" onChange={(s) => setSearchValue(s.target.value)} >
+
+                </TextField>
 
                     {tabValue === 1 && //Templates
                         <div>
+
+                        <Box sx={{ overflow: 'auto', border: '1px solid'}} >
+                        <List>
+                            <ListItem sx={{borderTop: "1px solid",borderBottom: "1px solid"}} key={0} disablePadding >
+                                <ListItemButton onClick={() => handleValueSelection(null,"GenericTemplate")}>
+                                    <ListItemText primary={"Generic Ticket"}  primaryTypographyProps={{ sx: { marginRight: '5px' }, align: 'center', fontSize: '18px'}}  ></ListItemText>
+                                </ListItemButton>
+                            </ListItem>
+                        </List>
+                        </Box>
+
                         <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
                         {ticketTemplateIDs.filter((obj) => {
@@ -231,6 +245,7 @@ export default function MainDrawer (props) {
                                     role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate />}
+                {ticketOrTemplateDisplay === "GenericTemplate" && <GenericTemplate handlePageClear={handlePageClear} />}
                 <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
 
 
