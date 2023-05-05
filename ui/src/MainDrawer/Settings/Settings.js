@@ -60,8 +60,6 @@ export default function Settings(props) {
     const themes =[
         
         {
-
-
             primary: "242f40",
             secondary: "cca43b",
             text: "363636",
