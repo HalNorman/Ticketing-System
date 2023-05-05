@@ -14,7 +14,7 @@ const applyFieldTagsToTicket = async (ctx) => {
             const query = `
                         INSERT INTO
                             ticketingsystem.ticketfieldtag 
-                            (templateID, fieldtagId) 
+                            (ticketID, fieldtagId) 
                         VALUES
                             (?, ?)
                         `;

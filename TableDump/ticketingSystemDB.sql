@@ -72,10 +72,10 @@ CREATE TABLE `ticketingsystem`.`ticketfieldtag` (
 CREATE TABLE `ticketingsystem`.`theme` (
   `themeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL DEFAULT 'TicketingSystem',
-  `primaryColor` VARCHAR(20) NOT NULL DEFAULT "2011a2", 
-  `secondaryColor` VARCHAR(20) NOT NULL DEFAULT "55e7ff", 
-  `textColor` VARCHAR(20) NOT NULL DEFAULT "ff34b3",
-  `backgroundColor` VARCHAR(20) NOT NULL DEFAULT "ffffff",
+  `primaryColor` VARCHAR(7) NOT NULL DEFAULT "2011a2", 
+  `secondaryColor` VARCHAR(7) NOT NULL DEFAULT "55e7ff", 
+  `textColor` VARCHAR(7) NOT NULL DEFAULT "ff34b3",
+  `backgroundColor` VARCHAR(7) NOT NULL DEFAULT "ffffff",
   PRIMARY KEY (`themeID`))
 COMMENT = '16711680 is red, 65535 is blue';
 
@@ -124,7 +124,7 @@ END; //
 DELIMITER ;
 
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('admin', ' ', 'admin', 'admin', 'password');
-INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("Default", "2011a2", "55e7ff", "ff34b3","ffffff");
+INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("Tickets Please", "2011a2", "55e7ff", "ff34b3","ffffff");
 
 -- Rest of the inserts are used for the demo
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee', 'password');

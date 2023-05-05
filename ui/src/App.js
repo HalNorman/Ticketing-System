@@ -7,7 +7,7 @@ import HomePage from './HomePage/HomePage'
 function App(props) {
   return (
       <div className="App">
-        <HomePage user = {props.user}/> {/* routes to main homepage */ }
+        <HomePage user = {props.user} theme={props.theme} handleThemeChange={props.handleThemeChange}/> {/* routes to main homepage */ }
       </div>
   );
 }

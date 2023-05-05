@@ -6,78 +6,16 @@ import MainDrawer from "../MainDrawer/MainDrawer";
 import TagEditor from "..//MainDrawer/TagEditor";
 import Settings from "../MainDrawer/Settings/Settings"
 import Profile from "../MainDrawer/Profile"
-import AddTemplate from "../MainDrawer/AddTemplate";
 import React, {useState, useEffect} from "react";
-import API from "../API_Interface/API_Interface";
-import {createTheme,ThemeProvider} from "@mui/material";
-import CssBaseline from "@mui/material/CssBaseline";
+
 
 
 export default function HomePage(props) {
 
     const [admin,setAdmin] = useState(props.user.role === "admin");
     const [page,setPage] = useState("MainDrawer");
+
     
-    
-    const [theme,setTheme] = useState()
-
-    useEffect(() => {
-        const api = new API();
-        async function getTheme() {
-            await api.getTheme()
-                .then(newTheme => {
-                    console.log(`api gets theme: ${JSON.stringify(newTheme)}`);
-                    //setTheme(theme.data);
-                    const themeData = newTheme.data;
-                    console.log("Primary: " + newTheme.data[0].primaryColor);
-                    console.log("Secondary: " + newTheme.data[0].secondaryColor);
-                    setTheme(createTheme({
-                        palette: {
-                            primary: {
-                                main: '#'+themeData[0].primaryColor,
-                            },
-                            secondary: {
-                                main: '#'+themeData[0].secondaryColor,
-                            },
-                            text: {
-                                primary: '#'+themeData[0].textColor,
-                                secondary: '#'+themeData[0].textColor,
-                                disabled: '#'+themeData[0].textColor,
-                            },
-                            background: {
-                                default: '#'+themeData[0].backgroundColor
-                            }
-                        },
-                    }))
-
-                });
-        }
-
-        getTheme();
-    }, []);
-
-    const handleThemeChange = (primaryColor,secondaryColor,textColor,backgroundColor) => {
-        setTheme(createTheme({
-            palette: {
-                primary: {
-                    main: '#'+primaryColor,
-                },
-                secondary: {
-                    main: '#'+secondaryColor,
-                },
-                text: {
-                    primary: '#' + textColor,
-                    secondary: '#' + textColor,
-                    disabled: '#' + textColor,
-                },
-                background: {
-                    default: '#'+backgroundColor
-                }
-
-            },
-        }))
-    }
-
 
 
     const adminSwitch = () => {
@@ -94,9 +32,7 @@ export default function HomePage(props) {
 
     return (
         <div className="HomePage" >
-            {theme != null &&
-            <ThemeProvider theme={theme} >
-                <CssBaseline />
+            
             <Box sx={{ display: 'flex',}} >
                 <MenuAppBar adminSwitch = {adminSwitch}
                     admin = {admin}
@@ -110,7 +46,7 @@ export default function HomePage(props) {
                 {page === "Settings" &&
                     <Settings admin = {admin}
                               user = {props.user}
-                              handleThemeChange={handleThemeChange}/>}
+                              handleThemeChange={props.handleThemeChange}/>}
                 {page === "Profile" &&
                     <Profile  admin = {admin}
                               user = {props.user}/>}
@@ -122,7 +58,7 @@ export default function HomePage(props) {
                     user = {props.user}/>}
                 
             </Box>
-            </ThemeProvider>}
+            
         </div>
     );
 }
