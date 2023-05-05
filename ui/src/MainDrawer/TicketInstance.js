@@ -16,7 +16,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from '@mui/material/IconButton';
 
-const Fields = (props) => {
+const TicketInstance = (props) => {
   //const [fieldTags, setFieldTags] = useState([]);
   const [allFieldTags, setAllFieldTags] = useState([]);
   const [fields, setFields] = useState([]);
@@ -166,7 +166,7 @@ const Fields = (props) => {
     const templateID = props.ticket.templateID;
     console.log(templateID);
     api.deleteTemplate(templateID);
-    props.setRerender();
+    props.handleRerender();
     props.handlePageClear("Deleting Template");
   }
 
@@ -250,4 +250,4 @@ const Fields = (props) => {
 );
 };
 
-export default Fields;
+export default TicketInstance;

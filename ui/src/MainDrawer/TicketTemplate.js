@@ -54,7 +54,7 @@ function TicketTemplate(props) {
       setSelectedFieldTags([]);
       setTitle('');
       setInfo('');
-      props.setRerender(props.reRender + 1);
+      props.handleRerender();
     }
   }
   

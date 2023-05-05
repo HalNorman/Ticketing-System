@@ -67,14 +67,14 @@ export default function MainDrawer (props) {
 
         getTemplates();
         console.log(ticketTemplateIDs)
-    }, []);
+    }, [reRender]);
 
 
     console.log('user ', props.user.userID);
     console.log(ticketInstanceIDs);
 
 
-
+/*
     const  [templates, setTemplates] = useState([]); // ticket templates
     useEffect(() => {
         setTemplates(ticketInstanceIDs.map((ticket) => ({
@@ -83,7 +83,7 @@ export default function MainDrawer (props) {
             info: ticket.info,
         })));
       }, [ticketInstanceIDs]);
-
+*/
 
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState(2); //currently selected tab bar
@@ -119,12 +119,15 @@ export default function MainDrawer (props) {
         setTicketOrTemplateDisplay(null);
         setIsButtonVisible(false);
         console.log(message);
-        if(message != ''){
+        if(message !== ''){
             setSnackMessage(message);
             setOpenSnack(true);
         }
     }
 
+    const handleRerender = () => {
+        setRerender(reRender + 1);
+    }
     return(
         <Fragment>
             <Drawer
@@ -228,6 +231,7 @@ export default function MainDrawer (props) {
                     {ticketOrTemplateDisplay === "Template" &&
                 <TicketInstance handlePageClear={handlePageClear} 
                                 ticket = {selectedValue} 
+                                handleRerender={handleRerender}
                                 userID = {props.user.userID} 
                                 userRole={props.user.role}/>}
                 {ticketOrTemplateDisplay === "Ticket" &&
@@ -238,8 +242,7 @@ export default function MainDrawer (props) {
                                     role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate handlePageClear={handlePageClear}
-                                reRender={reRender}
-                                setRerender={setRerender}
+                                handleRerender={handleRerender}
                 />}
                 <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
             </Box>
