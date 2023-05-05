@@ -21,6 +21,7 @@ const Fields = (props) => {
   const [allFieldTags, setAllFieldTags] = useState([]);
   const [fields, setFields] = useState([]);
   const [description, setDescription] = useState("");
+  const templateID = props.ticket.templateID;
 
   useEffect(() => {
     const api = new API();
@@ -51,10 +52,11 @@ const Fields = (props) => {
 
     getFields();
     getFieldTags();
-  }, []);
+  }, [templateID]);
 
   const title = props.ticket.title;
   const info = props.ticket.info;
+  
 
   const [selectedTags, setSelectedTags] = useState([]);
 

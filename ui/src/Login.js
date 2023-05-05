@@ -2,7 +2,7 @@
 //Displays the login screen
 import React, {useState, useEffect, Fragment} from 'react';
 import API from './API_Interface/API_Interface';
-
+import TitleRenderer from './Logo/TitleRenderer';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -71,7 +71,8 @@ export default function Login({setUser, title}) {
     }, [verifyUser, setUser, userName, password]);
 
 /*
-    <Box sx={{flexGrow:1, justifyContent: "center", alignItems: "center"}}>
+    return (
+       <Box sx={{flexGrow:1, justifyContent: "center", alignItems: "center"}}>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5} >
             <Typography variant="h3" justifyContent="center" mt={10}>
 
@@ -83,14 +84,10 @@ export default function Login({setUser, title}) {
 
 
     return (
-       <Box sx={{flexGrow:1, justifyContent: "center", alignItems: "center"}}>
-           <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5} >
-            <Typography variant="h3" justifyContent="center" mt={10}>
-
-                {title}
-
+       <Box>
+            <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
+               <TitleRenderer/>
             </Typography>
-           </Box>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>
 
                 <TextField
