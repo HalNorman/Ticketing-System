@@ -115,6 +115,5 @@ export default function Login({setUser, title}) {
                 >Log in</Button>
            </Box>
        </Box>
-
     );
 }
