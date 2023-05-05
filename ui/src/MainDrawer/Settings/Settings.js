@@ -38,11 +38,6 @@ const userTableCols = [
         title: 'Username',
         attributeDBName: 'username',
         align: 'left'
-    },
-    {
-        title: 'Password',
-        attributeDBName: 'password',
-        align: 'left'
     }
 ];
 
@@ -60,12 +55,11 @@ export default function Settings(props) {
     }});
     const [updateView, setUpdateView] = React.useState(1);
     const [userTable, setUserTable] = React.useState([]);
-    
+    const [systemName, setSystemName] = React.useState('');
+
     const themes =[
         
         {
-
-
             primary: "242f40",
             secondary: "cca43b",
             text: "363636",
@@ -222,7 +216,11 @@ export default function Settings(props) {
             setUpdateView(updateView + 1);
         }
     }
-
+    async function setSystemNameInApi(){
+        if(systemName !== ''){
+            await api.setThemeName(systemName);
+        }
+    }
     async function deleteUser(user_id){
         await api.deleteUser(user_id);
         setUpdateView(updateView + 1);
@@ -230,6 +228,15 @@ export default function Settings(props) {
 
         return(
             <Box sx= {{flexGrow:1,p: 3 }} >
+                <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
+                    <Typography variant = "h5">
+                        Change System Name
+                    </Typography>
+                    <Stack direction = "row" spacing={2} >
+                        <TextField id="Ticketing System Name" fullWidth label="Ticketing System Name" variant="outlined" onChange={(event) => setSystemName(event.target.value)}/>
+                        <Button onClick={() => setSystemNameInApi()} variant="contained" margin="normal">Set System Name</Button>
+                    </Stack>
+                </Box>
                 <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
                     <Typography variant = "h5">
                         Theme Select
@@ -282,7 +289,6 @@ export default function Settings(props) {
                         Add User
                     </Typography>
                 <Box
-
                     component="form"
                     noValidate
                     autoComplete="off"
@@ -311,6 +317,9 @@ export default function Settings(props) {
                 </Box>
                 </Box>
                 <Box sx={{border: "1px solid"}}>
+                <Typography variant = "h5">
+                        Current Users in the System
+                    </Typography>
                     {makeTable()}
                 </Box>
             </Box>

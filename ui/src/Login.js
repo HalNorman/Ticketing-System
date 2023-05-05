@@ -11,12 +11,13 @@ import Divider from '@mui/material/Divider';
 import { Typography } from '@mui/material';
 
 
-export default function Login({setUser}) {
+export default function Login({setUser, title}) {
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [verifyUser, setVerifyUser] = useState(false);
     const [authFailed, setAuthFailed] = useState(false);
 
+    console.log(title);
 
     const handleInputChange = (label) => event => {
         console.log("handleInputChange called.");
@@ -71,12 +72,14 @@ export default function Login({setUser}) {
 
 
     return (
-       <Fragment>
-            <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
+       <Box sx={{flexGrow:1, justifyContent: "center", alignItems: "center"}}>
+           <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5} >
+            <Typography variant="h3" justifyContent="center" mt={10}>
 
-                Ticketing System
+                {title}
 
             </Typography>
+           </Box>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>
 
                 <TextField
@@ -100,7 +103,6 @@ export default function Login({setUser}) {
                     placeholder=""
                     value={password}
                     onChange={handleInputChange('Password')}
-                    type="password"
                 />
                 <Divider />
            </Box>
@@ -112,7 +114,7 @@ export default function Login({setUser}) {
                     onClick={() => {setVerifyUser(true)}}
                 >Log in</Button>
            </Box>
-       </Fragment>
+       </Box>
 
     );
 }

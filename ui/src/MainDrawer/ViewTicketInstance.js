@@ -4,16 +4,11 @@ import {
   Box,
   Typography,
   MenuItem,
-  Select,
   Button,
-  TextField,
   Grid,
   Paper
 } from "@mui/material";
 import Stack from '@mui/joy/Stack';
-import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
-
-
 
 const Fields = (props) => {
 
@@ -27,8 +22,6 @@ const Fields = (props) => {
   }
 
 
-  const [fieldTags, setFieldTags] = useState([]);
-  const [allFieldTags, setAllFieldTags] = useState([]);
   const [fields, setFields] = useState([]);
   const [reveal, setReveal] = useState(assertRole());
   // const[ticketID, setTicketID] = useState([props.ticket.ticketID]);
@@ -81,40 +74,15 @@ const Fields = (props) => {
   }, [fields]);
 
 
-
-  const handleTagChange = (event, fieldtagID) => {
-    const newSelectedTags = { ...selectedTags };
-    newSelectedTags[fieldtagID].tag = event.target.value;
-
-    console.log("index ", fieldtagID, " value ", event.target.value);
-    setSelectedTags(newSelectedTags);
-  };
-
-
-  const getMenuItems = (fieldtagID) => {
-    if (fieldTags.length === 0) return null;
-    const matchingField = fieldTags.fieldtags.find(
-      (field) => field.fieldtagID === fieldtagID
-    );
-
-    if (!matchingField) return null;
-
-    return matchingField.tags.map((tag) => (
-
-      <MenuItem key={tag} value={tag}>
-        {tag}
-
-      </MenuItem>
-    ));
-  };
-
-  const handleResolve = async () => {
+  async function handleResolve (){
     const api = new API();
-    const response = await api.compleTicket(ticketID);
+    const response = await api.completeTicket(ticketID);
+    props.handlePageClear();
+    props.setRerender(props.reRender+1);
     console.log("response: " + JSON.stringify(response));
-    window.location.reload();
   };
 
+  //sx={{color:"secondary.main"}}
 
   return (
    <Fragment>
@@ -186,7 +154,7 @@ const Fields = (props) => {
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        <Button sx= {{display: reveal ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={handleResolve}>
+        <Button sx= {{display: reveal ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={() => handleResolve()}>
           Resolve
         </Button>
         </Grid>

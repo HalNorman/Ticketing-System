@@ -120,4 +120,7 @@ export default class APIInterface {
     async setThemeName(name){
         return axiosAgent.post(`theme/setThemeName`, {name: name});
     }
+    async deleteTemplate(template_id){
+        return axiosAgent.delete(`template/${template_id}/deleteTemplate`);
+    }
 }

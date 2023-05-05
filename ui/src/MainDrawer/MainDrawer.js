@@ -7,7 +7,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import {IconButton, Tab} from "@mui/material";
 import * as React from "react";
-import {useState, useEffect} from "react";
+import {useState, useEffect, useCallback} from "react";
 import {Tabs} from "@mui/material";
 import {TextField} from "@mui/material";
 import {Icon} from "@mui/material";
@@ -32,12 +32,14 @@ import ViewTicketInstance from "./ViewTicketInstance";
 const drawerWidth = 210;
 
 
-
 export default function MainDrawer (props) {
 
     const [ticketInstanceIDs, setTicketInstanceIDs] = useState([]);
     const [ticketTemplateIDs, setTicketTemplateIDs] = useState([]);
     const [ticketOrTemplateDisplay,setTicketOrTemplateDisplay] = useState(null)
+    const [reRender,setRerender] = useState(0);
+
+
     useEffect(() => {
         const api = new API();
 
@@ -48,7 +50,7 @@ export default function MainDrawer (props) {
             setTicketInstanceIDs(routesJSONString.data);
         }
         getTickets();
-    }, []);
+    }, [reRender]);
 
     useEffect(() => {
         const api = new API();
@@ -109,9 +111,7 @@ export default function MainDrawer (props) {
     const handleValueSelection = (data,view) => {
         setSelectedValue(data)
         setTicketOrTemplateDisplay(view)
-        console.log("hello")
         setIsButtonVisible(true)
-
     }
 
     const handlePageClear = () => {
@@ -193,6 +193,7 @@ export default function MainDrawer (props) {
                                     onChange={(event) => setTicketStatus(event.target.value, "role")}
                                     value={ticketStatus}
                                     >
+                                <MenuItem value={"all"}>All</MenuItem>
                                 <MenuItem value={"active"}>Active</MenuItem>
                                 <MenuItem value={"complete"}>Complete</MenuItem>
                             </Select>
@@ -202,7 +203,7 @@ export default function MainDrawer (props) {
                         <List>
                             {ticketInstanceIDs.filter((data) => {
                             
-                                return (data.title.toLowerCase().includes(searchValue.toLowerCase()) || (`${data.fName} ${data.lName}`).toLowerCase().includes(searchValue.toLowerCase())) && data.status === ticketStatus
+                                return (data.title.toLowerCase().includes(searchValue.toLowerCase()) || (`${data.fName} ${data.lName}`).toLowerCase().includes(searchValue.toLowerCase())) && (data.status === ticketStatus || ticketStatus === 'all')
 
                             }).map((instance, index) => (
                                 <div>
@@ -224,9 +225,13 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance ticket = {selectedValue}/>} 
+                <TicketInstance ticket = {selectedValue} userID = {props.user.userID}/>} 
                 {ticketOrTemplateDisplay === "Ticket" &&
-                <ViewTicketInstance ticket = {selectedValue} role={props.user.role}/>}
+                <ViewTicketInstance handlePageClear={handlePageClear}
+                                    reRender={reRender}
+                                    setRerender={setRerender}
+                                    ticket = {selectedValue}
+                                    role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate />}
                 <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
