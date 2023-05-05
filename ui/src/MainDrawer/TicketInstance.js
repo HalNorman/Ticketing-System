@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import LockIcon from "@mui/icons-material/Lock";
 import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/icons-material/Lock";
+import IconButton from '@mui/material/IconButton';
 
 const Fields = (props) => {
-  const [fieldTags, setFieldTags] = useState([]);
+  //const [fieldTags, setFieldTags] = useState([]);
   const [allFieldTags, setAllFieldTags] = useState([]);
   const [fields, setFields] = useState([]);
   const [description, setDescription] = useState("");
