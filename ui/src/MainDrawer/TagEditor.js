@@ -84,7 +84,7 @@ export default function FieldForm() {
   const uniqueFields = Array.from(
     new Set(fields.map((fieldTag) => fieldTag.field))
   );
-
+    //divider={<Divider orientation="horizontal" />}
   return (
     <Box sx= {{flexGrow:1, p: 3 }}  >
     <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
@@ -98,7 +98,7 @@ export default function FieldForm() {
         <Button variant="contained" onClick={handleSave}>Save</Button>
         </Box>
           {uniqueFields.map((field) => (
-            <Stack direction="column" divider={<Divider orientation="horizontal" />} spacing={2} justifyContent="center" key={field}>
+            <Stack direction="column" spacing={2} justifyContent="center" key={field}>
               <Box>
                 <Stack direction="row" justifyContent="center" spacing={2}>
                   <Button onClick={() => handleToggleFieldTags(field)} variant="contained">

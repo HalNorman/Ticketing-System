@@ -109,9 +109,7 @@ export default function MainDrawer (props) {
     const handleValueSelection = (data,view) => {
         setSelectedValue(data)
         setTicketOrTemplateDisplay(view)
-        console.log("hello")
         setIsButtonVisible(true)
-
     }
 
     const handlePageClear = () => {
@@ -193,6 +191,7 @@ export default function MainDrawer (props) {
                                     onChange={(event) => setTicketStatus(event.target.value, "role")}
                                     value={ticketStatus}
                                     >
+                                <MenuItem value={"all"}>All</MenuItem>
                                 <MenuItem value={"active"}>Active</MenuItem>
                                 <MenuItem value={"complete"}>Complete</MenuItem>
                             </Select>
@@ -202,7 +201,7 @@ export default function MainDrawer (props) {
                         <List>
                             {ticketInstanceIDs.filter((data) => {
                             
-                                return (data.title.toLowerCase().includes(searchValue.toLowerCase()) || (`${data.fName} ${data.lName}`).toLowerCase().includes(searchValue.toLowerCase())) && data.status === ticketStatus
+                                return (data.title.toLowerCase().includes(searchValue.toLowerCase()) || (`${data.fName} ${data.lName}`).toLowerCase().includes(searchValue.toLowerCase())) && (data.status === ticketStatus || ticketStatus === 'all')
 
                             }).map((instance, index) => (
                                 <div>
