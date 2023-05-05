@@ -104,10 +104,6 @@ export default function MainDrawer (props) {
     };
 
 
-    const handleValueSelectionAndDiscard = (data,view) => {
-        handlePageClear();
-        handleValueSelection(data,view);
-    }
     const handleValueSelection = (data,view) => {
         setSelectedValue(data)
         setTicketOrTemplateDisplay(view)
@@ -171,7 +167,7 @@ export default function MainDrawer (props) {
                           <div className="font-link">
 
                             <ListItem sx={{borderTop: "1px solid",borderBottom: "1px solid"}} key={obj.ticketID} disablePadding >
-                              <ListItemButton onClick={() => handleValueSelectionAndDiscard(obj,"Template")}>
+                              <ListItemButton onClick={() => handleValueSelection(obj,"Template")}>
                                 <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
                               </ListItemButton>
                             </ListItem>
