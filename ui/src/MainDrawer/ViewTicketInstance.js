@@ -134,7 +134,7 @@ const Fields = (props) => {
         </Typography>
       </Grid>
       <Grid item xs={6}>
-        <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+        <Paper spacing='2px' sx={{ p: 2, margin: 'auto', marginBottom: '5px', maxWidth: 500, flexGrow: 1, border: '2px solid', backgroundColor: '#f5f5f5', borderColor: 'secondary.main' }}>
           {info}
         </Paper>
       </Grid>
@@ -148,13 +148,13 @@ const Fields = (props) => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  //could do 
                   my: 1,
-                  p: 1,
                   border: "2px solid",
                   borderColor: "secondary.main"
                 }}
               >
-                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
                 <Typography sx={{ mr: 1, color: "text.primary" }}>
                   {field.field + ": " }
                 </Typography>
@@ -171,12 +171,11 @@ const Fields = (props) => {
                   display: "flex",
                   alignItems: "center",
                   my: 1,
-                  p: 1,
                   border: "2px solid",
                   borderColor: "secondary.main"
                 }}
               >
-                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
+                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
                 <Typography sx={{ mr: 1, color: "text.primary" }}>
                   {field.tag}
                 </Typography>
