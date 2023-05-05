@@ -135,6 +135,7 @@ const Fields = (props) => {
     } catch (error) {
       console.error("Error creating ticket instance:", error);
     }
+    props.setRerender();
     props.handlePageClear();
   };
 
@@ -161,14 +162,15 @@ const Fields = (props) => {
   };
   async function deleteTemplate(){
     const api = new API();
-    const templateID = props.ticket.ticketID;
+    const templateID = props.ticket.templateID;
+    console.log(templateID);
     api.deleteTemplate(templateID);
+    props.setRerender();
     props.handlePageClear();
   }
 
   return (
     <Box>
-
       <Typography variant="h3" sx={{ color: "text.primary" }}>
         {title}
       </Typography>
@@ -220,7 +222,7 @@ const Fields = (props) => {
           )}
         </Box>
       ))}
-  <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
+    <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
       {getAvailableFieldsToAdd().length > 0 &&
       <FormControl  sx={{width: "40vh"}} >
         <InputLabel id="field-selector">Field</InputLabel>     
@@ -232,14 +234,17 @@ const Fields = (props) => {
           ))}
         </Select>
       </FormControl>}
-      
     </Box>
     </Stack>
     </Stack>
-      <Button onClick={handleFormSubmit} variant="contained" color="secondary" sx={{ backgroundColor: 'secondary.main' }}>
+    <Stack direction = "column" spacing={2} alignItems="center" justifyContent="center">
+      <Button onClick={handleFormSubmit} variant="contained">
         Submit
       </Button>
-      
+      <Button sx= {{display: props.userRole === 'admin' ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={() => deleteTemplate()}>
+        Delete Template
+      </Button>
+    </Stack>
   </Box>
 );
 };
