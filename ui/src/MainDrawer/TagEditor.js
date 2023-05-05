@@ -101,7 +101,7 @@ export default function FieldForm() {
             <Stack direction="column" spacing={2} justifyContent="center" key={field}>
               <Box>
                 <Stack direction="row" justifyContent="center" spacing={2}>
-                  <Button onClick={() => handleToggleFieldTags(field)} variant="contained">
+                  <Button onClick={() => handleToggleFieldTags(field)} variant="outlined">
                     {field}
                   </Button>
                   <Button onClick={() => handleDeleteField(field)} variant="contained">Delete Field</Button>
