@@ -77,8 +77,8 @@ const Fields = (props) => {
   async function handleResolve (){
     const api = new API();
     const response = await api.completeTicket(ticketID);
+    props.setRerender();
     props.handlePageClear();
-    props.setRerender(props.reRender+1);
     console.log("response: " + JSON.stringify(response));
   };
 

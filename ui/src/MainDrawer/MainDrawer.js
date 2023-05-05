@@ -65,7 +65,7 @@ export default function MainDrawer (props) {
 
         getTemplates();
         console.log(ticketTemplateIDs)
-    }, []);
+    }, [reRender]);
 
 
     console.log('user ', props.user.userID);
@@ -120,6 +120,9 @@ export default function MainDrawer (props) {
         setIsButtonVisible(false);
     }
 
+    const handlePageRender = () => {
+        setRerender(reRender + 1);
+    }
     return(
         <Fragment>
             <Drawer
@@ -177,7 +180,6 @@ export default function MainDrawer (props) {
                                 <AddIcon sx={{color: "secondary.main"}} />
                             </IconButton>}
                         </div>
-
                     }
                     {tabValue === 2 && //Tickets 
                         <div>
@@ -222,20 +224,20 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance ticket = {selectedValue} userID = {props.user.userID} userRole={props.user.role} handlePageClear={handlePageClear}/>} 
+                <TicketInstance ticket = {selectedValue} 
+                                userID = {props.user.userID} 
+                                userRole={props.user.role} 
+                                setRerender={handlePageRender}
+                                handlePageClear={handlePageClear}/>} 
                 {ticketOrTemplateDisplay === "Ticket" &&
                 <ViewTicketInstance handlePageClear={handlePageClear}
-                                    reRender={reRender}
-                                    setRerender={setRerender}
+                                    setRerender={handlePageRender}
                                     ticket = {selectedValue}
                                     role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate />}
-                <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
-
-
-
             </Box>
         </Fragment>
     )
 }
+//<Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>

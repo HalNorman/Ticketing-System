@@ -133,6 +133,7 @@ const Fields = (props) => {
     } catch (error) {
       console.error("Error creating ticket instance:", error);
     }
+    props.setRerender();
     props.handlePageClear();
   };
 
@@ -159,8 +160,10 @@ const Fields = (props) => {
   };
   async function deleteTemplate(){
     const api = new API();
-    const templateID = props.ticket.ticketID;
+    const templateID = props.ticket.templateID;
+    console.log(templateID);
     api.deleteTemplate(templateID);
+    props.setRerender();
     props.handlePageClear();
   }
 
