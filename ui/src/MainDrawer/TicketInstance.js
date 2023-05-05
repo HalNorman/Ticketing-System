@@ -238,7 +238,7 @@ const Fields = (props) => {
     </Stack>
     </Stack>
     <Stack direction = "column" spacing={2} alignItems="center" justifyContent="center">
-      <Button onClick={handleFormSubmit} variant="contained" sx={{ ml: 1 }}>
+      <Button onClick={handleFormSubmit} variant="contained">
         Submit
       </Button>
       <Button sx= {{display: props.userRole === 'admin' ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={() => deleteTemplate()}>

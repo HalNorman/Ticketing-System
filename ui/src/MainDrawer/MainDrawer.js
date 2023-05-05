@@ -233,7 +233,7 @@ export default function MainDrawer (props) {
                 <ViewTicketInstance handlePageClear={handlePageClear}
                                     setRerender={handlePageRender}
                                     ticket = {selectedValue}
-                                    role={props.user.role}/>}
+                                    role={props.admin}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
                 <TicketTemplate />}
             </Box>
