@@ -2,7 +2,7 @@
 //Displays the login screen
 import React, {useState, useEffect, Fragment} from 'react';
 import API from './API_Interface/API_Interface';
-import LogoRenderer from './Logo/LogoRenderer';
+import TitleRenderer from './Logo/TitleRenderer';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
@@ -73,11 +73,8 @@ export default function Login({setUser, title}) {
 
     return (
        <Fragment>
-            <LogoRenderer/>
             <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
-
-                {title}
-
+               <TitleRenderer/>
             </Typography>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>
 
