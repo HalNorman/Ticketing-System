@@ -107,7 +107,6 @@ const Fields = (props) => {
       </Grid>
       <Grid item xs={6}>
         <Stack spacing={1} direction="row">
-
           <Stack direction="column">
             {fields.map((field, index) => (
               <Box

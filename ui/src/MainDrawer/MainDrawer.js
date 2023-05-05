@@ -118,9 +118,6 @@ export default function MainDrawer (props) {
         setIsButtonVisible(false);
     }
 
-
-
-
     return(
         <Fragment>
             <Drawer
@@ -223,7 +220,7 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance ticket = {selectedValue} userID = {props.user.userID}/>} 
+                <TicketInstance ticket = {selectedValue} userID = {props.user.userID} userRole={props.user.role} handlePageClear={handlePageClear}/>} 
                 {ticketOrTemplateDisplay === "Ticket" &&
                 <ViewTicketInstance ticket = {selectedValue} role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
