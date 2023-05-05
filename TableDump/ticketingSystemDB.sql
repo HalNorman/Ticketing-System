@@ -115,8 +115,9 @@ BEGIN
 END; //
 DELIMITER ;
 
+
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('admin', ' ', 'admin', 'admin', 'password');
-INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("Tickets Please", "2011a2", "55e7ff", "ff34b3","ffffff");
+INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("Tickets Please", "242f40", "cca43b", "363636","F6F1F1");
 
 -- Rest of the inserts are used for the demo
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee', 'password');
