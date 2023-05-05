@@ -81,6 +81,7 @@ const Fields = (props) => {
     window.location.reload();
   };
 
+  //sx={{color:"secondary.main"}}
 
   return (
    <Fragment>
@@ -99,7 +100,7 @@ const Fields = (props) => {
           Date Created: {date}
         </Typography>
       </Grid>
-      <Grid item xs={6} sx={{color:"secondary.main"}}>
+      <Grid item xs={6} >
         <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1}}>
           {info}
         </Paper>

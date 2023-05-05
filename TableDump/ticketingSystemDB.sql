@@ -36,13 +36,6 @@ CREATE TABLE `ticketingsystem`.`user` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
--- CREATE TABLE `ticketingsystem`.`usermodticket` (
--- 	`userID` INT UNSIGNED NOT NULL,
--- 	`ticketID` INT UNSIGNED NOT NULL,
---    `modified` DATE NOT NULL,
---    PRIMARY KEY (`userID`)
--- )
-
 
 CREATE TABLE `ticketingsystem`.`fieldtag` (
   `fieldtagID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -68,14 +61,13 @@ CREATE TABLE `ticketingsystem`.`ticketfieldtag` (
     ON DELETE CASCADE
     ON UPDATE CASCADE);
 
-
 CREATE TABLE `ticketingsystem`.`theme` (
   `themeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NOT NULL DEFAULT 'TicketingSystem',
-  `primaryColor` VARCHAR(7) NOT NULL DEFAULT "2011a2", 
-  `secondaryColor` VARCHAR(7) NOT NULL DEFAULT "55e7ff", 
-  `textColor` VARCHAR(7) NOT NULL DEFAULT "ff34b3",
-  `backgroundColor` VARCHAR(7) NOT NULL DEFAULT "ffffff",
+  `primaryColor` VARCHAR(7) NOT NULL DEFAULT "242f40", 
+  `secondaryColor` VARCHAR(7) NOT NULL DEFAULT "cca43b", 
+  `textColor` VARCHAR(7) NOT NULL DEFAULT "363636",
+  `backgroundColor` VARCHAR(7) NOT NULL DEFAULT "F6F1F1",
   PRIMARY KEY (`themeID`))
 COMMENT = '16711680 is red, 65535 is blue';
 
@@ -123,8 +115,9 @@ BEGIN
 END; //
 DELIMITER ;
 
+
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('admin', ' ', 'admin', 'admin', 'password');
-INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("Tickets Please", "2011a2", "55e7ff", "ff34b3","ffffff");
+INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("Tickets Please", "242f40", "cca43b", "363636","F6F1F1");
 
 -- Rest of the inserts are used for the demo
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee', 'password');
