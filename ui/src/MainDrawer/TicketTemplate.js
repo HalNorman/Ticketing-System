@@ -14,6 +14,7 @@ import {
 import Stack from '@mui/joy/Stack';
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from '@mui/material/IconButton';
+import Snack from "../HomePage/SnackBar";
 
 function TicketTemplate(props) {
   const [fields, setFields] = useState([]);
@@ -21,7 +22,8 @@ function TicketTemplate(props) {
   const [selectedField, setSelectedField] = useState('');
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  
+  const [openSnack,setOpenSnack] = useState(false);
+  const [snackMessage,setSnackMessage] = useState("")
 
   const displayFieldTags = fields.filter((fieldtag) => !(selectedFieldTags.some((selectedFieldTag) => fieldtag.field === selectedFieldTag.field)));
       let fieldStringArray = [];
@@ -55,6 +57,8 @@ function TicketTemplate(props) {
       setTitle('');
       setInfo('');
       props.handleRerender();
+      setSnackMessage("Creating Template");
+      setOpenSnack(true);
     }
   }
   
@@ -224,6 +228,7 @@ function TicketTemplate(props) {
         {displaySelector()}
         <Button onClick={handleSubmit} type="submit" variant="contained" color='secondary' sx={{ backgroundColor:'secondary.main' }}>Submit</Button>
         </Stack>
+        <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
     </div>
   );
 }

@@ -90,17 +90,23 @@ export default function Settings(props) {
             background:"CBE4DE"
         },
         {
-            primary: "301E67",
-            secondary: "5B8FB9",
-            text: "B6EADA",
-            background:"03001C"
+            primary: "E4D9FF",
+            secondary: "30343F",
+            text: "1E2749",
+            background: "FAFAFF"
         },
         {
-            primary: "3C2A21",
-            secondary: "D5CEA3",
-            text: "E5E5CB",
-            background:"1A120B"
+            primary: "E63B2E",
+            secondary: "7F6A93",
+            text: "221E22",
+            background: "F9E0D9"
         },
+        {
+            primary: "E63B2E",
+            secondary: "7F6A93",
+            text: "221E22",
+            background: "F9E0D9"
+        }
 
     ]
     
@@ -265,7 +271,7 @@ export default function Settings(props) {
                                  }}
                     >
                         <Stack direction = "row" justifyContent="space-between">
-                        <Typography sx={{color: `#${theme.primary}`}}>
+                        <Typography sx={{color: `#${theme.text}`}}>
                             Primary:
                         </Typography>
                         <Box sx={{
@@ -274,7 +280,7 @@ export default function Settings(props) {
                             border: "1px solid",
                             width: "25vh"
                         }} bgcolor={'#' + theme.primary} />
-                        <Typography  sx={{color: `#${theme.primary}`}}>
+                        <Typography  sx={{color: `#${theme.text}`}}>
                             Secondary:
                         </Typography>
                         <Box sx={{
@@ -283,7 +289,7 @@ export default function Settings(props) {
                             border: "1px solid ",
                             width: "25vh"
                         }} bgcolor={'#' + theme.secondary}/>
-                        <Typography  sx={{color: `#${theme.primary}`}}>
+                        <Typography  sx={{color: `#${theme.text}`}}>
                             Text:
                         </Typography>
                         <Box sx={{

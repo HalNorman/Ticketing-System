@@ -112,16 +112,16 @@ export default function FieldForm() {
         <Button onClick={() => handleAddFieldAndTag2()} variant="contained">Add</Button>
       </Stack>
         <Box>
-        <Button variant="contained" onClick={handleSave}>Save</Button>
+        <Button variant="contained" onClick={handleSave} color="secondary">Save</Button>
         </Box>
           {uniqueFields.map((field) => (
             <Stack direction="column" spacing={2} justifyContent="center" key={field}>
               <Box>
                 <Stack direction="row" justifyContent="center" spacing={2}>
-                  <Button onClick={() => handleToggleFieldTags(field)} variant="outlined">
+                  <Button onClick={() => handleToggleFieldTags(field)} variant="outlined" color="secondary">
                     {field}
                   </Button>
-                  <Button onClick={() => handleDeleteField(field)} variant="contained">Delete Field</Button>
+                  <Button onClick={() => handleDeleteField(field)} variant="contained" color="secondary">Delete Field</Button>
                 </Stack>
               </Box>
                 <Collapse in={openField === field}>
@@ -130,7 +130,7 @@ export default function FieldForm() {
                       <Box>
                         <Stack direction="row" spacing={2} justifyContent="center" key={fieldTag.fieldtagID}>
                           <Typography spacing={2}> {fieldTag.tag} </Typography>
-                          <Button onClick={() =>handleDeleteFieldTag(fieldTag.fieldtagID)} variant="contained">Delete Tag</Button>
+                          <Button onClick={() =>handleDeleteFieldTag(fieldTag.fieldtagID)} variant="contained" color="secondary">Delete Tag</Button>
                         </Stack>
                       </Box>
                     ))}

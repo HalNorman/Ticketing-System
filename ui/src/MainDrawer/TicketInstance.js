@@ -243,13 +243,14 @@ const TicketInstance = (props) => {
     </Stack>
     </Stack>
     <Stack direction = "column" spacing={2} alignItems="center" justifyContent="center">
-      <Button onClick={handleFormSubmit} variant="contained">
+      <Button onClick={handleFormSubmit} variant="contained" color="secondary">
         Submit
       </Button>
       <Button sx= {{display: props.userRole === 'admin' ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={() => deleteTemplate()}>
         Delete Template
       </Button>
     </Stack>
+    
   </Box>
 );
 };
