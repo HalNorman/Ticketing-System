@@ -38,13 +38,13 @@ const Fields = (props) => {
   console.log("ticketID: " + JSON.stringify(ticketID));
   console.log("role: " + role);
 
-  // const changeReveal = (role) => {
-  //   if(role === "admin" || role === "employee"){
-  //     setReveal(true);
-  //   }
-  // }
+   const changeReveal = (role) => {
+     if((role === "admin" || role === "employee") && status !== 'complete'){
+       setReveal(true);
+     }
+   }
 
-  // changeReveal(role);
+   changeReveal(role);
 
 
   useEffect(() => {
