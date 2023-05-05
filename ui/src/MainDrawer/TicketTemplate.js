@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import API from '../API_Interface/API_Interface';
 import {
   Box,
@@ -9,174 +9,205 @@ import {
   Select,
   TextField,
   Typography,
-  Grid
+  Paper
 } from '@mui/material';
+import Stack from '@mui/joy/Stack';
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from '@mui/material/IconButton';
 
 function TicketTemplate(props) {
   const [fields, setFields] = useState([]);
-  const [selectedFields, setSelectedFields] = useState([]);
+  const [selectedFieldTags, setSelectedFieldTags] = useState([]);
+  const [selectedField, setSelectedField] = useState('');
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
+  
+
+  const displayFieldTags = fields.filter((fieldtag) => !(selectedFieldTags.some((selectedFieldTag) => fieldtag.field === selectedFieldTag.field)));
+      let fieldStringArray = [];
+      displayFieldTags.forEach(element => {
+        if(!fieldStringArray.includes(element.field)){
+          fieldStringArray.push(element.field);
+        }
+      });
 
   useEffect(() => {
     const api = new API();
 
     async function getFieldTags() {
       const routesJSONString = await api.getAllFieldTags();
+      console.log(routesJSONString.data);
       setFields(routesJSONString.data);
     }
 
     getFieldTags();
   }, []);
 
-  function handleAddField(field) {
-    // Check if the field already exists in the selectedFields array
-    const fieldExists = selectedFields.some(
-      (selectedField) => selectedField.field === field
-    );
-  
-    // If the field does not exist, add it to the selectedFields array
-    if (!fieldExists) {
-      setSelectedFields([...selectedFields, { field, fieldTag: null }]);
+  async function handleSubmit(){
+    console.log(`handle submit called with ${title} and ${info}`);
+    if(title !== '' && info !== ''){
+      const api = new API();
+      const fieldtagArray = selectedFieldTags.map((object) => object.fieldtagID);
+      console.log(fieldtagArray);
+      await api.createTicketTemplate({title:title, info:info}, fieldtagArray);
+      setSelectedField('');
+      setSelectedFieldTags([]);
+      setTitle('');
+      setInfo('');
+      props.setRerender(props.reRender + 1);
     }
   }
-
-  function handleDeleteField(index) {
-    const updatedSelectedFields = [...selectedFields];
-    updatedSelectedFields.splice(index, 1);
-    setSelectedFields(updatedSelectedFields);
+  
+  function handleRemove(fieldTag){
+    let newSelectedFieldTags = [...selectedFieldTags];
+    newSelectedFieldTags = newSelectedFieldTags.filter((object) => object.fieldtagID !== fieldTag.fieldtagID);
+    console.log(newSelectedFieldTags);
+    setSelectedFieldTags(newSelectedFieldTags);
+  }
+  function displaySelectedFields(){
+    return <Fragment> 
+            {selectedFieldTags.length > 0 && 
+              selectedFieldTags.map((object) => {
+                return <Stack spacing={3} direction = "row" justifyContent={"center"}>
+                          <Box
+                            key={object.field}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              //could do 
+                              my: 1,
+                              border: "2px solid",
+                              borderColor: "secondary.main"
+                              }}
+                            >
+                            <Paper sx={{ p: 2, margin: 'auto', minWidth: 300, maxWidth: 600, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
+                              <Typography sx={{ mr: 1, color: "text.primary" }}>
+                                {object.field + ": " }
+                              </Typography>
+                            </Paper>
+                          </Box>
+                          <Box
+                            key={object.tag}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              //could do 
+                              my: 1,
+                              border: "2px solid",
+                              borderColor: "secondary.main"
+                              }}
+                            >
+                            <Paper sx={{ p: 2, margin: 'auto', minWidth: 300, maxWidth: 600, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
+                              <Typography sx={{ mr: 1, color: "text.primary" }}>
+                                {object.tag}
+                              </Typography>
+                            </Paper>
+                          </Box>
+                            <IconButton
+                    
+                              onClick={() => handleRemove(object)}
+                              sx={{color:"secondary.main"}}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                        </Stack>
+              })
+            }
+          </Fragment>
+  }
+  function tagSelected(fieldTag){
+    let newSelectedFieldTags = [...selectedFieldTags];
+    newSelectedFieldTags.push(fieldTag);
+    setSelectedFieldTags(newSelectedFieldTags);
+    setSelectedField('');
+    console.log(selectedFieldTags);
   }
 
-  function handleSelectFieldTag(index, fieldTag) {
-    const updatedSelectedFields = [...selectedFields];
-    updatedSelectedFields[index].fieldTag = fieldTag;
-    setSelectedFields(updatedSelectedFields);
+
+  function displaySelector(){
+    console.log(selectedField);
+    if(selectedField !== ''){
+      const tagArray = fields.filter((fieldTag) => fieldTag.field === selectedField);
+      return <Fragment>
+              <FormControl> 
+                <Stack spacing={3} direction = "row" justifyContent={"center"}>
+                <Typography>
+                  {selectedField}
+                </Typography>
+                
+                <InputLabel id="tagSelector">Tag</InputLabel>
+                  <Select 
+                        fullWidth
+                        labelId="tagSelector"
+                        id="tagSelect"
+                        label="tag"
+                        onChange={(event) => tagSelected(event.target.value)}
+                        >
+                        {tagArray.map((fieldTag) => (
+                          <MenuItem value={fieldTag}>
+                            {fieldTag.tag}
+                          </MenuItem>)
+                        )}
+                  </Select>
+                </Stack>
+              </FormControl>
+             </Fragment>
+    } 
+    else if(displayFieldTags.length > 0) {
+      console.log(fieldStringArray);
+      return <Fragment>
+              <FormControl>
+              <Stack spacing={3} direction = "row" justifyContent={"space-between"}>
+              
+              <InputLabel id="fieldSelector">Field</InputLabel>
+                <Select 
+                        fullWidth
+                        labelId="fieldSelector"
+                        id="fieldSelect"
+                        label="field"
+                        value="field"
+                        onChange={(event) => setSelectedField(event.target.value)}
+                        >
+                        {fieldStringArray.map((fieldString) => (
+                          <MenuItem value={fieldString}>
+                            {fieldString}
+                          </MenuItem>
+                        )
+                        )}
+                </Select>
+              </Stack>
+              </FormControl>
+             </Fragment>
+    }
+    else{
+      return <Fragment>
+                
+             </Fragment>
+    }
   }
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-    const api = new API();
-    const template = { title, info };
-    const template_field_array = selectedFields.map((field) => field.fieldTag.fieldtagID);
-    console.log("template_field_array ", template_field_array);
-    await api.createTicketTemplate(template, template_field_array);
-    props.handlePageClear('Template Added');
-
-    //create the ticket template fields
-  }
-
-
   return (
     <div>
-      <h1>TicketTemplate</h1>
-      <form onSubmit={handleSubmit}>
+      <h1>Create a New Template</h1>
+        <Stack spacing={3} direction = "column" alignItems="center" justifyContent={"space-between"}>
         <TextField
           label="Title"
           required
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          sx={{ mb: 2 }}
+          onChange={(event) => setTitle(event.target.value)}
+          sx={{ mb: 2, width: "40vh" }}
         />
         <br />
         <TextField
           label="Info"
           value={info}
-          onChange={(e) => setInfo(e.target.value)}
-          sx={{ mb: 4 }}
+          onChange={(event) => setInfo(event.target.value)}
+          multiline variant="outlined"
+          sx={{ mb: 4, width: "40vh" }}
         />
-        <Grid container spacing={2}>
-          {selectedFields.map((selectedField, index) => (
-            <React.Fragment key={index}>
-              <Grid item xs={6}>
-                {selectedField.field}
-              </Grid>
-              <Grid item xs={6}>
-                <FieldTagSelector
-                  field={selectedField.field}
-                  fields={fields}
-                  onSelectFieldTag={(fieldTag) =>
-                    handleSelectFieldTag(index, fieldTag)
-                  }
-                />
-                <button type="button" onClick={() => handleDeleteField(index)}>
-                  -
-                </button>
-              </Grid>
-            </React.Fragment>
-          ))}
-        </Grid>
-        <AddFieldButton fields={fields} onAddField={handleAddField} />
-        <Button type="submit" variant="contained" color='secondary' sx={{ backgroundColor:'secondary.main' }}>Submit</Button>
-      </form>
-    </div>
-  );
-}
-
-
-function AddFieldButton({ fields, onAddField }) {
-  const [selectedField, setSelectedField] = useState('');
-
-  const handleChange = (event) => {
-    setSelectedField(event.target.value);
-    onAddField(event.target.value);
-  };
-
-  const uniqueFields = [...new Set(fields.map((field) => field.field))];
-
-  return (
-    <div>
-      <FormControl fullWidth>
-        <InputLabel id="add-field-label">Add Field</InputLabel>
-        <Select
-          labelId="add-field-label"
-          id="add-field"
-          value={selectedField}
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {uniqueFields.map((field) => (
-            <MenuItem key={field} value={field}>
-              {field}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-    </div>
-  );
-}
-
-function FieldTagSelector({ field, fields, onSelectFieldTag }) {
-  const [selectedFieldTag, setSelectedFieldTag] = useState(null);
-
-  const handleChange = (event) => {
-    setSelectedFieldTag(event.target.value);
-    onSelectFieldTag(event.target.value);
-  };
-
-  const fieldTags = fields.filter((f) => f.field === field);
-
-  return (
-    <div>
-      <FormControl fullWidth>
-        <InputLabel id={`select-field-tag-label-${field}`}>Select Field Tag</InputLabel>
-        <Select
-          labelId={`select-field-tag-label-${field}`}
-          id={`select-field-tag-${field}`}
-          value={selectedFieldTag}
-          onChange={handleChange}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {fieldTags.map((fieldTag) => (
-            <MenuItem key={fieldTag.fieldtagID} value={fieldTag}>
-              {fieldTag.tag}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        {displaySelectedFields()}
+        {displaySelector()}
+        <Button onClick={handleSubmit} type="submit" variant="contained" color='secondary' sx={{ backgroundColor:'secondary.main' }}>Submit</Button>
+        </Stack>
     </div>
   );
 }

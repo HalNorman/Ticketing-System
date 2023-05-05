@@ -226,7 +226,10 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance handlePageClear={handlePageClear} ticket = {selectedValue} userID = {props.user.userID} userRole={props.user.role}/>}
+                <TicketInstance handlePageClear={handlePageClear} 
+                                ticket = {selectedValue} 
+                                userID = {props.user.userID} 
+                                userRole={props.user.role}/>}
                 {ticketOrTemplateDisplay === "Ticket" &&
                 <ViewTicketInstance handlePageClear={handlePageClear}
                                     reRender={reRender}
@@ -234,12 +237,13 @@ export default function MainDrawer (props) {
                                     ticket = {selectedValue}
                                     role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
-                <TicketTemplate handlePageClear={handlePageClear}/>}
-                <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
-
-
+                <TicketTemplate handlePageClear={handlePageClear}
+                                reRender={reRender}
+                                setRerender={setRerender}
+                />}
                 <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
             </Box>
         </Fragment>
     )
 }
+//<Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
