@@ -136,7 +136,7 @@ const TicketInstance = (props) => {
     } catch (error) {
       console.error("Error creating ticket instance:", error);
     }
-    props.setRerender();
+    props.handleRerender();
     props.handlePageClear("Ticket Submitted");
   };
 
