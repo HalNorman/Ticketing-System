@@ -98,6 +98,7 @@ const Fields = (props) => {
     setFields(newFields);
   };
 
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -220,7 +221,7 @@ const Fields = (props) => {
           )}
         </Box>
       ))}
-  <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
+  <Box sx={{ alignItems: "center", my: 1, width: '15vh'}}>
       {getAvailableFieldsToAdd().length > 0 &&
       <FormControl  sx={{width: "40vh"}} >
         <InputLabel id="field-selector">Field</InputLabel>     

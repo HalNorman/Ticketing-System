@@ -9,8 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Stack from '@mui/joy/Stack';
 
-import React, {useEffect, Fragment} from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import API from "../../API_Interface/API_Interface";
+
+import Snack from "../../HomePage/SnackBar";
 
 
 
@@ -56,6 +58,9 @@ export default function Settings(props) {
     const [updateView, setUpdateView] = React.useState(1);
     const [userTable, setUserTable] = React.useState([]);
     const [systemName, setSystemName] = React.useState('');
+
+    const [openSnack,setOpenSnack] = useState(false);
+    const [snackMessage,setSnackMessage] = useState("")
 
     const themes =[
         
@@ -211,16 +216,27 @@ export default function Settings(props) {
         if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.password !== '' ){
             await api.addUser(user);
             setUpdateView(updateView + 1);
+            setSnackMessage("User Added");
+            setOpenSnack(true);
+        }else{
+
         }
     }
     async function setSystemNameInApi(){
         if(systemName !== ''){
             await api.setThemeName(systemName);
+            setSnackMessage("System Name Changed");
+            setOpenSnack(true);
+        }else{
+            setSnackMessage("No Value In TextField");
+            setOpenSnack(true);
         }
     }
     async function deleteUser(user_id){
         await api.deleteUser(user_id);
         setUpdateView(updateView + 1);
+        setSnackMessage("User Deleted");
+        setOpenSnack(true);
     }
 
         return(
@@ -319,6 +335,7 @@ export default function Settings(props) {
                     </Typography>
                     {makeTable()}
                 </Box>
+                <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
             </Box>
         )
 /*
