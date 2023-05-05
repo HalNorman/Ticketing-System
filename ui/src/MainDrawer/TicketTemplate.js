@@ -151,8 +151,9 @@ function TicketTemplate(props) {
                       </Paper>
                     </Box>
                 <FormControl sx={{width: "20vh"}}> 
-                  <InputLabel id="tagSelector">Tag</InputLabel>
+                  <InputLabel id="tagSelector" sx={{marginTop: 1}}>Tag</InputLabel>
                     <Select 
+                        sx={{marginTop: 1}}
                         fullWidth
                         labelId="tagSelector"
                         id="tagSelect"
