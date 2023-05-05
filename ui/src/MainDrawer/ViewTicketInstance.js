@@ -154,9 +154,11 @@ const Fields = (props) => {
                   borderColor: "secondary.main"
                 }}
               >
+                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
                 <Typography sx={{ mr: 1, color: "text.primary" }}>
                   {field.field + ": " }
                 </Typography>
+                </Paper>
               </Box>
             ))}
           </Stack>
@@ -174,9 +176,11 @@ const Fields = (props) => {
                   borderColor: "secondary.main"
                 }}
               >
+                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1 }}>
                 <Typography sx={{ mr: 1, color: "text.primary" }}>
                   {field.tag}
                 </Typography>
+                </Paper>
               </Box>
             ))}
           </Stack>
