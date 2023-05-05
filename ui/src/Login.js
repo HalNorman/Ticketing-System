@@ -72,12 +72,10 @@ export default function Login({setUser, title}) {
 
 
     return (
-    
        <Fragment>
-            <Typography variant="h3" display="flex" justifyContent="center" alignItems="center" mt={20}>
+            <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
                <TitleRenderer/>
             </Typography>
-           </Box>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>
 
                 <TextField
@@ -112,7 +110,7 @@ export default function Login({setUser, title}) {
                     onClick={() => {setVerifyUser(true)}}
                 >Log in</Button>
            </Box>
-       </Box>
-</Fragment>
+       </Fragment>
+
     );
 }
