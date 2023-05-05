@@ -137,7 +137,7 @@ const Fields = (props) => {
       console.error("Error creating ticket instance:", error);
     }
     props.setRerender();
-    props.handlePageClear();
+    props.handlePageClear("Ticket Submitted");
   };
 
   const handleAddField = (field) => {
@@ -167,7 +167,7 @@ const Fields = (props) => {
     console.log(templateID);
     api.deleteTemplate(templateID);
     props.setRerender();
-    props.handlePageClear();
+    props.handlePageClear("Deleting Template");
   }
 
   return (
