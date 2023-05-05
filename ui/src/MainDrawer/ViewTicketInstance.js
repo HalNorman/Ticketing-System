@@ -74,11 +74,12 @@ const Fields = (props) => {
   }, [fields]);
 
 
-  const handleResolve = async () => {
+  async function handleResolve (){
     const api = new API();
-    const response = await api.compleTicket(ticketID);
+    const response = await api.completeTicket(ticketID);
+    props.handlePageClear();
+    props.setRerender(props.reRender+1);
     console.log("response: " + JSON.stringify(response));
-    window.location.reload();
   };
 
   //sx={{color:"secondary.main"}}
@@ -100,14 +101,13 @@ const Fields = (props) => {
           Date Created: {date}
         </Typography>
       </Grid>
-      <Grid item xs={6} >
-        <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1}}>
+      <Grid item xs={6}>
+        <Paper spacing='2px' sx={{ p: 2, margin: 'auto', marginBottom: '5px', maxWidth: 500, flexGrow: 1, border: '2px solid', backgroundColor: '#f5f5f5', borderColor: 'secondary.main' }}>
           {info}
         </Paper>
       </Grid>
       <Grid item xs={6}>
         <Stack spacing={1} direction="row">
-
           <Stack direction="column">
             {fields.map((field, index) => (
               <Box
@@ -115,15 +115,17 @@ const Fields = (props) => {
                 sx={{
                   display: "flex",
                   alignItems: "center",
+                  //could do 
                   my: 1,
-                  p: 1,
                   border: "2px solid",
                   borderColor: "secondary.main"
                 }}
               >
+                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
                 <Typography sx={{ mr: 1, color: "text.primary" }}>
                   {field.field + ": " }
                 </Typography>
+                </Paper>
               </Box>
             ))}
           </Stack>
@@ -136,21 +138,22 @@ const Fields = (props) => {
                   display: "flex",
                   alignItems: "center",
                   my: 1,
-                  p: 1,
                   border: "2px solid",
                   borderColor: "secondary.main"
                 }}
               >
+                <Paper sx={{ p: 2, margin: 'auto', maxWidth: 500, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
                 <Typography sx={{ mr: 1, color: "text.primary" }}>
                   {field.tag}
                 </Typography>
+                </Paper>
               </Box>
             ))}
           </Stack>
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        <Button sx= {{display: reveal ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={handleResolve}>
+        <Button sx= {{display: reveal ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={() => handleResolve()}>
           Resolve
         </Button>
         </Grid>

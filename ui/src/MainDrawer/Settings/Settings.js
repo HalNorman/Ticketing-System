@@ -99,9 +99,6 @@ export default function Settings(props) {
 
     ]
     
-    
-    
-
 
     useEffect(() => {
         async function getUsers() {
