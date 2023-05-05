@@ -89,7 +89,7 @@ const addTicket = (ctx) => {
         const ticket = ctx.request.body;
         const query =  `INSERT INTO 
                             ticketingsystem.ticket
-                            (userID, title, info, status, dateCreated, dateCompleted)
+                            (userID, title, info, status, dateCreated, dateModified)
                         VALUES
                             (?, ?, ?, ?, ?, ?)
                     `;
