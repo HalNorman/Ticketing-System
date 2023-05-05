@@ -169,7 +169,6 @@ const Fields = (props) => {
 
   return (
     <Box>
-
       <Typography variant="h3" sx={{ color: "text.primary" }}>
         {title}
       </Typography>
