@@ -74,11 +74,12 @@ const Fields = (props) => {
   }, [fields]);
 
 
-  const handleResolve = async () => {
+  async function handleResolve (){
     const api = new API();
-    const response = await api.compleTicket(ticketID);
+    const response = await api.completeTicket(ticketID);
+    props.handlePageClear();
+    props.setRerender(props.reRender+1);
     console.log("response: " + JSON.stringify(response));
-    window.location.reload();
   };
 
   //sx={{color:"secondary.main"}}
@@ -150,7 +151,7 @@ const Fields = (props) => {
         </Stack>
       </Grid>
       <Grid item xs={12}>
-        <Button sx= {{display: reveal ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={handleResolve}>
+        <Button sx= {{display: reveal ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={() => handleResolve()}>
           Resolve
         </Button>
         </Grid>
