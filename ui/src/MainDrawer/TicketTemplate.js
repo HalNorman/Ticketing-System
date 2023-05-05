@@ -105,7 +105,7 @@ function TicketTemplate() {
           ))}
         </Grid>
         <AddFieldButton fields={fields} onAddField={handleAddField} />
-        <Button type="submit" variant="contained" sx={{ mt: 2 }}>Submit</Button>
+        <Button type="submit" variant="contained" color='secondary' sx={{ backgroundColor:'secondary.main' }}>Submit</Button>
       </form>
     </div>
   );
