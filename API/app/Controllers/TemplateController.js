@@ -137,12 +137,38 @@ const allTemplates = async (ctx) => {
         ctx.status = 500;
     });
 }
-
+const deleteTemplate = async (ctx) => {
+    console.log('templates all deleteTemplate called.');
+    return new Promise((resolve, reject) => {
+        const query = `
+                        DELETE FROM 
+                            ticketingsystem.template
+                        WHERE templateID = ?
+                        `;
+        dbConnection.query({
+            sql: query,
+            values: [ctx.params.templateID]
+        }, (error, tuples) => {
+            if (error) {
+                console.log("Connection error in TemplateController::deleteTemplate", error);
+                return reject(error);
+            }
+            ctx.body = tuples;
+            ctx.status = 200;
+            return resolve();
+        });
+    }).catch(err => {
+        console.log("Database connection error in deleteTemplate.", err);
+        ctx.body = [];
+        ctx.status = 500;
+    });
+}
 
 
 module.exports = {
     allTemplatesWithFields,
     allTemplates,
     templateWithFieldsByTemplateID,
-    addTemplate
+    addTemplate,
+    deleteTemplate
 };
