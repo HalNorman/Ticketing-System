@@ -83,6 +83,7 @@ templateRouter.get('/all-templates', Authorize('any'), TemplateController.allTem
 templateRouter.get('/all-templates-fields', Authorize('any'), TemplateController.allTemplatesWithFields, err => console.log(`allTemplatesWithFields ran into an error: ${err}`));
 templateRouter.get('/:templateID/template-fields-byID', Authorize('any'), TemplateController.templateWithFieldsByTemplateID, err => console.log(`allTemplatesWithFields ran into an error: ${err}`));
 templateRouter.post('/addTemplate', Authorize('admin'), TemplateController.addTemplate, err => console.log(`addTemplate ran into an error: ${err}`));
+templateRouter.delete('/:templateID/deleteTemplate', Authorize('admin'), TemplateController.deleteTemplate, err => console.log(`deleteTemplate ran into an error: ${err}`));
 
 // FieldTag Router configuration
 
