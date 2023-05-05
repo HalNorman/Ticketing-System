@@ -5,11 +5,13 @@ import {
   Typography,
   MenuItem,
   Select,
-  Paper,
-  MenuList,
+  FormControl,
+  InputLabel,
   Button,
   TextField,
+  Grid
 } from "@mui/material";
+import Stack from '@mui/joy/Stack';
 import LockIcon from "@mui/icons-material/Lock";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from '@mui/material/IconButton';
@@ -131,9 +133,8 @@ const Fields = (props) => {
     } catch (error) {
       console.error("Error creating ticket instance:", error);
     }
+    props.handlePageClear();
   };
-
-
 
   const handleAddField = (field) => {
     setFields([
@@ -156,82 +157,87 @@ const Fields = (props) => {
       (field) => !fields.some((f) => f.field === field)
     );
   };
+  async function deleteTemplate(){
+    const api = new API();
+    const templateID = props.ticket.ticketID;
+    api.deleteTemplate(templateID);
+    props.handlePageClear();
+  }
 
   return (
     <Box>
 
       <Typography variant="h3" sx={{ color: "text.primary" }}>
-  {title}
-  </Typography>
-  <Typography variant="h5" sx={{ color: "text.primary" }}>
-  {info}
-  </Typography>
-  <TextField
-  label="Description"
-  variant="outlined"
-  fullWidth
-  value={description}
-  onChange={(e) => setDescription(e.target.value)}
-  sx={{ my: 2 }}
-  />
-      {fields.map((field, index) => (
-        <Box
-          key={index}
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            my: 1,
-            p: 1,
-            border: "2px solid",
-            borderColor: "secondary.main",
-          }}
-        >
-          <Typography sx={{ mr: 1, color: "text.primary" }}>
-            {field.field}:
-          </Typography>
-          {field.fromTemplate ? (
+        {title}
+      </Typography>
+      <Typography variant="h5" sx={{ color: "text.primary" }}>
+        {info}
+      </Typography>
+      <Stack spacing={3} direction = "row" justifyContent={"space-between"}>
+        <TextField label="Description" id="outlined-textarea" sx={{width: "65vh"}} multiline variant="outlined" value={description} onChange={(e) => setDescription(e.target.value)}/>
+        <Stack>
+          {fields.map((field, index) => (
+            <Box
+              key={index}
+              sx={{
+              display: "flex",
+              alignItems: "center",
+              my: 1,
+              p: 1,
+              border: "2px solid",
+              backgroundColor:"#F5F5F5",
+              borderColor: "secondary.main",
+              }}>
+            <Typography sx={{ mr: 1, color: "text.primary" }}>
+              {field.field}:
+            </Typography>
+              {field.fromTemplate ? (
             <Fragment>
               <LockIcon sx={{ mr: 1 }} />
               <Typography>{field.tag}</Typography>
             </Fragment>
-          ) : (
+            ) : (
             <Fragment>
-              <Select
+              <FormControl sx={{width: "40vh"}}>
+              <InputLabel id="tag-selector">Tag</InputLabel>  
+              <Select sx={{backgroundColor:"#F5F5F5"}} labelId="tag-selector" id="tag-select" label="tag"
                 value={selectedTags[index] ? selectedTags[index].tag : null}
                 onChange={(event) => handleTagChange(event, index)}
               >
                 {getMenuItems(field.field)}
               </Select>
+              </FormControl>
               <IconButton
                 edge="end"
-                color="error"
                 onClick={() => handleDeleteField(index)}
-                sx={{ ml: 1 }}
-              >
-                <DeleteIcon />
-              </IconButton>
+                sx={{ ml: 1, color:"secondary.main"}}
+                    >
+                  <DeleteIcon />
+                </IconButton>
             </Fragment>
           )}
         </Box>
       ))}
   <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
-      <Select
-        onChange={(event) => handleAddField(event.target.value)}
-        defaultValue=""
-      >
-        <MenuItem value="" disabled>
-          Add Field
-        </MenuItem>
-        {getAvailableFieldsToAdd().map((field) => (
-          <MenuItem key={field} value={field}>
-            {field}
-          </MenuItem>
-        ))}
-      </Select>
+      {getAvailableFieldsToAdd().length > 0 &&
+      <FormControl  sx={{width: "40vh"}} >
+        <InputLabel id="field-selector">Field</InputLabel>     
+        <Select labelId="field-selector" id="field-select" label="field" onChange={(event) => handleAddField(event.target.value)}>
+          {getAvailableFieldsToAdd().map((field) => (
+            <MenuItem key={field} value={field}>
+              {field}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>}
+      
+    </Box>
+    </Stack>
+    </Stack>
       <Button onClick={handleFormSubmit} variant="contained" sx={{ ml: 1 }}>
         Submit
       </Button>
-    </Box>
+      
   </Box>
 );
 };
