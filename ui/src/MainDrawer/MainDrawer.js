@@ -22,6 +22,7 @@ import AddIcon from '@mui/icons-material/Add';
 import {FormControl, InputLabel, MenuItem} from "@mui/material";
 import Select from '@mui/material/Select';
 import ViewTicketInstance from "./ViewTicketInstance";
+import Snack from "../HomePage/SnackBar";
 
 
 
@@ -36,6 +37,9 @@ export default function MainDrawer (props) {
     const [ticketTemplateIDs, setTicketTemplateIDs] = useState([]);
     const [ticketOrTemplateDisplay,setTicketOrTemplateDisplay] = useState(null)
     const [reRender,setRerender] = useState(0);
+
+    const [openSnack,setOpenSnack] = useState(false);
+    const [snackMessage,setSnackMessage] = useState("")
 
 
     useEffect(() => {
@@ -63,7 +67,7 @@ export default function MainDrawer (props) {
 
         getTemplates();
         console.log(ticketTemplateIDs)
-    }, [reRender]);
+    }, []);
 
 
     console.log('user ', props.user.userID);
@@ -87,6 +91,8 @@ export default function MainDrawer (props) {
     const [isButtonVisible, setIsButtonVisible] = useState(false) //current view to be displayed in window
     const [ticketStatus, setTicketStatus] = useState('active');
 
+
+
     const handleTabChange = (newValue) => {
         if (newValue === "Templates") {
             setTabValue(1);
@@ -96,6 +102,7 @@ export default function MainDrawer (props) {
         }
         console.log( "tab value: " + newValue);
     };
+
 
     const handleValueSelectionAndDiscard = (data,view) => {
         handlePageClear();
@@ -107,15 +114,15 @@ export default function MainDrawer (props) {
         setIsButtonVisible(true)
     }
 
-    const handlePageClear = () => {
+    const handlePageClear = (message) => {
         setSelectedValue(null);
         setTicketOrTemplateDisplay(null);
         setIsButtonVisible(false);
+        setSnackMessage(message);
+        setOpenSnack(true);
+
     }
 
-    const handlePageRender = () => {
-        setRerender(reRender + 1);
-    }
     return(
         <Fragment>
             <Drawer
@@ -172,6 +179,7 @@ export default function MainDrawer (props) {
                                 <AddIcon sx={{color: "secondary.main"}} />
                             </IconButton>}
                         </div>
+
                     }
                     {tabValue === 2 && //Tickets 
                         <div>
@@ -216,20 +224,20 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance ticket = {selectedValue} 
-                                userID = {props.user.userID} 
-                                userRole={props.user.role} 
-                                setRerender={handlePageRender}
-                                handlePageClear={handlePageClear}/>} 
+                <TicketInstance handlePageClear={handlePageClear} ticket = {selectedValue} userID = {props.user.userID} userRole={props.user.role} handlePageClear={handlePageClear}/>}
                 {ticketOrTemplateDisplay === "Ticket" &&
                 <ViewTicketInstance handlePageClear={handlePageClear}
-                                    setRerender={handlePageRender}
+                                    reRender={reRender}
+                                    setRerender={setRerender}
                                     ticket = {selectedValue}
-                                    role={props.admin}/>}
+                                    role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
-                <TicketTemplate />}
+                <TicketTemplate handlePageClear={handlePageClear}/>}
+                <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
+
+
+                <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
             </Box>
         </Fragment>
     )
 }
-//<Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>

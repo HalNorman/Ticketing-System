@@ -12,7 +12,7 @@ import {
   Grid
 } from '@mui/material';
 
-function TicketTemplate() {
+function TicketTemplate(props) {
   const [fields, setFields] = useState([]);
   const [selectedFields, setSelectedFields] = useState([]);
   const [title, setTitle] = useState('');
@@ -60,6 +60,7 @@ function TicketTemplate() {
     const template_field_array = selectedFields.map((field) => field.fieldTag.fieldtagID);
     console.log("template_field_array ", template_field_array);
     await api.createTicketTemplate(template, template_field_array);
+    props.handlePageClear('Template Added');
 
     //create the ticket template fields
   }

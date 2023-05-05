@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import Stack from '@mui/joy/Stack';
 
+import Snack from "../HomePage/SnackBar";
+
 const Fields = (props) => {
 
   console.log("this is the ticket: " + JSON.stringify(props.ticket));
@@ -38,13 +40,13 @@ const Fields = (props) => {
   console.log("ticketID: " + JSON.stringify(ticketID));
   console.log("role: " + role);
 
-   const changeReveal = (role) => {
-     if((role === "admin" || role === "employee") && status !== 'complete'){
-       setReveal(true);
-     }
-   }
+  // const changeReveal = (role) => {
+  //   if(role === "admin" || role === "employee"){
+  //     setReveal(true);
+  //   }
+  // }
 
-   changeReveal(role);
+  // changeReveal(role);
 
 
   useEffect(() => {
@@ -67,6 +69,9 @@ const Fields = (props) => {
 
   const [selectedTags, setSelectedTags] = useState([]);
 
+
+
+
   useEffect(() => {
     setSelectedTags(fields);
     console.log("selectedTags ", selectedTags);
@@ -77,8 +82,8 @@ const Fields = (props) => {
   async function handleResolve (){
     const api = new API();
     const response = await api.completeTicket(ticketID);
-    props.setRerender();
-    props.handlePageClear();
+    props.handlePageClear("Ticket Resolved");
+    props.setRerender(props.reRender+1);
     console.log("response: " + JSON.stringify(response));
   };
 
