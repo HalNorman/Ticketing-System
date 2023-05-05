@@ -118,9 +118,11 @@ export default function MainDrawer (props) {
         setSelectedValue(null);
         setTicketOrTemplateDisplay(null);
         setIsButtonVisible(false);
-        setSnackMessage(message);
-        setOpenSnack(true);
-
+        console.log(message);
+        if(message != ''){
+            setSnackMessage(message);
+            setOpenSnack(true);
+        }
     }
 
     return(
@@ -224,7 +226,7 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance handlePageClear={handlePageClear} ticket = {selectedValue} userID = {props.user.userID} userRole={props.user.role} handlePageClear={handlePageClear}/>}
+                <TicketInstance handlePageClear={handlePageClear} ticket = {selectedValue} userID = {props.user.userID} userRole={props.user.role}/>}
                 {ticketOrTemplateDisplay === "Ticket" &&
                 <ViewTicketInstance handlePageClear={handlePageClear}
                                     reRender={reRender}
