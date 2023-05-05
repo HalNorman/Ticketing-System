@@ -70,6 +70,17 @@ export default function Login({setUser, title}) {
         getUserInfo();
     }, [verifyUser, setUser, userName, password]);
 
+/*
+    <Box sx={{flexGrow:1, justifyContent: "center", alignItems: "center"}}>
+           <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5} >
+            <Typography variant="h3" justifyContent="center" mt={10}>
+
+                {title}
+
+            </Typography>
+           </Box>
+*/
+
 
     return (
        <Box sx={{flexGrow:1, justifyContent: "center", alignItems: "center"}}>
