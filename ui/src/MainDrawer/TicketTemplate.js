@@ -131,10 +131,21 @@ function TicketTemplate(props) {
       return <Fragment>
               <FormControl> 
                 <Stack spacing={3} direction = "row" justifyContent={"center"}>
-                <Typography>
-                  {selectedField}
-                </Typography>
-                
+                  <Box
+                    sx={{
+                        display: "flex",
+                        alignItems: "center", 
+                        my: 1,
+                        border: "2px solid",
+                        borderColor: "secondary.main"
+                        }}
+                        >
+                      <Paper sx={{ p: 2, margin: 'auto', minWidth: 300, maxWidth: 600, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
+                        <Typography sx={{ mr: 1, color: "text.primary" }}>
+                          {selectedField + " : "}
+                        </Typography>
+                      </Paper>
+                    </Box>
                 <InputLabel id="tagSelector">Tag</InputLabel>
                   <Select 
                         fullWidth
