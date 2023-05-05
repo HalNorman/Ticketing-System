@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import API from '../API_Interface/API_Interface';
 import { Box, Collapse, Button, TextField, Typography, Divider } from '@mui/material';
 import Stack from '@mui/joy/Stack';
+import Snack from "../HomePage/SnackBar";
 
 export default function FieldForm() {
   const [fields, setFields] = useState([]);
@@ -9,6 +10,9 @@ export default function FieldForm() {
   const [openField, setOpenField] = useState(null);
   const [fieldInput, setFieldInput] = useState('');
   const [tagInput, setTagInput] = useState('');
+
+  const [openSnack,setOpenSnack] = useState(false);
+  const [snackMessage,setSnackMessage] = useState("")
 
 
   useEffect(() => {
@@ -28,11 +32,15 @@ export default function FieldForm() {
       (field) => field.fieldtagID !== fieldID
     );
     setFields(updatedFields);
+    setSnackMessage("FieldTag Deleted");
+    setOpenSnack(true);
   }
 
   function handleDeleteField(fieldName) {
     const updatedFields = fields.filter((field) => field.field !== fieldName);
     setFields(updatedFields);
+    setSnackMessage("Field Deleted");
+    setOpenSnack(true);
   }
 
   function handleAddFieldAndTag2() {
@@ -49,9 +57,16 @@ export default function FieldForm() {
   
       if (fieldExists && tagInput) {
         setFields([...fields, newFieldTag]);
+        setSnackMessage("Tag Added To Field" );
+        setOpenSnack(true);
       } else if (!fieldExists && fieldInput && tagInput) {
         setFields([...fields, newFieldTag]);
+        setSnackMessage("Tag And Field Added" );
+        setOpenSnack(true);
       }
+    }else{
+      setSnackMessage("Tag Already Exists");
+      setOpenSnack(true);
     }
   }
 
@@ -76,6 +91,8 @@ export default function FieldForm() {
         await api.addFieldTag(fieldTag);
       }
     }
+    setSnackMessage("Changes Saved" );
+    setOpenSnack(true);
 
     // Update initialFields state
     setInitialFields(fields);
@@ -123,6 +140,7 @@ export default function FieldForm() {
         ))}
         </Stack>
       </Box>
+      <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
     </Box>
   );
 }

@@ -98,6 +98,7 @@ const Fields = (props) => {
     setFields(newFields);
   };
 
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 

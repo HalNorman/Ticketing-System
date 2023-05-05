@@ -16,13 +16,11 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import {Fragment} from "react";
 import API from '../API_Interface/API_Interface';
-import TempTicketDisplay from "./TempTicketDisplay";
 import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
-import {AccountCircle} from "@mui/icons-material";
 import AddIcon from '@mui/icons-material/Add';
 import {FormControl, InputLabel, MenuItem} from "@mui/material";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import ViewTicketInstance from "./ViewTicketInstance";
 
 
@@ -71,16 +69,7 @@ export default function MainDrawer (props) {
     console.log('user ', props.user.userID);
     console.log(ticketInstanceIDs);
 
-  
-    const [tickets, setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
-        return{
-            user: "user" + idx,
-            name: "ticket" + idx,
-            date: "date" + idx,
-            otherInfo: "other Info" + idx
-        }
 
-    }))
 
     const  [templates, setTemplates] = useState([]); // ticket templates
     useEffect(() => {
@@ -108,6 +97,10 @@ export default function MainDrawer (props) {
         console.log( "tab value: " + newValue);
     };
 
+    const handleValueSelectionAndDiscard = (data,view) => {
+        handlePageClear();
+        handleValueSelection(data,view);
+    }
     const handleValueSelection = (data,view) => {
         setSelectedValue(data)
         setTicketOrTemplateDisplay(view)
@@ -166,8 +159,7 @@ export default function MainDrawer (props) {
                           <div className="font-link">
 
                             <ListItem sx={{borderTop: "1px solid",borderBottom: "1px solid"}} key={obj.ticketID} disablePadding >
-                              <ListItemButton onClick={() => handleValueSelection(obj,"Template")}>
-
+                              <ListItemButton onClick={() => handleValueSelectionAndDiscard(obj,"Template")}>
                                 <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
                               </ListItemButton>
                             </ListItem>

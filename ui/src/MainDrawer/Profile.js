@@ -5,6 +5,8 @@ import Toolbar from "@mui/material/Toolbar";
 import * as React from "react";
 import {Fragment, useState} from "react";
 import API from "../API_Interface/API_Interface";
+import Snack from "../HomePage/SnackBar.js"
+import Snackbar from "@mui/material/Snackbar";
 export default function Profile(props) {
     const api = new API();
 
@@ -15,16 +17,27 @@ export default function Profile(props) {
     const [confirmPassWord,setConfirmPassWord] = useState("");
 
     const [authFailed, setAuthFailed] = useState(false);
+
+    const [openSnack,setOpenSnack] = useState(false);
+    const [snackMessage,setSnackMessage] = useState("")
+
     async function changeCredentials() {
         console.log("hello")
         console.log(userName,passWord)
         if(passWord == confirmPassWord && userName == confirmUserName) {
             await api.editUserNamePassword({username: userName, password: passWord, userID: props.user.userID});
+            setSnackMessage("Changed Credentials");
+            setOpenSnack(true);
         }else{
+            setSnackMessage("Fields Dont Match");
+            setOpenSnack(true);
             setAuthFailed(true);
         }
     }
 
+    const handleSubmit = () => {
+        setOpenSnack(true);
+    }
     const callTwoFunctions = (s,func) => {
         switch(func) {
             case 'username':
@@ -47,7 +60,7 @@ export default function Profile(props) {
     }
 
     return(
-        <Box sx ={{ flexGrow: 1, marginLeft: 23,marginRight: 23}}>
+        <Box sx ={{ flexGrow: 1, marginLeft: '60vh',marginRight: '60vh'}}>
             <Stack spacing={2}>
             <Toolbar/>
             <Typography variant = "h3">
@@ -64,6 +77,7 @@ export default function Profile(props) {
             <Button variant="contained" onClick={() => changeCredentials()} >
                 Change Credentials
             </Button>
+                <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
             </Stack>
         </Box>
     )
