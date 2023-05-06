@@ -257,11 +257,7 @@ export default function MainDrawer (props) {
                                 handleRerender={handleRerender}
                 />}
                 <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
-
-                <TicketTemplate />}
                 {ticketOrTemplateDisplay === "GenericTemplate" && <GenericTemplate handlePageClear={handlePageClear} />}
-                <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
-
             </Box>
         </Fragment>
     )

@@ -25,17 +25,19 @@ const Fields = (props) => {
 
 
   const [fields, setFields] = useState([]);
-  const [reveal, setReveal] = useState(assertRole());
+  //const [reveal, setReveal] = useState(assertRole());
   // const[ticketID, setTicketID] = useState([props.ticket.ticketID]);
-
   const title = props.ticket.title;
   const info = props.ticket.info;
   const ticketID = props.ticket.ticketID;
   const isoString = props.ticket.dateCreated;
-  const date = new Date(isoString).toLocaleDateString();
+  const dateCreated = new Date(isoString).toLocaleDateString();
+  const isoString2 = props.ticket.dateCompleted;
+  const dateCompleted = new Date(isoString2).toLocaleDateString();
   const status = props.ticket.status;
   const role = props.role;
-
+  const reveal = (role === "admin" || role === "employee") && (props.ticket.status !== 'complete')
+  
   console.log("fields: " + JSON.stringify(fields));
   console.log("ticketID: " + JSON.stringify(ticketID));
   console.log("role: " + role);
@@ -102,8 +104,11 @@ const Fields = (props) => {
           </Typography>
         {/* <CircleOutlinedIcon sx={{ color: "secondary.main" }}/> */}
         </Box>
-        <Typography variant="h5" sx={{ color: "text.primary" }}>
-          Date Created: {date}
+        <Typography variant="h5" sx= {{display: status !== 'complete' ? 'inline' : 'none', color: "text.primary" }}>
+          Date Created: {dateCreated}
+        </Typography>
+        <Typography sx= {{display: status === 'complete' ? 'inline' : 'none', color: "text.primary" }} variant="h5">
+          Date Completed: {dateCompleted}
         </Typography>
       </Grid>
       <Grid item xs={6}>
