@@ -126,17 +126,18 @@ INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `pas
 INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("TicketEase", "242f40", "cca43b", "363636","F6F1F1");
 
 -- Rest of the inserts are used for the demo
-INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee', 'password');
+INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Alex', 'Finch', 'user', 'aFinch', 'password');
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bill', 'McGoo', 'user', 'bmcgoo', 'password');
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bic', 'Michell', 'user', 'bMichell', 'password');
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Alice', 'Match', 'employee', 'aMatch', 'password');
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Stephane', 'Zuiho', 'user', 'sZuiho', 'password');
-INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Alex', 'Finch', 'user', 'aFinch', 'password');
+INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee', 'password');
+
 
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (3, "Broken Washing Machine", "I have been using the whirlpool washing machine that came with the appartment, and it has worked wonderfully up to now. After putting a load into the machine yesterday, I came back to water spewing out of the machine and covering the floor. The water leaked down and seems to be going through the floor.", "active", "2023-02-21", "2023-02-21", null);
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (4, "Internet down by bear creek", "The storm last week made the internet go down, and now it will intermittently stop working. This is much worse than it has been, and it will usually take up to 5 minutes to load my emails. This is affecting the whole appartment and should be fixed ASAP", "complete", "2023-02-24", "2023-03-14", "2023-03-14");
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (6, "Power line down from the storm on May 3rd", "During the storm on may 3rd, a powerline went down on Catamaran St. I have contacted PG&E, but would like to add a ticket here to document this", "active", "2023-05-03", "2023-05-03", null);
-INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (7, "Leaky sink", "When doing dishes the other night, I noticed my sink leaking water down below from the garbage disposal. I put a bucket under it before it leaked anywhere, but it would be nice to be fixed sooner as opposed to later.", "active", "2023-05-04", "2023-05-04", null);
+INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (2, "Leaky sink", "When doing dishes the other night, I noticed my sink leaking water down below from the garbage disposal. I put a bucket under it before it leaked anywhere, but it would be nice to be fixed sooner as opposed to later.", "active", "2023-05-04", "2023-05-04", null);
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (4, "Bear creek ", "The storm last week made the internet go down, and now it will intermittently stop working. This is much worse than it has been, and it will usually take up to 5 minutes to load my emails. This is affecting the whole appartment and should be fixed ASAP", "complete", "2023-02-24", "2023-03-14", "2023-03-14");
 
 
