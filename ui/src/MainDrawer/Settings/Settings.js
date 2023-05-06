@@ -71,23 +71,10 @@ export default function Settings(props) {
             background:"F6F1F1"
         },
         {
-
-            primary: "F1F6F9",
-            secondary: "394867",
-            text: "212A3E",
-            background:"9BA4B5"
-        },
-        {
-            primary: "393646",
-            secondary: "4F4557",
-            text: "6D5D6E",
-            background:"F4EEE0"
-        },
-        {
-            primary: "2C3333",
-            secondary: "2E4F4F",
-            text: "0E8388",
-            background:"CBE4DE"
+            primary: "F1D302",
+            secondary: "ED1C24",
+            text: "235789",
+            background: "FDFFFC"
         },
         {
             primary: "E4D9FF",
@@ -96,22 +83,35 @@ export default function Settings(props) {
             background: "FAFAFF"
         },
         {
+
+            primary: "F1F6F9",
+            secondary: "394867",
+            text: "212A3E",
+            background:"9BA4B5"
+        },
+        {
             primary: "E63B2E",
             secondary: "7F6A93",
             text: "221E22",
             background: "F9E0D9"
         },
         {
-            primary: "F1D302",
-            secondary: "ED1C24",
-            text: "235789",
-            background: "FDFFFC"
-        },
-        {
             primary: "809848",
             secondary: "6D6A75",
             text: "37323E",
             background: "BFBDC1"
+        },
+        {
+            primary: "2C3333",
+            secondary: "2E4F4F",
+            text: "0E8388",
+            background:"CBE4DE"
+        },
+        {
+            primary: "393646",
+            secondary: "4F4557",
+            text: "6D5D6E",
+            background:"F4EEE0"
         }
 
     ]
