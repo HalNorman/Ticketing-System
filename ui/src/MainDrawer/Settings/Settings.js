@@ -102,10 +102,16 @@ export default function Settings(props) {
             background: "F9E0D9"
         },
         {
-            primary: "E63B2E",
-            secondary: "7F6A93",
-            text: "221E22",
-            background: "F9E0D9"
+            primary: "F1D302",
+            secondary: "ED1C24",
+            text: "235789",
+            background: "FDFFFC"
+        },
+        {
+            primary: "809848",
+            secondary: "6D6A75",
+            text: "37323E",
+            background: "BFBDC1"
         }
 
     ]

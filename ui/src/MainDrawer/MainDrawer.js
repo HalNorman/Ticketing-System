@@ -257,7 +257,10 @@ export default function MainDrawer (props) {
                                 handleRerender={handleRerender}
                 />}
                 <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
-                {ticketOrTemplateDisplay === "GenericTemplate" && <GenericTemplate handlePageClear={handlePageClear} />}
+                {ticketOrTemplateDisplay === "GenericTemplate" && <GenericTemplate user={props.user} 
+                                                                                    handlePageClear={handlePageClear} 
+                                                                                    handleRerender={handleRerender}
+                />}
             </Box>
         </Fragment>
     )

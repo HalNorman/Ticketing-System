@@ -179,7 +179,7 @@ const TicketInstance = (props) => {
         {info}
       </Typography>
       <Stack spacing={3} direction = "row" justifyContent={"space-between"}>
-        <TextField label="Description" id="outlined-textarea" sx={{width: "65vh"}} multiline variant="outlined" value={description} onChange={(e) => setDescription(e.target.value)}/>
+        <TextField label="Description" id="outlined-textarea" sx={{width: "45vw"}} multiline variant="outlined" value={description} onChange={(e) => setDescription(e.target.value)}/>
         <Stack>
           {fields.map((field, index) => (
             <Box
@@ -192,6 +192,7 @@ const TicketInstance = (props) => {
               border: "2px solid",
               backgroundColor:"#F5F5F5",
               borderColor: "secondary.main",
+              width: "30vw"
               }}>
             <Typography sx={{ mr: 1, color: "text.primary" }}>
               {field.field}:
@@ -203,7 +204,9 @@ const TicketInstance = (props) => {
             </Fragment>
             ) : (
             <Fragment>
-              <FormControl sx={{width: "40vh"}}>
+            <Stack direction = "row" spacing={2} justifyContent="space-between" alignItems="center">
+              <Stack item>
+              <FormControl sx={{maxWidth: "20vw", minWidth:"10vw"}}>
               <InputLabel id="tag-selector">Tag</InputLabel>  
               <Select sx={{backgroundColor:"#F5F5F5"}} labelId="tag-selector" id="tag-select" label="tag"
                 value={selectedTags[index] ? selectedTags[index].tag : null}
@@ -212,6 +215,8 @@ const TicketInstance = (props) => {
                 {getMenuItems(field.field)}
               </Select>
               </FormControl>
+              </Stack>
+              <Stack item>
               <IconButton
                 edge="end"
                 onClick={() => handleDeleteField(index)}
@@ -219,6 +224,9 @@ const TicketInstance = (props) => {
                     >
                   <DeleteIcon />
                 </IconButton>
+                </Stack>
+              </Stack>
+                
             </Fragment>
           )}
         </Box>

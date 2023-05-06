@@ -86,7 +86,7 @@ function TicketTemplate(props) {
                               borderColor: "secondary.main"
                               }}
                             >
-                            <Paper sx={{ p: 2, margin: 'auto', minWidth: 300, maxWidth: 600, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
+                            <Paper sx={{ p: 2, margin: 'auto', minWidth: "20vw", maxWidth: "20vw", flexGrow: 1, backgroundColor: '#f5f5f5', }}>
                               <Typography sx={{ mr: 1, color: "text.primary" }}>
                                 {object.field + ": " }
                               </Typography>
@@ -104,7 +104,7 @@ function TicketTemplate(props) {
                               borderColor: "secondary.main"
                               }}
                             >
-                            <Paper sx={{ p: 2, margin: 'auto', minWidth: 300, maxWidth: 600, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
+                            <Paper sx={{ p: 2, margin: 'auto', minWidth: "20vw", maxWidth: "20vw", flexGrow: 1, backgroundColor: '#f5f5f5', }}>
                               <Typography sx={{ mr: 1, color: "text.primary" }}>
                                 {object.tag}
                               </Typography>
@@ -114,7 +114,7 @@ function TicketTemplate(props) {
                           <Stack item>
                             <IconButton
                               onClick={() => handleRemove(object)}
-                              sx={{color:"secondary.main", my:1}}
+                              sx={{color:"secondary.main", my:1, minWidth: "3vw", maxWidth: "3vw",}}
                             >
                               <DeleteIcon />
                             </IconButton>
@@ -148,13 +148,13 @@ function TicketTemplate(props) {
                         borderColor: "secondary.main"
                         }}
                         >
-                      <Paper sx={{ p: 2, margin: 'auto', minWidth: 300, maxWidth: 600, flexGrow: 1, backgroundColor: '#f5f5f5', }}>
+                      <Paper sx={{ p: 2, margin: 'auto', minWidth: "20vw", maxWidth: "20vw", flexGrow: 1, backgroundColor: '#f5f5f5', }}>
                         <Typography sx={{ mr: 1, color: "text.primary" }}>
                           {selectedField + " : "}
                         </Typography>
                       </Paper>
                     </Box>
-                <FormControl sx={{width: "20vh"}}> 
+                <FormControl sx={{width: "18vw"}}> 
                   <InputLabel id="tagSelector" sx={{marginTop: 1}}>Tag</InputLabel>
                     <Select 
                         sx={{marginTop: 1}}
@@ -178,7 +178,7 @@ function TicketTemplate(props) {
       console.log(fieldStringArray);
       return <Fragment>
               <Stack spacing={3} direction = "row" justifyContent={"space-between"}>
-                <FormControl sx={{width: "20vh"}}>
+                <FormControl sx={{width: "18vw"}}>
                   <InputLabel id="fieldSelector">Field</InputLabel>
                     <Select 
                         fullWidth

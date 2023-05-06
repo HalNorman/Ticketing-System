@@ -51,7 +51,7 @@ function GenericTemplate(props) {
       const api = new API();
       const fieldtagArray = selectedFieldTags.map((object) => object.fieldtagID);
       console.log(fieldtagArray);
-      await api.createTicketTemplate({title:title, info:info}, fieldtagArray);
+      await api.createTicketInstance({userID: props.user.userID, title:title, info:info}, fieldtagArray);
       setSelectedField('');
       setSelectedFieldTags([]);
       setTitle('');
@@ -207,7 +207,7 @@ function GenericTemplate(props) {
   }
   return (
     <div>
-      <h1>Create a New Template</h1>
+      <h1>Create a New Ticket</h1>
         <Stack spacing={3} direction = "column" alignItems="center" justifyContent={"space-between"}>
         <TextField
           label="Title"
