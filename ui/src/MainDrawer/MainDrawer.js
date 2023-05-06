@@ -217,9 +217,7 @@ export default function MainDrawer (props) {
                         <Box sx={{ overflow: 'auto', border: '1px solid'}} >
                         <List>
                             {ticketInstanceIDs.filter((data) => {
-                            
-                                return (data.title.toLowerCase().includes(searchValue.toLowerCase()) || (`${data.fName} ${data.lName}`).toLowerCase().includes(searchValue.toLowerCase())) && (data.status === ticketStatus || ticketStatus === 'all')
-
+                                return (data.title.toLowerCase().includes(searchValue.toLowerCase()) || (`${data.fName} ${data.lName}`).toLowerCase().includes(searchValue.toLowerCase()) || data.ticketID == searchValue) && (data.status === ticketStatus || ticketStatus === 'all')
                             }).map((instance, index) => (
                                 <div>
                                     <ListItem sx={{borderBottom: "1px solid",borderTop: "1px solid" }} key={instance} multiline = "true" disablePadding >

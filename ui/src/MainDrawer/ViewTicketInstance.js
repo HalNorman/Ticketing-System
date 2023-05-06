@@ -104,6 +104,12 @@ const Fields = (props) => {
           </Typography>
         {/* <CircleOutlinedIcon sx={{ color: "secondary.main" }}/> */}
         </Box>
+        <Box sx={{ }} >
+          <Typography variant="h5" sx={{ color: "text.primary" }}>
+            Tickket ID: {ticketID}
+          </Typography>
+        {/* <CircleOutlinedIcon sx={{ color: "secondary.main" }}/> */}
+        </Box>
         <Typography variant="h5" sx= {{display: status !== 'complete' ? 'inline' : 'none', color: "text.primary" }}>
           Date Created: {dateCreated}
         </Typography>
