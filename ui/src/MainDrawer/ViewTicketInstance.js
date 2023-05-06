@@ -106,7 +106,7 @@ const Fields = (props) => {
         </Box>
         <Box sx={{ }} >
           <Typography variant="h5" sx={{ color: "text.primary" }}>
-            Tickket ID: {ticketID}
+            Ticket ID: {ticketID}
           </Typography>
         {/* <CircleOutlinedIcon sx={{ color: "secondary.main" }}/> */}
         </Box>
