@@ -57,7 +57,7 @@ function GenericTemplate(props) {
       setTitle('');
       setInfo('');
       props.handleRerender();
-      setSnackMessage("Creating Template");
+      setSnackMessage("Creating Ticket");
       setOpenSnack(true);
     }
   }
