@@ -24,14 +24,21 @@ export default function Profile(props) {
     async function changeCredentials() {
         console.log("hello")
         console.log(userName,passWord)
-        if(passWord == confirmPassWord && userName == confirmUserName && userName !== '' && passWord !== '') {
-            await api.editUserNamePassword({username: userName, password: passWord, userID: props.user.userID});
-            setSnackMessage("Changed Credentials");
+        if(passWord === '' || userName === ''){
+            setSnackMessage("Username or password empty");
             setOpenSnack(true);
-        }else{
+            setAuthFailed(true);
+        }
+        else if(passWord !== confirmPassWord || userName !== confirmUserName) {
             setSnackMessage("Fields Dont Match");
             setOpenSnack(true);
             setAuthFailed(true);
+        }
+        else{
+            await api.editUserNamePassword({username: userName, password: passWord, userID: props.user.userID});
+            setSnackMessage("Changed Credentials");
+            setOpenSnack(true)
+            setAuthFailed(false);
         }
     }
 
