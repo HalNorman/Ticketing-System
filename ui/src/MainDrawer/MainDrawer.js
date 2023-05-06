@@ -16,15 +16,15 @@ import InputAdornment from '@mui/material/InputAdornment';
 import SearchIcon from '@mui/icons-material/Search';
 import {Fragment} from "react";
 import API from '../API_Interface/API_Interface';
-import TempTicketDisplay from "./TempTicketDisplay";
 import TicketInstance from "./TicketInstance";
 import TicketTemplate from "./TicketTemplate";
-import {AccountCircle} from "@mui/icons-material";
 import AddIcon from '@mui/icons-material/Add';
 import {FormControl, InputLabel, MenuItem} from "@mui/material";
-import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Select from '@mui/material/Select';
 import ViewTicketInstance from "./ViewTicketInstance";
+import Snack from "../HomePage/SnackBar";
 import GenericTemplate from "./GenericTemplate";
+
 
 
 
@@ -39,6 +39,9 @@ export default function MainDrawer (props) {
     const [ticketTemplateIDs, setTicketTemplateIDs] = useState([]);
     const [ticketOrTemplateDisplay,setTicketOrTemplateDisplay] = useState(null)
     const [reRender,setRerender] = useState(0);
+
+    const [openSnack,setOpenSnack] = useState(false);
+    const [snackMessage,setSnackMessage] = useState("")
 
 
     useEffect(() => {
@@ -66,23 +69,14 @@ export default function MainDrawer (props) {
 
         getTemplates();
         console.log(ticketTemplateIDs)
-    }, []);
+    }, [reRender]);
 
 
     console.log('user ', props.user.userID);
     console.log(ticketInstanceIDs);
 
-  
-    const [tickets, setTickets] = useState(Array.from({length: 30}, (item,idx) => { //for tickets instances
-        return{
-            user: "user" + idx,
-            name: "ticket" + idx,
-            date: "date" + idx,
-            otherInfo: "other Info" + idx
-        }
 
-    }))
-
+/*
     const  [templates, setTemplates] = useState([]); // ticket templates
     useEffect(() => {
         setTemplates(ticketInstanceIDs.map((ticket) => ({
@@ -91,13 +85,15 @@ export default function MainDrawer (props) {
             info: ticket.info,
         })));
       }, [ticketInstanceIDs]);
-
+*/
 
     const [searchValue, setSearchValue] = useState(""); //value in search bar
     const [tabValue, setTabValue] = useState(2); //currently selected tab bar
     const [selectedValue,setSelectedValue] = useState(null) //current view to be displayed in window
     const [isButtonVisible, setIsButtonVisible] = useState(false) //current view to be displayed in window
     const [ticketStatus, setTicketStatus] = useState('active');
+
+
 
     const handleTabChange = (newValue) => {
         if (newValue === "Templates") {
@@ -109,18 +105,27 @@ export default function MainDrawer (props) {
         console.log( "tab value: " + newValue);
     };
 
+
     const handleValueSelection = (data,view) => {
         setSelectedValue(data)
         setTicketOrTemplateDisplay(view)
         setIsButtonVisible(true)
     }
 
-    const handlePageClear = () => {
+    const handlePageClear = (message) => {
         setSelectedValue(null);
         setTicketOrTemplateDisplay(null);
         setIsButtonVisible(false);
+        console.log(message);
+        if(message !== ''){
+            setSnackMessage(message);
+            setOpenSnack(true);
+        }
     }
 
+    const handleRerender = () => {
+        setRerender(reRender + 1);
+    }
     return(
         <Fragment>
             <Drawer
@@ -178,7 +183,6 @@ export default function MainDrawer (props) {
 
                             <ListItem sx={{borderTop: "1px solid",borderBottom: "1px solid"}} key={obj.ticketID} disablePadding >
                               <ListItemButton onClick={() => handleValueSelection(obj,"Template")}>
-
                                 <ListItemText primary={obj.title}  primaryTypographyProps={{fontSize: '18px'}}  ></ListItemText>
                               </ListItemButton>
                             </ListItem>
@@ -236,7 +240,11 @@ export default function MainDrawer (props) {
             >
                 <Toolbar />
                     {ticketOrTemplateDisplay === "Template" &&
-                <TicketInstance ticket = {selectedValue} userID = {props.user.userID} userRole={props.user.role} handlePageClear={handlePageClear}/>} 
+                <TicketInstance handlePageClear={handlePageClear} 
+                                ticket = {selectedValue} 
+                                handleRerender={handleRerender}
+                                userID = {props.user.userID} 
+                                userRole={props.user.role}/>}
                 {ticketOrTemplateDisplay === "Ticket" &&
                 <ViewTicketInstance handlePageClear={handlePageClear}
                                     reRender={reRender}
@@ -244,13 +252,18 @@ export default function MainDrawer (props) {
                                     ticket = {selectedValue}
                                     role={props.user.role}/>}
                 {ticketOrTemplateDisplay === "AddTemplate" &&
+
+                <TicketTemplate handlePageClear={handlePageClear}
+                                handleRerender={handleRerender}
+                />}
+                <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
+
                 <TicketTemplate />}
                 {ticketOrTemplateDisplay === "GenericTemplate" && <GenericTemplate handlePageClear={handlePageClear} />}
                 <Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>
-
-
 
             </Box>
         </Fragment>
     )
 }
+//<Button sx= {{display: isButtonVisible ? 'inline' : 'none', marginTop : '6px' }} variant="contained" color="secondary" onClick={() => handlePageClear()}>Discard</Button>

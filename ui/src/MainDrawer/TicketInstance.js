@@ -16,7 +16,7 @@ import LockIcon from "@mui/icons-material/Lock";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from '@mui/material/IconButton';
 
-const Fields = (props) => {
+const TicketInstance = (props) => {
   //const [fieldTags, setFieldTags] = useState([]);
   const [allFieldTags, setAllFieldTags] = useState([]);
   const [fields, setFields] = useState([]);
@@ -98,6 +98,7 @@ const Fields = (props) => {
     setFields(newFields);
   };
 
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
@@ -135,7 +136,8 @@ const Fields = (props) => {
     } catch (error) {
       console.error("Error creating ticket instance:", error);
     }
-    props.handlePageClear();
+    props.handleRerender();
+    props.handlePageClear("Ticket Submitted");
   };
 
   const handleAddField = (field) => {
@@ -161,14 +163,15 @@ const Fields = (props) => {
   };
   async function deleteTemplate(){
     const api = new API();
-    const templateID = props.ticket.ticketID;
+    const templateID = props.ticket.templateID;
+    console.log(templateID);
     api.deleteTemplate(templateID);
-    props.handlePageClear();
+    props.handleRerender();
+    props.handlePageClear("Deleting Template");
   }
 
   return (
     <Box>
-
       <Typography variant="h3" sx={{ color: "text.primary" }}>
         {title}
       </Typography>
@@ -220,28 +223,36 @@ const Fields = (props) => {
           )}
         </Box>
       ))}
-  <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
+    <Box sx={{ display: "flex", alignItems: "center", my: 1 }}>
       {getAvailableFieldsToAdd().length > 0 &&
-      <FormControl  sx={{width: "40vh"}} >
-        <InputLabel id="field-selector">Field</InputLabel>     
-        <Select labelId="field-selector" id="field-select" label="field" onChange={(event) => handleAddField(event.target.value)}>
-          {getAvailableFieldsToAdd().map((field) => (
-            <MenuItem key={field} value={field}>
-              {field}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>}
-      
+        <FormControl sx={{width: "20vh"}}>
+          <InputLabel id="field-selector">Field</InputLabel>     
+            <Select 
+              labelId="field-selector" 
+              id="field-select" 
+              label="field"  
+              onChange={(event) => handleAddField(event.target.value)}>
+              {getAvailableFieldsToAdd().map((field) => (
+                <MenuItem key={field} value={field}>
+                  {field}
+                </MenuItem>
+              ))}
+            </Select>
+        </FormControl>}
     </Box>
     </Stack>
     </Stack>
-      <Button onClick={handleFormSubmit} variant="contained" color="secondary" sx={{ backgroundColor: 'secondary.main' }}>
+    <Stack direction = "column" spacing={2} alignItems="center" justifyContent="center">
+      <Button onClick={handleFormSubmit} variant="contained" color="secondary">
         Submit
       </Button>
-      
+      <Button sx= {{display: props.userRole === 'admin' ? 'inline' : 'none' }} variant="contained" color="secondary" onClick={() => deleteTemplate()}>
+        Delete Template
+      </Button>
+    </Stack>
+    
   </Box>
 );
 };
 
-export default Fields;
+export default TicketInstance;

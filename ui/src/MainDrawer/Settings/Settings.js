@@ -9,8 +9,10 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Stack from '@mui/joy/Stack';
 
-import React, {useEffect, Fragment} from 'react';
+import React, {useEffect, Fragment, useState} from 'react';
 import API from "../../API_Interface/API_Interface";
+
+import Snack from "../../HomePage/SnackBar";
 
 
 
@@ -57,6 +59,9 @@ export default function Settings(props) {
     const [userTable, setUserTable] = React.useState([]);
     const [systemName, setSystemName] = React.useState('');
 
+    const [openSnack,setOpenSnack] = useState(false);
+    const [snackMessage,setSnackMessage] = useState("")
+
     const themes =[
         
         {
@@ -85,17 +90,23 @@ export default function Settings(props) {
             background:"CBE4DE"
         },
         {
-            primary: "301E67",
-            secondary: "5B8FB9",
-            text: "B6EADA",
-            background:"03001C"
+            primary: "E4D9FF",
+            secondary: "30343F",
+            text: "1E2749",
+            background: "FAFAFF"
         },
         {
-            primary: "3C2A21",
-            secondary: "D5CEA3",
-            text: "E5E5CB",
-            background:"1A120B"
+            primary: "E63B2E",
+            secondary: "7F6A93",
+            text: "221E22",
+            background: "F9E0D9"
         },
+        {
+            primary: "E63B2E",
+            secondary: "7F6A93",
+            text: "221E22",
+            background: "F9E0D9"
+        }
 
     ]
     
@@ -211,16 +222,27 @@ export default function Settings(props) {
         if(user.fName !== '' && user.lName !== '' && user.role !== '' && user.username !== '' && user.password !== '' ){
             await api.addUser(user);
             setUpdateView(updateView + 1);
+            setSnackMessage("User Added");
+            setOpenSnack(true);
+        }else{
+
         }
     }
     async function setSystemNameInApi(){
         if(systemName !== ''){
             await api.setThemeName(systemName);
+            setSnackMessage("System Name Changed");
+            setOpenSnack(true);
+        }else{
+            setSnackMessage("No Value In TextField");
+            setOpenSnack(true);
         }
     }
     async function deleteUser(user_id){
         await api.deleteUser(user_id);
         setUpdateView(updateView + 1);
+        setSnackMessage("User Deleted");
+        setOpenSnack(true);
     }
 
         return(
@@ -249,7 +271,7 @@ export default function Settings(props) {
                                  }}
                     >
                         <Stack direction = "row" justifyContent="space-between">
-                        <Typography sx={{color: `#${theme.primary}`}}>
+                        <Typography sx={{color: `#${theme.text}`}}>
                             Primary:
                         </Typography>
                         <Box sx={{
@@ -258,7 +280,7 @@ export default function Settings(props) {
                             border: "1px solid",
                             width: "25vh"
                         }} bgcolor={'#' + theme.primary} />
-                        <Typography  sx={{color: `#${theme.primary}`}}>
+                        <Typography  sx={{color: `#${theme.text}`}}>
                             Secondary:
                         </Typography>
                         <Box sx={{
@@ -267,7 +289,7 @@ export default function Settings(props) {
                             border: "1px solid ",
                             width: "25vh"
                         }} bgcolor={'#' + theme.secondary}/>
-                        <Typography  sx={{color: `#${theme.primary}`}}>
+                        <Typography  sx={{color: `#${theme.text}`}}>
                             Text:
                         </Typography>
                         <Box sx={{
@@ -294,7 +316,7 @@ export default function Settings(props) {
                     <Stack direction="row" justifyContent="space-between">
                 <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
                 <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
-                <FormControl  sx={{width: "20vh"}} >
+                <FormControl sx={{width: "20vh"}} >
                 <InputLabel id="role-selector">Role</InputLabel>
                     <Select
                         labelId="role-selector"
@@ -319,6 +341,7 @@ export default function Settings(props) {
                     </Typography>
                     {makeTable()}
                 </Box>
+                <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
             </Box>
         )
 /*
