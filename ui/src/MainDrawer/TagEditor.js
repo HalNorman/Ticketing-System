@@ -6,11 +6,10 @@ import Snack from "../HomePage/SnackBar";
 
 export default function FieldForm() {
   const [fields, setFields] = useState([]);
-  const [initialFields, setInitialFields] = useState([]);
   const [openField, setOpenField] = useState(null);
   const [fieldInput, setFieldInput] = useState('');
   const [tagInput, setTagInput] = useState('');
-
+  const [reRender, setReRender] = useState(0);
   const [openSnack,setOpenSnack] = useState(false);
   const [snackMessage,setSnackMessage] = useState("")
 
@@ -21,49 +20,25 @@ export default function FieldForm() {
     async function getFieldTags() {
       const routesJSONString = await api.getAllFieldTags();
       setFields(routesJSONString.data);
-      setInitialFields(routesJSONString.data);
     }
 
     getFieldTags();
-  }, []);
+  }, [reRender]);
 
-  function handleDeleteFieldTag(fieldID) {
-    const updatedFields = fields.filter(
-      (field) => field.fieldtagID !== fieldID
-    );
-    setFields(updatedFields);
+  async function handleDeleteFieldTag(fieldID) {
+    const api = new API();
+    const response = await api.deleteFieldTag(fieldID);
+    setReRender(reRender + 1);
     setSnackMessage("FieldTag Deleted");
     setOpenSnack(true);
   }
 
-  function handleDeleteField(fieldName) {
-    const updatedFields = fields.filter((field) => field.field !== fieldName);
-    setFields(updatedFields);
-    setSnackMessage("Field Deleted");
-    setOpenSnack(true);
-  }
-
-  function handleAddFieldAndTag2() {
-    
-    const fieldExists = fields.find((field) => field.field === fieldInput);
+  async function handleAddFieldAndTag2() {
+    const api = new API();
     const fieldTagExists = (fields.find((fieldtag) => fieldtag.field === fieldInput && fieldtag.tag === tagInput));
     if(!fieldTagExists){
-      const newFieldTag = {
-        fieldtagID: Math.max(...fields.map((field) => field.fieldtagID)) + 1,
-        field: fieldInput,
-        tag: tagInput,
-        valid: 1,
-      };
-  
-      if (fieldExists && tagInput) {
-        setFields([...fields, newFieldTag]);
-        setSnackMessage("Tag Added To Field" );
-        setOpenSnack(true);
-      } else if (!fieldExists && fieldInput && tagInput) {
-        setFields([...fields, newFieldTag]);
-        setSnackMessage("Tag And Field Added" );
-        setOpenSnack(true);
-      }
+      const result = await api.addFieldTag({field: fieldInput, tag: tagInput});
+      setReRender(reRender + 1);
     }else{
       setSnackMessage("Tag Already Exists");
       setOpenSnack(true);
@@ -72,30 +47,6 @@ export default function FieldForm() {
 
   function handleToggleFieldTags(field) {
     setOpenField((prevOpenField) => (prevOpenField === field ? null : field));
-  }
-
-  async function handleSave() {
-    const api = new API();
-
-    // Find and delete removed field tags
-    for (const initialField of initialFields) {
-      if (!fields.find((field) => field.fieldtagID === initialField.fieldtagID)) {
-        await api.deleteFieldTag(initialField.fieldtagID);
-      }
-    }
-
-    // Find and add new field tags
-    for (const field of fields) {
-      if (!initialFields.find((initialField) => initialField.fieldtagID === field.fieldtagID)) {
-        const fieldTag = { field: field.field, tag: field.tag };
-        await api.addFieldTag(fieldTag);
-      }
-    }
-    setSnackMessage("Changes Saved" );
-    setOpenSnack(true);
-
-    // Update initialFields state
-    setInitialFields(fields);
   }
 
   const uniqueFields = Array.from(
@@ -112,7 +63,6 @@ export default function FieldForm() {
         <Button onClick={() => handleAddFieldAndTag2()} variant="contained" color="secondary">Add</Button>
       </Stack>
         <Box>
-        <Button variant="contained" onClick={handleSave} color="secondary">Save</Button>
         </Box>
           {uniqueFields.map((field) => (
             <Stack direction="column" spacing={2} justifyContent="center" key={field}>
@@ -121,7 +71,6 @@ export default function FieldForm() {
                   <Button onClick={() => handleToggleFieldTags(field)} variant="outlined" color="secondary">
                     {field}
                   </Button>
-                  <Button onClick={() => handleDeleteField(field)} variant="contained" color="secondary">Delete Field</Button>
                 </Stack>
               </Box>
                 <Collapse in={openField === field}>
@@ -130,7 +79,7 @@ export default function FieldForm() {
                       <Box>
                         <Stack direction="row" spacing={2} justifyContent="center" key={fieldTag.fieldtagID}>
                           <Typography spacing={2}> {fieldTag.tag} </Typography>
-                          <Button onClick={() =>handleDeleteFieldTag(fieldTag.fieldtagID)} variant="contained" color="secondary">Delete Tag</Button>
+                          <Button onClick={() => handleDeleteFieldTag(fieldTag.fieldtagID)} variant="contained" color="secondary">Delete Tag</Button>
                         </Stack>
                       </Box>
                     ))}
