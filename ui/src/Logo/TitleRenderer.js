@@ -3,7 +3,6 @@ import { Typography } from '@mui/material';
 import { styled } from '@mui/system';
 
 const LogoText = styled(Typography)({
-  background: '#2D3748',
   display: 'inline-block',
   padding: '10px 20px',
   borderRadius: '4px',
@@ -12,8 +11,11 @@ const LogoText = styled(Typography)({
   fontSize: '40px',
 });
 
-const Logo = () => {
-  return <LogoText>TicketEase</LogoText>;
+const Logo = (props) => {
+  const title = props.title;
+  return <LogoText sx={{backgroundColor: "primary.main", color: "secondary.main"}}>
+    {title}
+    </LogoText>;
 };
 
 export default Logo;
