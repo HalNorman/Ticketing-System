@@ -34,14 +34,26 @@ export default function FieldForm() {
   }
 
   async function handleAddFieldAndTag2() {
-    const api = new API();
-    const fieldTagExists = (fields.find((fieldtag) => fieldtag.field === fieldInput && fieldtag.tag === tagInput));
-    if(!fieldTagExists){
-      const result = await api.addFieldTag({field: fieldInput, tag: tagInput});
-      setReRender(reRender + 1);
-    }else{
-      setSnackMessage("Tag Already Exists");
+    if(fieldInput === ''){
+      setSnackMessage("Field empty");
       setOpenSnack(true);
+    }
+    else if (tagInput === ''){
+      setSnackMessage("Tag empty");
+      setOpenSnack(true);
+    }
+    else {
+      const api = new API();
+      const fieldTagExists = (fields.find((fieldtag) => fieldtag.field === fieldInput && fieldtag.tag === tagInput));
+      if(!fieldTagExists){
+        const result = await api.addFieldTag({field: fieldInput, tag: tagInput});
+        setReRender(reRender + 1);
+        setSnackMessage("Added Field Tag");
+        setOpenSnack(true);
+      }else{
+        setSnackMessage("Tag Already Exists");
+        setOpenSnack(true);
+      }
     }
   }
 
