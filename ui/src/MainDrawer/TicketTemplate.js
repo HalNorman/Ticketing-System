@@ -154,7 +154,7 @@ function TicketTemplate(props) {
                         </Typography>
                       </Paper>
                     </Box>
-                <FormControl sx={{width: "23vw"}}> 
+                <FormControl sx={{width: "18vw"}}> 
                   <InputLabel id="tagSelector" sx={{marginTop: 1}}>Tag</InputLabel>
                     <Select 
                         sx={{marginTop: 1}}
@@ -178,7 +178,7 @@ function TicketTemplate(props) {
       console.log(fieldStringArray);
       return <Fragment>
               <Stack spacing={3} direction = "row" justifyContent={"space-between"}>
-                <FormControl sx={{width: "30vw"}}>
+                <FormControl sx={{width: "18vw"}}>
                   <InputLabel id="fieldSelector">Field</InputLabel>
                     <Select 
                         fullWidth
