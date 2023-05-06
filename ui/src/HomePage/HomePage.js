@@ -14,12 +14,6 @@ export default function HomePage(props) {
 
     const [admin,setAdmin] = useState(props.user.role === "admin");
     const [page,setPage] = useState("MainDrawer");
-
-
-
-    
-
-
     const adminSwitch = () => {
         console.log("admin is " + admin)
         setAdmin(!admin)

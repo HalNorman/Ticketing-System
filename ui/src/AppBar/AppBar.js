@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import AddIcon from '@mui/icons-material/Add';
+import StyleIcon from '@mui/icons-material/Style';
 import {Fragment} from "react";
 
 
@@ -50,7 +51,7 @@ export default function MenuAppBar(props) {
                     {props.admin &&
                         <Fragment>
                             <IconButton onClick={() => props.handlePageChange("TagEditor")}>
-                                <AddIcon sx={{color: "secondary.main"}}/>
+                                <StyleIcon sx={{color: "secondary.main"}}/>
                             </IconButton>
                             <IconButton onClick={() => props.handlePageChange("Settings")}>
                                 <SettingsIcon sx={{color: "secondary.main"}} />
