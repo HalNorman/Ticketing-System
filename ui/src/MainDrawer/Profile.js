@@ -24,7 +24,7 @@ export default function Profile(props) {
     async function changeCredentials() {
         console.log("hello")
         console.log(userName,passWord)
-        if(passWord == confirmPassWord && userName == confirmUserName) {
+        if(passWord == confirmPassWord && userName == confirmUserName && userName !== '' && passWord !== '') {
             await api.editUserNamePassword({username: userName, password: passWord, userID: props.user.userID});
             setSnackMessage("Changed Credentials");
             setOpenSnack(true);
