@@ -15,7 +15,7 @@ import Stack from '@mui/joy/Stack';
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from '@mui/material/IconButton';
 
-function TicketTemplate(props) {
+function GenericTemplate(props) {
   const [fields, setFields] = useState([]);
   const [selectedFieldTags, setSelectedFieldTags] = useState([]);
   const [selectedField, setSelectedField] = useState('');
@@ -223,4 +223,4 @@ function TicketTemplate(props) {
   );
 }
 
-export default TicketTemplate;
+export default GenericTemplate;
