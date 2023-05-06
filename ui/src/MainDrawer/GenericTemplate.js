@@ -14,6 +14,7 @@ import {
 import Stack from '@mui/joy/Stack';
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from '@mui/material/IconButton';
+import Snack from "../HomePage/SnackBar";
 
 function GenericTemplate(props) {
   const [fields, setFields] = useState([]);
@@ -21,7 +22,8 @@ function GenericTemplate(props) {
   const [selectedField, setSelectedField] = useState('');
   const [title, setTitle] = useState('');
   const [info, setInfo] = useState('');
-  
+  const [openSnack,setOpenSnack] = useState(false);
+  const [snackMessage,setSnackMessage] = useState("")
 
   const displayFieldTags = fields.filter((fieldtag) => !(selectedFieldTags.some((selectedFieldTag) => fieldtag.field === selectedFieldTag.field)));
       let fieldStringArray = [];
@@ -55,6 +57,8 @@ function GenericTemplate(props) {
       setTitle('');
       setInfo('');
       props.handleRerender();
+      setSnackMessage("Creating Template");
+      setOpenSnack(true);
     }
   }
   
@@ -64,12 +68,14 @@ function GenericTemplate(props) {
     console.log(newSelectedFieldTags);
     setSelectedFieldTags(newSelectedFieldTags);
   }
+  
   function displaySelectedFields(){
     return <Fragment> 
             {selectedFieldTags.length > 0 && 
               selectedFieldTags.map((object) => {
                 return <Stack spacing={3} direction = "row" justifyContent={"center"}>
-                          <Box
+                          <Stack item>
+                          <Box 
                             key={object.field}
                             sx={{
                               display: "flex",
@@ -86,8 +92,9 @@ function GenericTemplate(props) {
                               </Typography>
                             </Paper>
                           </Box>
+                          </Stack>
+                          <Stack item>
                           <Box
-                            key={object.tag}
                             sx={{
                               display: "flex",
                               alignItems: "center",
@@ -103,14 +110,16 @@ function GenericTemplate(props) {
                               </Typography>
                             </Paper>
                           </Box>
+                          </Stack>
+                          <Stack item>
                             <IconButton
-                    
                               onClick={() => handleRemove(object)}
-                              sx={{color:"secondary.main"}}
+                              sx={{color:"secondary.main", my:1}}
                             >
                               <DeleteIcon />
                             </IconButton>
                         </Stack>
+                      </Stack>
               })
             }
           </Fragment>
@@ -129,7 +138,6 @@ function GenericTemplate(props) {
     if(selectedField !== ''){
       const tagArray = fields.filter((fieldTag) => fieldTag.field === selectedField);
       return <Fragment>
-              <FormControl> 
                 <Stack spacing={3} direction = "row" justifyContent={"center"}>
                   <Box
                     sx={{
@@ -146,8 +154,10 @@ function GenericTemplate(props) {
                         </Typography>
                       </Paper>
                     </Box>
-                <InputLabel id="tagSelector">Tag</InputLabel>
-                  <Select 
+                <FormControl sx={{width: "20vh"}}> 
+                  <InputLabel id="tagSelector" sx={{marginTop: 1}}>Tag</InputLabel>
+                    <Select 
+                        sx={{marginTop: 1}}
                         fullWidth
                         labelId="tagSelector"
                         id="tagSelect"
@@ -160,18 +170,17 @@ function GenericTemplate(props) {
                           </MenuItem>)
                         )}
                   </Select>
+                  </FormControl>
                 </Stack>
-              </FormControl>
              </Fragment>
     } 
     else if(displayFieldTags.length > 0) {
       console.log(fieldStringArray);
       return <Fragment>
-              <FormControl>
               <Stack spacing={3} direction = "row" justifyContent={"space-between"}>
-              
-              <InputLabel id="fieldSelector">Field</InputLabel>
-                <Select 
+                <FormControl sx={{width: "20vh"}}>
+                  <InputLabel id="fieldSelector">Field</InputLabel>
+                    <Select 
                         fullWidth
                         labelId="fieldSelector"
                         id="fieldSelect"
@@ -185,9 +194,9 @@ function GenericTemplate(props) {
                           </MenuItem>
                         )
                         )}
-                </Select>
+                    </Select>
+                </FormControl>
               </Stack>
-              </FormControl>
              </Fragment>
     }
     else{
@@ -198,7 +207,7 @@ function GenericTemplate(props) {
   }
   return (
     <div>
-      <h1>Creating a New Ticket</h1>
+      <h1>Create a New Template</h1>
         <Stack spacing={3} direction = "column" alignItems="center" justifyContent={"space-between"}>
         <TextField
           label="Title"
@@ -219,6 +228,7 @@ function GenericTemplate(props) {
         {displaySelector()}
         <Button onClick={handleSubmit} type="submit" variant="contained" color='secondary' sx={{ backgroundColor:'secondary.main' }}>Submit</Button>
         </Stack>
+        <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
     </div>
   );
 }
