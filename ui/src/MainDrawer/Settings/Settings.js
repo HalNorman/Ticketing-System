@@ -55,6 +55,7 @@ export default function Settings(props) {
         username: '',
         password: ''
     }});
+    
     const [updateView, setUpdateView] = React.useState(1);
     const [userTable, setUserTable] = React.useState([]);
     const [systemName, setSystemName] = React.useState('');
@@ -230,6 +231,13 @@ export default function Settings(props) {
             setUpdateView(updateView + 1);
             setSnackMessage("User Added");
             setOpenSnack(true);
+            setUser({
+                fName:"",
+                lName:"",
+                role:"",
+                username:"",
+                password:""
+            })
         }else{
 
         }
@@ -320,8 +328,8 @@ export default function Settings(props) {
                 justifyContent="space-between"
                 sx={{marginTop: "5px", }} padding="20px">
                     <Stack direction="row" justifyContent="space-between">
-                <TextField id="fName" label="First Name" variant="outlined" onChange={(event) => editUser(event.target.value, "fName")}/>
-                <TextField id="lName" label="Last Name" variant="outlined" onChange={(event) => editUser(event.target.value, "lName")}/>
+                <TextField id="fName" label="First Name" variant="outlined" value={user.fName} onChange={(event) => editUser(event.target.value, "fName")}/>
+                <TextField id="lName" label="Last Name" variant="outlined" value={user.lName} onChange={(event) => editUser(event.target.value, "lName")}/>
                 <FormControl sx={{width: "20vh"}} >
                 <InputLabel id="role-selector">Role</InputLabel>
                     <Select
@@ -335,8 +343,8 @@ export default function Settings(props) {
                             <MenuItem value={"user"}>User</MenuItem>
                     </Select>
                 </FormControl>
-                <TextField id="username" label="Username" variant="outlined" onChange={(event) => editUser(event.target.value, "username")}/>
-                <TextField id="password" label="Password" variant="outlined" onChange={(event) => editUser(event.target.value, "password")}/>
+                <TextField id="username" label="Username" variant="outlined" value={user.username} onChange={(event) => editUser(event.target.value, "username")}/>
+                <TextField id="password" label="Password" variant="outlined" value={user.password} onChange={(event) => editUser(event.target.value, "password")}/>
                 <Button onClick={() => addUser()}variant="contained">Add User</Button>
                     </Stack>
                 </Box>
