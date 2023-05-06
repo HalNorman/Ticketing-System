@@ -57,6 +57,10 @@ export default function FieldForm() {
     }
   }
 
+  function handleClear(){
+    setFieldInput('');
+    setTagInput('');
+  }
   function handleToggleFieldTags(field) {
     setOpenField((prevOpenField) => (prevOpenField === field ? null : field));
   }
@@ -70,9 +74,10 @@ export default function FieldForm() {
     <Box sx={{my:8, flexDirection: "up",marginLeft: "5px"}}>
     <Stack direction="column" spacing={2} justifyContent="center">
       <Stack direction="row" spacing={2} justifyContent="center">
-        <TextField id="Field" label="Field" variant="outlined" onChange={(event) => setFieldInput(event.target.value)}/>
-        <TextField id="Tag" label="Tag" variant="outlined" onChange={(event) => setTagInput(event.target.value)}/>
+        <TextField id="Field" label="Field" variant="outlined" value={fieldInput} onChange={(event) => setFieldInput(event.target.value)}/>
+        <TextField id="Tag" label="Tag" variant="outlined" value={tagInput} onChange={(event) => setTagInput(event.target.value)}/>
         <Button onClick={() => handleAddFieldAndTag2()} variant="contained" color="secondary">Add</Button>
+        <Button onClick={() => handleClear()} variant="contained" color="secondary">Clear</Button>
       </Stack>
         <Box>
         </Box>
