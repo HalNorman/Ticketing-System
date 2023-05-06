@@ -126,6 +126,7 @@ INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `pas
 INSERT INTO `ticketingsystem`.`theme` (`name`, `primaryColor`, `secondaryColor`, `textColor`,`backgroundColor`) VALUES ("TicketEase", "242f40", "cca43b", "363636","F6F1F1");
 
 -- Rest of the inserts are used for the demo
+/*
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bob', 'McGee', 'employee', 'bmcgee', 'password');
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bill', 'McGoo', 'user', 'bmcgoo', 'password');
 INSERT INTO `ticketingsystem`.`user` (`fName`, `lName`, `role`, `username`, `password`) VALUES ('Bic', 'Michell', 'user', 'bMichell', 'password');
@@ -179,13 +180,14 @@ INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VA
 INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (1, 11);
 INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (2, 8);
 INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (2, 9);
+*/
 
 -- Test Functions and updates go below here
 -- UPDATE `ticketingsystem`.`user` SET `username` = "bmgee", `password` = "passcode" WHERE `userID` = 2;
 
 -- This is an example of a call to validate a user and password
 -- SELECT * FROM `ticketingsystem`.`user` A WHERE BINARY A.`username` = 'admin' AND BINARY A.`password` = 'password'; 
--- SELECT * FROM `ticketingsystem`.`ticketfieldtag`;
+-- SELECT * FROM `ticketingsystem`.`user`;
 -- SELECT * FROM `ticketingsystem`.`theme` ORDER BY themeID LIMIT 1;
 
 -- This is an example of a ticket instance with fields and user name
