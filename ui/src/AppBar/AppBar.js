@@ -6,11 +6,12 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import AddIcon from '@mui/icons-material/Add';
 import StyleIcon from '@mui/icons-material/Style';
+import LogoutIcon from '@mui/icons-material/Logout';
 import {Fragment} from "react";
 
 
 import SettingsIcon from '@mui/icons-material/Settings';
-import {AccountCircle} from "@mui/icons-material";
+import {AccountCircle, Logout} from "@mui/icons-material";
 import {FormControlLabel, IconButton, Typography} from "@mui/material";
 import {Switch} from "@mui/material";
 
@@ -23,6 +24,10 @@ export default function MenuAppBar(props) {
     const handleChange = (event) => {
         setChecked(event.target.checked);
         props.adminSwitch();
+    }
+
+    const handleLogout = () => {
+        window.location.reload();
     }
 
     const displaySwitch = (user) => {
@@ -60,6 +65,9 @@ export default function MenuAppBar(props) {
                     }
                     <IconButton onClick={() => props.handlePageChange("Profile")}>
                         <AccountCircle sx={{color: "secondary.main"}} />
+                    </IconButton>
+                    <IconButton onClick={() => handleLogout()}>
+                        <LogoutIcon sx={{color: "secondary.main"}} />
                     </IconButton>
                 </Toolbar>
             </AppBar>
