@@ -44,7 +44,7 @@ INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (4, 9);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (4, 12);
 
-INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("Bear Creek Internet Issues", "For the tennants of bear creek appartments who recieve internet issues, please submit with this template.");
+INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("Bear Creek Internet Issues", "For the tenants of bear creek apartments who receive internet issues, please submit with this template.");
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("House flooded from the storm", "After the storm on may 23rd, if your house was flooded and you need the area inspected, please use this template");
 
 INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (1, 1);
