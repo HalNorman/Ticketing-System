@@ -257,8 +257,6 @@ export default function MainDrawer (props) {
                                 handleRerender={handleRerender}
                 />}
                 <Snack open={openSnack} setOpen={setOpenSnack} message={snackMessage}/>
-
-                <TicketTemplate />
             </Box>
         </Fragment>
     )
