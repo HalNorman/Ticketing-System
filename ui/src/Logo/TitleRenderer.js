@@ -12,8 +12,9 @@ const LogoText = styled(Typography)({
   fontSize: '40px',
 });
 
-const Logo = () => {
-  return <LogoText>TicketEase</LogoText>;
+const Logo = (props) => {
+  const title = props.title;
+  return <LogoText>{title}</LogoText>;
 };
 
 export default Logo;

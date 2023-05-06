@@ -71,14 +71,11 @@ export default function Login({setUser, title}) {
     }, [verifyUser, setUser, userName, password]);
 
 
-
     return (
-        <Box sx={{flexGrow:1, justifyContent: "center", alignItems: "center"}}>
-        <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5} >
-         <Typography variant="h3" justifyContent="center" mt={10}>
-             {title}
-         </Typography>
-        </Box>
+       <Fragment>
+            <Typography variant="h1" display="flex" justifyContent="center" alignItems="center" mt={20}>
+               <TitleRenderer title = {title}/>
+            </Typography>
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={5}>
 
                 <TextField
@@ -105,13 +102,15 @@ export default function Login({setUser, title}) {
                 />
                 <Divider />
            </Box>
+
            <Box display="flex" justifyContent="center" alignItems="center" width="100%" mt={2}>
-           <Button sx={{color:"text.primary"}}
+           <Button
                     variant="outlined"
                     size="medium"
                     onClick={() => {setVerifyUser(true)}}
                 >Log in</Button>
            </Box>
-       </Box>
+       </Fragment>
+
     );
 }
