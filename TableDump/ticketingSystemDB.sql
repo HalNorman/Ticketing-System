@@ -14,7 +14,7 @@ CREATE TABLE `ticketingsystem`.`user` (
   `fName` VARCHAR(45) NULL,
   `lName` VARCHAR(45) NULL,
   `role` ENUM('admin', 'employee', 'user', 'inactive') NOT NULL DEFAULT 'user',
-  `username` VARCHAR(45) NOT NULL,
+  `username` VARCHAR(45) NOT NULL UNIQUE,
   `password` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`userID`));
  
