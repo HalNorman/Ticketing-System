@@ -59,7 +59,7 @@ const allTicketsByUserID = async (ctx) => {
                     ticketingsystem.ticket) B 
                 ON 
                     A.ticketID = B.ticketID 
-                INNER JOIN 
+                LEFT JOIN 
                     ticketingsystem.user C 
                 ON 
                     A.userID = C.userID;
@@ -126,7 +126,7 @@ const ticketWithTicketID = (ctx) => {
                     ticketingsystem.ticketfieldtag B ON A.ticketID = B.ticketID 
                             INNER JOIN 
                     ticketingsystem.fieldtag C ON B.fieldtagID = C.fieldtagID 
-                            INNER JOIN ticketingsystem.user D ON A.userID = D.userID 
+                            LEFT JOIN ticketingsystem.user D ON A.userID = D.userID 
                             WHERE A.ticketID = ?;
                         `;
             dbConnection.query({

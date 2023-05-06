@@ -33,7 +33,7 @@ CREATE TABLE `ticketingsystem`.`user` (
   CONSTRAINT `userID`
     FOREIGN KEY (`userID`)
     REFERENCES `ticketingsystem`.`user` (`userID`)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE);
 
 -- CREATE TABLE `ticketingsystem`.`usermodticket` (
@@ -138,22 +138,24 @@ INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `da
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (4, "Internet down by bear creek", "The storm last week made the internet go down, and now it will intermittently stop working. This is much worse than it has been, and it will usually take up to 5 minutes to load my emails. This is affecting the whole apartment and should be fixed ASAP", "complete", "2023-02-24", "2023-03-14", "2023-03-14");
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (6, "Power line down from the storm on May 3rd", "During the storm on may 3rd, a powerline went down on Catamaran St. I have contacted PG&E, but would like to add a ticket here to document this", "active", "2023-05-03", "2023-05-03", null);
 INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (2, "Leaky sink", "When doing dishes the other night, I noticed my sink leaking water down below from the garbage disposal. I put a bucket under it before it leaked anywhere, but it would be nice to be fixed sooner as opposed to later.", "active", "2023-05-04", "2023-05-04", null);
+INSERT INTO `ticketingsystem`.`ticket` (`userID`, `title`, `info`, `status`, `dateCreated`, `dateModified`, `dateCompleted`) VALUES (6, "House flooded from the storm", "Hello, I found water ", "active", "2023-05-05", "2023-05-05", null);
+
 
 
 INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Community Location", "Bear Creek");     -- 1
 INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Community Location", "Vintage Greens"); -- 2
 INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Community Location", "Island Heights"); -- 3
 INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Community Location", "Oak Dale Flats"); -- 4
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Home Type", "Condominium"); 			   -- 5
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Home Type", "Studio Apartment");       -- 6
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Home Type", "Condominium"); 			       -- 5
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Home Type", "Studio Apartment");        -- 6
 INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Home Type", "Maisonette apartments");   -- 7
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Home Type", "House");				   -- 8
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Issue", "Flooding");					   -- 9
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Home Type", "House");				           -- 8
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Issue", "Flooding");					           -- 9
 INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Issue", "Power Outage");                -- 10
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Issue", "Internet Outage");			   -- 11
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Issue", "Internet Outage");			       -- 11
 INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Range of impact", "Just me");           -- 12
 INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Range of impact", "Just my neighbors and me");
-INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Range of impact", "The whole community"); -- 14
+INSERT INTO `ticketingsystem`.`fieldtag` (`field`, `tag`) VALUES ("Range of impact", "The whole community");-- 14
 
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (1, 3);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (1, 7);
@@ -171,10 +173,12 @@ INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (4, 6);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (4, 9);
 INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (4, 12);
+INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (5, 8);
+INSERT INTO `ticketingsystem`.`ticketfieldtag` (`ticketID`, `fieldtagID`) VALUES (5, 9);
 
 
 INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("Bear Creek Internet Issues", "For the tenants of bear creek apartments who receive internet issues, please submit with this template.");
-INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("House flooded from the storm", "After the storm on may 23rd, if your house was flooded and you need the area inspected, please use this template");
+INSERT INTO `ticketingsystem`.`template` (`title`, `info`) VALUES ("House flooded from the storm", "After the storm on may 3rd, if your house was flooded and you need the area inspected, please use this template");
 
 INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (1, 1);
 INSERT INTO `ticketingsystem`.`templatefieldtag` (`templateID`, `fieldtagID`) VALUES (1, 11);

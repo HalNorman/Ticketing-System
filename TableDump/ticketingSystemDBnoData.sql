@@ -33,7 +33,7 @@ CREATE TABLE `ticketingsystem`.`user` (
   CONSTRAINT `userID`
     FOREIGN KEY (`userID`)
     REFERENCES `ticketingsystem`.`user` (`userID`)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE);
 
 -- CREATE TABLE `ticketingsystem`.`usermodticket` (
